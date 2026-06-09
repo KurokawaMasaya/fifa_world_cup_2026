@@ -1,0 +1,1 @@
+"""Rating model modules."""

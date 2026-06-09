@@ -1,0 +1,49 @@
+group_letter,team_name,fifa_code,matches_played,wins,draws,losses,goals_for,goals_against,goal_difference,points,group_rank,qualified,qualification_status
+A,Mexico,MEX,3,3,0,0,5,1,4,9,1,True,qualified_top_2
+A,Czechia,CZE,3,2,0,1,4,2,2,6,2,True,qualified_top_2
+A,South Korea,KOR,3,1,0,2,4,5,-1,3,3,True,qualified_best_third
+A,South Africa,RSA,3,0,0,3,0,5,-5,0,4,False,eliminated
+B,Canada,CAN,3,3,0,0,7,3,4,9,1,True,qualified_top_2
+B,Switzerland,SUI,3,2,0,1,7,6,1,6,2,True,qualified_top_2
+B,Bosnia and Herzegovina,BIH,3,0,1,2,5,7,-2,1,3,False,eliminated
+B,Qatar,QAT,3,0,1,2,3,6,-3,1,4,False,eliminated
+C,Morocco,MAR,3,2,1,0,8,3,5,7,1,True,qualified_top_2
+C,Brazil,BRA,3,2,1,0,6,3,3,7,2,True,qualified_top_2
+C,Scotland,SCO,3,1,0,2,2,4,-2,3,3,False,eliminated
+C,Haiti,HAI,3,0,0,3,3,9,-6,0,4,False,eliminated
+D,USA,USA,3,2,0,1,5,3,2,6,1,True,qualified_top_2
+D,Australia,AUS,3,1,1,1,6,4,2,4,2,True,qualified_top_2
+D,Turkey,TUR,3,1,1,1,4,5,-1,4,3,True,qualified_best_third
+D,Paraguay,PAR,3,1,0,2,3,6,-3,3,4,False,eliminated
+E,Germany,GER,3,3,0,0,11,1,10,9,1,True,qualified_top_2
+E,Cote d'Ivoire,CIV,3,1,1,1,5,6,-1,4,2,True,qualified_top_2
+E,Ecuador,ECU,3,1,0,2,10,6,4,3,3,True,qualified_best_third
+E,Curacao,CUR,3,0,1,2,3,16,-13,1,4,False,eliminated
+F,Netherlands,NED,3,1,2,0,5,3,2,5,1,True,qualified_top_2
+F,Japan,JPN,3,1,2,0,5,4,1,5,2,True,qualified_top_2
+F,Tunisia,TUN,3,1,1,1,7,5,2,4,3,True,qualified_best_third
+F,Sweden,SWE,3,0,1,2,4,9,-5,1,4,False,eliminated
+G,Belgium,BEL,3,2,1,0,8,3,5,7,1,True,qualified_top_2
+G,Egypt,EGY,3,1,1,1,6,3,3,4,2,True,qualified_top_2
+G,IR Iran,IRN,3,0,3,0,3,3,0,3,3,True,qualified_best_third
+G,New Zealand,NZL,3,0,1,2,0,8,-8,1,4,False,eliminated
+H,Spain,ESP,3,3,0,0,6,2,4,9,1,True,qualified_top_2
+H,Uruguay,URU,3,1,1,1,4,4,0,4,2,True,qualified_top_2
+H,Cabo Verde,CPV,3,1,0,2,4,6,-2,3,3,False,eliminated
+H,Saudi Arabia,KSA,3,0,1,2,2,4,-2,1,4,False,eliminated
+I,France,FRA,3,3,0,0,8,2,6,9,1,True,qualified_top_2
+I,Senegal,SEN,3,1,1,1,3,4,-1,4,2,True,qualified_top_2
+I,Iraq,IRQ,3,1,0,2,4,5,-1,3,3,True,qualified_best_third
+I,Norway,NOR,3,0,1,2,4,8,-4,1,4,False,eliminated
+J,Argentina,ARG,3,2,1,0,5,3,2,7,1,True,qualified_top_2
+J,Algeria,ALG,3,1,1,1,2,2,0,4,2,True,qualified_top_2
+J,Austria,AUT,3,0,3,0,1,1,0,3,3,True,qualified_best_third
+J,Jordan,JOR,3,0,1,2,1,3,-2,1,4,False,eliminated
+K,Portugal,POR,3,2,1,0,8,2,6,7,1,True,qualified_top_2
+K,Colombia,COL,3,2,1,0,4,1,3,7,2,True,qualified_top_2
+K,Uzbekistan,UZB,3,1,0,2,3,4,-1,3,3,False,eliminated
+K,DR Congo,COD,3,0,0,3,1,9,-8,0,4,False,eliminated
+L,England,ENG,3,3,0,0,10,4,6,9,1,True,qualified_top_2
+L,Croatia,CRO,3,1,1,1,10,4,6,4,2,True,qualified_top_2
+L,Panama,PAN,3,1,1,1,6,6,0,4,3,True,qualified_best_third
+L,Ghana,GHA,3,0,0,3,1,13,-12,0,4,False,eliminated

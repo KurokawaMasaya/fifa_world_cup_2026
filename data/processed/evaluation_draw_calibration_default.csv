@@ -1,0 +1,2 @@
+avg_predicted_draw_probability,actual_draw_rate,draw_brier_component,model_version,model_status,parameter_config_path,rating_col,bracket_source,uses_random_pairing,random_seed_used_for
+0.2205922975869799,0.23278029160382102,0.1752706196702133,v2_tuned_default,default,/Users/joe/Desktop/McGill/projects/FIFAproject2026/config/model_params_default.json,anchored_final_strength,matches.csv,False,"['scoreline_sampling', 'tiebreakers']"

@@ -1,0 +1,5 @@
+model_version,n_matches,accuracy,mean_brier_score,mean_log_loss,mean_actual_outcome_probability,goal_mae,goal_rmse,model_status,parameter_config_path,rating_col,bracket_source,uses_random_pairing,random_seed_used_for
+random_uniform,1989,0.48366013071895425,0.6666666666666666,1.0986122886681096,0.33333333333333326,,,,,,,,
+historical_frequency,1989,0.48366013071895425,0.6315120594459254,1.0480562914440483,0.3677330426836652,,,,,,,,
+elo_only,1989,0.6058320764203117,0.532198046279932,0.9054863503183759,0.44560484709518733,,,,,,,,
+final_model,1989,0.6058320764203117,0.5206555892863771,0.8843398021975011,0.48127519968459714,0.9804825569424727,1.2795985250570001,default,/Users/joe/Desktop/McGill/projects/FIFAproject2026/config/model_params_default.json,anchored_final_strength,matches.csv,False,"['scoreline_sampling', 'tiebreakers']"

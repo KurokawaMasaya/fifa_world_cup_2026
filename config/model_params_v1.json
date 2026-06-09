@@ -1,0 +1,14 @@
+{
+  "model_version": "v1_initial",
+  "model_status": "archived",
+  "base_total_goals": 2.65,
+  "share_scale": 250,
+  "mismatch_total_bonus": 0.80,
+  "mismatch_scale": 600,
+  "lambda_min": 0.15,
+  "lambda_max": 4.50,
+  "draw_boost_max": 0.0,
+  "draw_boost_scale": 300,
+  "rating_col": "world_cup_elo_rating",
+  "bracket_source": "matches.csv"
+}

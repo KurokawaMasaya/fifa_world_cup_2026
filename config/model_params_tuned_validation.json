@@ -1,0 +1,15 @@
+{
+  "model_version": "v2_tuned_validation",
+  "model_status": "validation",
+  "source": "data/processed/best_parameters.json",
+  "base_total_goals": 2.75,
+  "share_scale": 220,
+  "mismatch_total_bonus": 0.9,
+  "mismatch_scale": 650,
+  "lambda_min": 0.15,
+  "lambda_max": 4.50,
+  "draw_boost_max": 0.045,
+  "draw_boost_scale": 300,
+  "rating_col": "anchored_final_strength",
+  "bracket_source": "matches.csv"
+}
