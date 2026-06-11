@@ -2,9 +2,11 @@
 
 Full raw datasets and large generated outputs are not included in this GitHub repository because several files exceed normal GitHub repository size limits.
 
-The complete local data package is stored externally on Google Drive.
+The complete local data package is stored externally on Google Drive:
 
-Google Drive data link: [PASTE_GOOGLE_DRIVE_LINK_HERE]
+```text
+https://drive.google.com/file/d/1bJnvtBXX1PASxo_KnYHa7Js0-cYG1v1I/view?usp=drive_link
+```
 
 ## Restore Full Data Locally
 
@@ -18,10 +20,14 @@ output/brackets/
 output/diagnostics/
 ```
 
+If a `data/sample/` folder is included in the downloaded package, place it under:
+
+```text
+data/sample/
+```
+
 These paths are intentionally ignored by Git so the full datasets can remain on your local machine without being committed to GitHub.
 
-## Sample Data
+## Reproducibility Note
 
-The `data/sample/` folder contains small CSV samples with up to the first 100 rows from the local raw CSV files. These samples are tracked in Git for schema inspection, API review, and lightweight project understanding.
-
-The sample files are not sufficient to rerun the full model pipeline. To reproduce the complete cleaning, rating, prediction, evaluation, and simulation workflow, restore the full data package from Google Drive first.
+The GitHub repository contains the source code, configuration, documentation, API code, and small demo outputs. To reproduce the full cleaning, rating, prediction, evaluation, and simulation workflow, restore the full data package from Google Drive first.
