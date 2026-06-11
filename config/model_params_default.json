@@ -1,5 +1,5 @@
 {
-  "model_version": "v2_tuned_default",
+  "model_version": "v1",
   "model_status": "default",
   "evaluation_split": "validation",
   "evaluation_n_matches": 1123,
