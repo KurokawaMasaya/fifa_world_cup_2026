@@ -17,6 +17,7 @@ venv/
 deliverables/
 
 # Large raw/intermediate datasets
+data/
 data/raw/
 data/external/
 data/interim/
@@ -36,6 +37,3 @@ output/predictions/*v2_uncertainty_tuned.csv
 !output/predictions/group_stage_predictions_clean.csv
 !output/live/fixtures_results.csv
 !output/live/worldcup_group_stage_live_summary.csv
-
-# Keep sample data
-!data/sample/
