@@ -336,11 +336,11 @@ bash python src/evaluation/tune_parameters.py
 
 Current default model:
 
-text model_version: v2_tuned_default model_status: default 
+text model_version: v1 model_status: default 
 
 Earlier versions are preserved for comparison:
 
-text v1: initial team-level model v2_tuned_default: anchored strength + tuned Poisson/draw calibration experimental: future squad-adjusted models 
+text v1: anchored team-level model with tuned Poisson/draw calibration experimental: future squad-adjusted V2 models 
 
 ---
 
