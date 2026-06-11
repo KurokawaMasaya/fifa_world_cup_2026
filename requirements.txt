@@ -4,3 +4,7 @@ scipy
 scikit-learn
 streamlit
 plotly
+fastapi
+uvicorn
+fastapi
+uvicorn

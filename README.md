@@ -2,7 +2,7 @@
 
 CupCast is a probabilistic forecasting system for the 2026 FIFA World Cup. The project models international team strength, converts team strength into match-level win/draw/loss probabilities, simulates the full tournament bracket, and evaluates prediction quality through historical backtesting.
 
-The current version, V1, is a team-level forecasting model. It uses historical international match results, anchored team ratings, Poisson goal modeling, and Monte Carlo simulation to estimate each team’s probability of advancing through the tournament and winning the World Cup.
+The current default version is V2: a player-informed probability adjustment model built on the V1 anchored team-strength baseline. V1 still provides calibrated team strength through anchored_final_strength, while V2 applies squad uncertainty, superstar, and club-form layers to the final win/draw/loss probabilities before prediction display and tournament simulation.
 
 ---
 
@@ -24,9 +24,13 @@ This project combines applied probability, sports analytics, data cleaning, mode
 
 ## 2. Current Version
 
-### V1: Team-Level Forecasting Model
+### V1: Team-Level Forecasting Baseline
 
-V1 models each national team as a team-level entity. It does not yet explicitly include individual player quality, injuries, squad depth, or lineup availability.
+V1 models each national team as a team-level entity using anchored_final_strength. It remains available as the baseline layer and comparison model.
+
+### V2: Player-Impact Probability Layer
+
+V2 is the current default model. It does not replace anchored_final_strength or directly add player market value to team strength. Instead, it applies small probability post-processing layers using squad depth, superstar dependence, and recent club-form signals. This keeps the team-strength model stable while allowing squad changes, such as player replacements, to affect prediction and simulation probabilities.
 
 The model pipeline is:
 
@@ -51,7 +55,11 @@ text data/raw/results.csv data/raw/shootouts.csv data/raw/former_names.csv data/
 
 Processed files include:
 
-text data/processed/matches_clean.csv data/processed/team_ratings_world_cup_elo.csv data/processed/tournament_simulation_results_default.csv data/processed/evaluation_summary_default.csv 
+text data/processed/matches_clean.csv data/processed/team_ratings_world_cup_elo.csv data/processed/team_strength_v2_player_impacted.csv output/tournament_simulation_results_default.csv 
+
+### Data Availability
+
+Full raw datasets and large generated outputs are not tracked in this GitHub repository due to file size limits. They are stored separately on Google Drive. See [docs/DATA.md](docs/DATA.md) for download instructions and expected local paths.
 
 ---
 
@@ -270,33 +278,48 @@ text France with key players available vs. France with injuries Belgium 2018 vs.
 
 ---
 
-## 12. V2 Roadmap
+## 12. V2 Player-Informed Post-Processing
 
-V2 will extend the model with a squad-adjusted strength layer.
+V2 is an experimental player-informed probability post-processing layer.
 
-Planned structure:
+V2 does not directly change team strength. It does not replace `anchored_final_strength`, and it does not add player market value onto the rating. Instead, V1 first produces the base win/draw/loss probabilities, then V2 makes small post-processing adjustments based on player market-value-derived squad depth features.
 
-text anchored team strength + squad quality adjustment + star power adjustment + squad depth adjustment + player availability adjustment = final V2 tournament strength 
+V2 currently has two player-informed post-processing layers:
 
-Potential player/squad features include:
+1. Squad uncertainty layer
 
-- squad market value
-- top 5 player market value
-- average player value
-- squad age
-- position balance
-- number of players in top European leagues
-- key-player injury status
-- availability of star players
-- squad depth concentration
+   This uses top-five value concentration to estimate squad volatility and depth.
 
-The goal of V2 is not to replace the team-level model, but to adjust it using current squad information.
+text top_5_value_eur / squad_market_value_eur = depth_concentration 
+
+   Teams with high top-five concentration are treated as more star-dependent and potentially more volatile. Deeper squads are treated as more stable.
+
+2. Superstar impact layer
+
+   This captures teams with one exceptional match-winning player whose value is unusually high relative to their own squad. It uses the top player's value, top-player share, and top-player-to-squad median ratio to make a small probability adjustment after the uncertainty layer.
+
+This design avoids double-counting team strength already captured by the V1 anchored rating. Player features only make small probability adjustments after the calibrated V1 prediction.
+
+Model status:
+
+- V1 remains the default model unless V2 uncertainty improves probability quality.
+- V2 uncertainty is experimental unless it improves log loss or Brier score.
+- V2 is intended to adjust confidence and volatility, not to make strong teams automatically stronger.
 
 ---
 
 ## 13. Repository Structure
 
-text CupCast/   data/     raw/     processed/    src/     data/     ratings/     models/     tournament/     evaluation/     features/    config/     model_params_default.json     model_params_v1.json     model_params_experimental.json    docs/     model_versioning.md    README.md   requirements.txt 
+text FIFAproject2026/   config/   data/     raw/     processed/   docs/   notebooks/   output/     live/     predictions/     simulations/     diagnostics/     brackets/     reports/   src/     app/     data/     evaluation/     live/     models/     ratings/     simulation/     tournament/   tests/   README.md   requirements.txt   summary.txt 
+
+Generated Outputs:
+
+- `output/live/`: locked predictions, actual results, and live evaluation files
+- `output/predictions/`: deterministic match-level predictions
+- `output/simulations/`: Monte Carlo tournament simulation outputs
+- `output/diagnostics/`: model comparison, tuning, and data-quality reports
+- `output/brackets/`: generated tournament bracket outputs
+- `output/reports/`: markdown, HTML, PDF, and text reports
 
 ---
 
@@ -316,7 +339,11 @@ bash python src/ratings/build_team_ratings.py
 
 Run match prediction:
 
-bash python src/models/predict_match.py 
+bash python src/tournament/predict_group_stage_results.py 
+
+Run V2 uncertainty group-stage prediction:
+
+bash python src/tournament/predict_group_stage_results_v2_uncertainty.py 
 
 Run tournament simulation:
 
@@ -325,6 +352,10 @@ bash python src/tournament/monte_carlo.py --mode default
 Run model evaluation:
 
 bash python src/evaluation/evaluate_match_predictions.py --mode default 
+
+Run V2 uncertainty evaluation:
+
+bash python src/evaluation/evaluate_v2_uncertainty.py 
 
 Run parameter tuning:
 
@@ -340,7 +371,7 @@ text model_version: v1 model_status: default
 
 Earlier versions are preserved for comparison:
 
-text v1: anchored team-level model with tuned Poisson/draw calibration experimental: future squad-adjusted V2 models 
+text v1: anchored team-level model with tuned Poisson/draw calibration v2_uncertainty: experimental probability post-processing layer using squad depth volatility 
 
 ---
 
@@ -348,7 +379,7 @@ text v1: anchored team-level model with tuned Poisson/draw calibration experimen
 
 Current status:
 
-text Data cleaning: complete Team-strength model: complete Poisson match model: complete Tournament simulator: complete Historical evaluation: complete Parameter tuning: complete Squad-adjusted V2: in progress Dashboard: planned 
+text Data cleaning: complete Team-strength model: complete Poisson match model: complete Tournament simulator: complete Historical evaluation: complete Parameter tuning: complete V2 uncertainty layer: experimental Dashboard: planned 
 
 ---
 
@@ -366,4 +397,71 @@ The system:
 - evaluates predictive performance against baselines
 - identifies calibration issues and improves probability quality through tuning
 
-The next major development step is V2, which will incorporate squad and player-level adjustments.
+The next major development step is validating whether V2 uncertainty improves probability quality enough to promote beyond experimental status.
+
+
+---
+
+## Final Update — API and Current Default Model
+
+Current default model:
+
+```text
+V1 anchored_final_strength
+  ↓
+calibrated Poisson win/draw/loss probabilities
+  ↓
+V2 player-impact probability stack
+  ↓
+squad uncertainty + superstar impact + club form
+  ↓
+frontend predictions and tournament simulation
+```
+
+The active default config is:
+
+```text
+config/model_params_default.json
+model_version = v2_uncertainty_superstar_club_form
+rating_col = anchored_final_strength
+use_v2_probability_stack = true
+player_impact_layers = squad_uncertainty, superstar, club_form
+```
+
+Read-only API:
+
+```bash
+uvicorn src.api.main:app --reload
+```
+
+Main frontend endpoints:
+
+```text
+GET /health
+GET /predictions/group-stage
+GET /predictions/matches
+GET /predictions/teams
+GET /simulation/tournament
+GET /simulation/teams
+GET /simulation/team/{team}
+GET /live/results
+GET /live/standings
+GET /bracket/sample
+```
+
+A tutor handoff zip is available at:
+
+```text
+deliverables/cupcast_api_package.zip
+```
+
+Generated outputs are organized under:
+
+```text
+output/predictions/
+output/simulations/
+output/diagnostics/
+output/brackets/
+output/live/
+output/reports/
+```

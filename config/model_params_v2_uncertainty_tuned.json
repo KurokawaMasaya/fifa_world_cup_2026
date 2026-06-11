@@ -1,0 +1,28 @@
+{
+  "model_version": "v2_uncertainty_superstar_club_form_tuned",
+  "model_status": "experimental",
+  "base_model_version": "v1",
+  "use_v2_probability_stack": true,
+  "player_impact_layers": [
+    "squad_uncertainty",
+    "superstar",
+    "club_form"
+  ],
+  "max_shift": 0.015,
+  "volatility_weight": 0.01,
+  "stability_edge_weight": 0.008,
+  "max_star_shift": 0.025,
+  "star_weight": 0.006,
+  "selection_metric": "mean_log_loss",
+  "rating_file": "data/processed/team_ratings_world_cup_elo.csv",
+  "rating_source_path": "data/processed/team_ratings_world_cup_elo.csv",
+  "rating_col": "anchored_final_strength",
+  "squad_values_file": "data/raw/squad_values.csv",
+  "superstar_features_file": "data/processed/superstar_features.csv",
+  "club_form_features_file": "data/processed/team_club_form_features.csv",
+  "max_club_form_shift": 0.025,
+  "club_form_weight": 0.008,
+  "tuning_results_file": "output/diagnostics/v2_uncertainty_tuning_results.csv",
+  "notes": "V2 tuned config now applies all player-impact probability layers: squad uncertainty, superstar, and club form. Do not directly replace anchored_final_strength.",
+  "n_simulations": 100000
+}

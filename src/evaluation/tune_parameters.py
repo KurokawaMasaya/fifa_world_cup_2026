@@ -33,9 +33,10 @@ from src.ratings.build_elo_ratings import HOME_ADVANTAGE
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
-TUNING_RESULTS_PATH = PROCESSED_DIR / "parameter_tuning_results.csv"
+OUTPUT_DIR = PROJECT_ROOT / "output"
+TUNING_RESULTS_PATH = OUTPUT_DIR / "parameter_tuning_results.csv"
 BEST_PARAMETERS_PATH = PROCESSED_DIR / "best_parameters.json"
-FINAL_TEST_OUTPUT_PATH = PROCESSED_DIR / "final_test_evaluation_after_tuning.csv"
+FINAL_TEST_OUTPUT_PATH = OUTPUT_DIR / "final_test_evaluation_after_tuning.csv"
 MODEL_VERSION = "parameter_tuning_validation"
 
 BASE_TOTAL_GOALS_GRID = [2.45, 2.55, 2.65, 2.75]
@@ -246,6 +247,7 @@ def evaluate_parameter_set(
     summary = summarize_predictions(predictions, model_version=MODEL_VERSION)
     actual_draw_rate = predictions["actual_outcome"].eq("draw").mean()
     predicted_draw_rate = predictions["p_draw"].mean()
+    predicted_pick_draw_rate = predictions["predicted_outcome"].eq("draw").mean()
     return {
         **params,
         "status": "ok",
@@ -256,6 +258,7 @@ def evaluate_parameter_set(
         "mean_log_loss": summary["mean_log_loss"],
         "mean_actual_outcome_probability": summary["mean_actual_outcome_probability"],
         "predicted_draw_rate": predicted_draw_rate,
+        "predicted_pick_draw_rate": predicted_pick_draw_rate,
         "actual_draw_rate": actual_draw_rate,
         "draw_calibration_error": abs(predicted_draw_rate - actual_draw_rate),
         "goal_mae": summary["goal_mae"],
@@ -300,6 +303,7 @@ def run_tuning(
                     "mean_log_loss": pd.NA,
                     "mean_actual_outcome_probability": pd.NA,
                     "predicted_draw_rate": pd.NA,
+                    "predicted_pick_draw_rate": pd.NA,
                     "actual_draw_rate": pd.NA,
                     "draw_calibration_error": pd.NA,
                     "goal_mae": pd.NA,
@@ -354,10 +358,12 @@ def evaluate_final_test(
     summary = summarize_predictions(predictions, model_version=MODEL_VERSION)
     actual_draw_rate = predictions["actual_outcome"].eq("draw").mean()
     predicted_draw_rate = predictions["p_draw"].mean()
+    predicted_pick_draw_rate = predictions["predicted_outcome"].eq("draw").mean()
     row = {
         **params,
         **summary,
         "predicted_draw_rate": predicted_draw_rate,
+        "predicted_pick_draw_rate": predicted_pick_draw_rate,
         "actual_draw_rate": actual_draw_rate,
         "draw_calibration_error": abs(predicted_draw_rate - actual_draw_rate),
     }
@@ -395,6 +401,7 @@ def main() -> None:
         validation_end=args.validation_end,
     )
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     results.to_csv(TUNING_RESULTS_PATH, index=False)
 
     best_params = best_parameters_from_results(results)

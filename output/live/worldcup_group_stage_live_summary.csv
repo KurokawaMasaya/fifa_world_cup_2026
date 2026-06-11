@@ -1,0 +1,2 @@
+completed_matches,status,n_completed_matches,accuracy,mean_brier_score,mean_log_loss,mean_actual_outcome_probability,predicted_draw_rate,predicted_pick_draw_rate,actual_draw_rate,draw_calibration_error
+0,waiting_for_matches,0,,,,,,,,

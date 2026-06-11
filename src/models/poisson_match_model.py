@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+import argparse
 from pathlib import Path
 from typing import Mapping
 
@@ -604,14 +605,22 @@ def _prompt_float(prompt: str, default: float) -> float:
     return float(value) if value else default
 
 
-def _load_default_ratings() -> pd.DataFrame:
-    if not DEFAULT_RATINGS_PATH.exists() and not CALIBRATED_RATINGS_PATH.exists():
+def _load_default_ratings(mode: str = "default") -> pd.DataFrame:
+    config = load_model_config(mode)
+    configured_ratings_path = config.get("rating_source_path")
+    ratings_path = (
+        PROJECT_ROOT / configured_ratings_path
+        if configured_ratings_path
+        else DEFAULT_RATINGS_PATH
+    )
+    if not ratings_path.exists() and not DEFAULT_RATINGS_PATH.exists() and not CALIBRATED_RATINGS_PATH.exists():
         raise FileNotFoundError(
-            f"Could not find ratings file: {DEFAULT_RATINGS_PATH}. "
-            "Run src/ratings/build_elo_ratings.py first."
+            f"Could not find ratings file: {ratings_path}. "
+            "Run src/ratings/build_elo_ratings.py or src/ratings/build_player_impacted_strength.py first."
         )
 
-    ratings_path = DEFAULT_RATINGS_PATH
+    if not ratings_path.exists():
+        ratings_path = DEFAULT_RATINGS_PATH
     ratings_df = pd.read_csv(ratings_path)
     if DEFAULT_RATING_COL not in ratings_df.columns and CALIBRATED_RATINGS_PATH.exists():
         calibrated_df = pd.read_csv(CALIBRATED_RATINGS_PATH)
@@ -619,7 +628,6 @@ def _load_default_ratings() -> pd.DataFrame:
             ratings_path = CALIBRATED_RATINGS_PATH
             ratings_df = calibrated_df
 
-    config = load_model_config()
     configured_rating_col = config.get("rating_col", DEFAULT_RATING_COL)
     rating_col = configured_rating_col if configured_rating_col in ratings_df.columns else FALLBACK_RATING_COL
     required_columns = {"team_name", rating_col}
@@ -706,12 +714,21 @@ def _print_top_scorelines(score_probs: Mapping[str, float], limit: int = 10) -> 
 
 def main() -> None:
     """Run a small interactive prediction demo from PyCharm or terminal."""
+    parser = argparse.ArgumentParser(description="Interactive CupCast match prediction demo.")
+    parser.add_argument(
+        "--mode",
+        default="default",
+        choices=["default", "v2", "experimental", "test"],
+        help="Model parameter mode.",
+    )
+    args = parser.parse_args()
+
     print("Poisson match prediction demo")
     print("Press Enter to keep the default values.")
     print("Enter team names; ratings and base goals are loaded automatically.")
 
-    ratings_df = _load_default_ratings()
-    config = load_model_config()
+    ratings_df = _load_default_ratings(args.mode)
+    config = load_model_config(args.mode)
     rating_col = ratings_df.attrs["rating_col"]
     model_kwargs = {
         **poisson_parameter_kwargs(config),

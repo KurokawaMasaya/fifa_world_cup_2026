@@ -1,2 +1,0 @@
-base_total_goals,share_scale,mismatch_total_bonus,mismatch_scale,draw_boost_max,draw_boost_scale,model_version,n_matches,accuracy,mean_brier_score,mean_log_loss,mean_actual_outcome_probability,goal_mae,goal_rmse,predicted_draw_rate,actual_draw_rate,draw_calibration_error
-2.75,220.0,0.9,650.0,0.045,300.0,cupcast_rolling_weighted_elo_total_share_poisson_v1,1123,0.609973285841496,0.51350472065076,0.8735358516060624,0.4893371079196949,0.9941961154545019,1.2949735533718365,0.21660253005393781,0.2377560106856634,0.02115348063172559

@@ -1,0 +1,101 @@
+date,home_team,away_team,home_score,away_score,tournament,city,country,neutral
+1872-11-30,Scotland,England,0,0,Friendly,Glasgow,Scotland,False
+1873-03-08,England,Scotland,4,2,Friendly,London,England,False
+1874-03-07,Scotland,England,2,1,Friendly,Glasgow,Scotland,False
+1875-03-06,England,Scotland,2,2,Friendly,London,England,False
+1876-03-04,Scotland,England,3,0,Friendly,Glasgow,Scotland,False
+1876-03-25,Scotland,Wales,4,0,Friendly,Glasgow,Scotland,False
+1877-03-03,England,Scotland,1,3,Friendly,London,England,False
+1877-03-05,Wales,Scotland,0,2,Friendly,Wrexham,Wales,False
+1878-03-02,Scotland,England,7,2,Friendly,Glasgow,Scotland,False
+1878-03-23,Scotland,Wales,9,0,Friendly,Glasgow,Scotland,False
+1879-01-18,England,Wales,2,1,Friendly,London,England,False
+1879-04-05,England,Scotland,5,4,Friendly,London,England,False
+1879-04-07,Wales,Scotland,0,3,Friendly,Wrexham,Wales,False
+1880-03-13,Scotland,England,5,4,Friendly,Glasgow,Scotland,False
+1880-03-15,Wales,England,2,3,Friendly,Wrexham,Wales,False
+1880-03-27,Scotland,Wales,5,1,Friendly,Glasgow,Scotland,False
+1881-02-26,England,Wales,0,1,Friendly,Blackburn,England,False
+1881-03-12,England,Scotland,1,6,Friendly,London,England,False
+1881-03-14,Wales,Scotland,1,5,Friendly,Wrexham,Wales,False
+1882-02-18,Northern Ireland,England,0,13,Friendly,Belfast,Ireland,False
+1882-02-25,Wales,Northern Ireland,7,1,Friendly,Wrexham,Wales,False
+1882-03-11,Scotland,England,5,1,Friendly,Glasgow,Scotland,False
+1882-03-13,Wales,England,5,3,Friendly,Wrexham,Wales,False
+1882-03-25,Scotland,Wales,5,0,Friendly,Glasgow,Scotland,False
+1883-02-03,England,Wales,5,0,Friendly,London,England,False
+1883-02-24,England,Northern Ireland,7,0,Friendly,Liverpool,England,False
+1883-03-10,England,Scotland,2,3,Friendly,Sheffield,England,False
+1883-03-12,Wales,Scotland,0,3,Friendly,Wrexham,Wales,False
+1883-03-17,Northern Ireland,Wales,1,1,Friendly,Belfast,Ireland,False
+1884-01-26,Northern Ireland,Scotland,0,5,British Home Championship,Belfast,Ireland,False
+1884-02-09,Wales,Northern Ireland,6,0,British Home Championship,Wrexham,Wales,False
+1884-02-23,Northern Ireland,England,1,8,British Home Championship,Belfast,Ireland,False
+1884-03-15,Scotland,England,1,0,British Home Championship,Glasgow,Scotland,False
+1884-03-17,Wales,England,0,4,British Home Championship,Wrexham,Wales,False
+1884-03-29,Scotland,Wales,4,1,British Home Championship,Glasgow,Scotland,False
+1885-02-28,England,Northern Ireland,4,0,British Home Championship,Manchester,England,False
+1885-03-14,England,Wales,1,1,British Home Championship,Blackburn,England,False
+1885-03-14,Scotland,Northern Ireland,8,2,British Home Championship,Glasgow,Scotland,False
+1885-03-21,England,Scotland,1,1,British Home Championship,London,England,False
+1885-03-23,Wales,Scotland,1,8,British Home Championship,Wrexham,Wales,False
+1885-04-11,Northern Ireland,Wales,2,8,British Home Championship,Belfast,Ireland,False
+1885-11-28,United States,Canada,0,1,Friendly,Newark,United States,False
+1886-02-27,Wales,Northern Ireland,5,0,British Home Championship,Wrexham,Wales,False
+1886-03-13,Northern Ireland,England,1,6,British Home Championship,Belfast,Ireland,False
+1886-03-20,Northern Ireland,Scotland,2,7,British Home Championship,Belfast,Ireland,False
+1886-03-27,Scotland,England,1,1,British Home Championship,Glasgow,Scotland,False
+1886-03-29,Wales,England,1,3,British Home Championship,Wrexham,Wales,False
+1886-04-10,Scotland,Wales,4,1,British Home Championship,Glasgow,Scotland,False
+1886-11-25,United States,Canada,3,2,Friendly,Newark,United States,False
+1887-02-05,England,Northern Ireland,7,0,British Home Championship,Sheffield,England,False
+1887-02-19,Scotland,Northern Ireland,4,1,British Home Championship,Glasgow,Scotland,False
+1887-02-26,England,Wales,4,0,British Home Championship,London,England,False
+1887-03-12,Northern Ireland,Wales,4,1,British Home Championship,Belfast,Ireland,False
+1887-03-19,England,Scotland,2,3,British Home Championship,Blackburn,England,False
+1887-03-21,Wales,Scotland,0,2,British Home Championship,Wrexham,Wales,False
+1888-02-04,England,Wales,5,1,British Home Championship,Crewe,England,False
+1888-03-03,Wales,Northern Ireland,11,0,British Home Championship,Wrexham,Wales,False
+1888-03-10,Scotland,Wales,5,1,British Home Championship,Edinburgh,Scotland,False
+1888-03-17,Scotland,England,0,5,British Home Championship,Glasgow,Scotland,False
+1888-03-24,Northern Ireland,Scotland,2,10,British Home Championship,Belfast,Ireland,False
+1888-04-07,Northern Ireland,England,1,5,British Home Championship,Belfast,Ireland,False
+1888-09-19,Scotland,Canada,4,0,Friendly,Glasgow,Scotland,False
+1889-02-23,England,Wales,4,1,British Home Championship,Stoke-on-Trent,England,False
+1889-03-02,England,Northern Ireland,6,1,British Home Championship,Liverpool,England,False
+1889-03-09,Scotland,Northern Ireland,7,0,British Home Championship,Glasgow,Scotland,False
+1889-04-13,England,Scotland,2,3,British Home Championship,London,England,False
+1889-04-15,Wales,Scotland,0,0,British Home Championship,Wrexham,Wales,False
+1889-04-27,Northern Ireland,Wales,1,3,British Home Championship,Belfast,Ireland,False
+1890-02-08,Wales,Northern Ireland,5,2,British Home Championship,Shrewsbury,England,True
+1890-03-15,Northern Ireland,England,1,9,British Home Championship,Belfast,Ireland,False
+1890-03-15,Wales,England,1,3,British Home Championship,Wrexham,Wales,False
+1890-03-22,Scotland,Wales,5,0,British Home Championship,Paisley,Scotland,False
+1890-03-29,Northern Ireland,Scotland,1,4,British Home Championship,Belfast,Ireland,False
+1890-04-05,Scotland,England,1,1,British Home Championship,Glasgow,Scotland,False
+1891-02-07,Northern Ireland,Wales,7,2,British Home Championship,Belfast,Ireland,False
+1891-03-07,England,Wales,4,1,British Home Championship,Sunderland,England,False
+1891-03-07,England,Northern Ireland,6,1,British Home Championship,Wolverhampton,England,False
+1891-03-21,Wales,Scotland,3,4,British Home Championship,Wrexham,Wales,False
+1891-03-28,Scotland,Northern Ireland,2,1,British Home Championship,Glasgow,Scotland,False
+1891-04-04,England,Scotland,2,1,British Home Championship,Blackburn,England,False
+1892-02-27,Wales,Northern Ireland,1,1,British Home Championship,Bangor,Wales,False
+1892-03-05,Northern Ireland,England,0,2,British Home Championship,Belfast,Ireland,False
+1892-03-05,Wales,England,0,2,British Home Championship,Wrexham,Wales,False
+1892-03-19,Northern Ireland,Scotland,2,3,British Home Championship,Belfast,Ireland,False
+1892-03-26,Scotland,Wales,6,1,British Home Championship,Edinburgh,Scotland,False
+1892-04-02,Scotland,England,1,4,British Home Championship,Glasgow,Scotland,False
+1893-02-25,England,Northern Ireland,6,1,British Home Championship,Birmingham,England,False
+1893-03-13,England,Wales,6,0,British Home Championship,Stoke-on-Trent,England,False
+1893-03-18,Wales,Scotland,0,8,British Home Championship,Wrexham,Wales,False
+1893-03-25,Scotland,Northern Ireland,6,1,British Home Championship,Glasgow,Scotland,False
+1893-04-01,England,Scotland,5,2,British Home Championship,Richmond,England,False
+1894-02-24,Wales,Northern Ireland,4,1,British Home Championship,Swansea,Wales,False
+1894-03-03,Northern Ireland,England,2,2,British Home Championship,Belfast,Ireland,False
+1894-03-12,Wales,England,1,5,British Home Championship,Wrexham,Wales,False
+1894-03-24,Scotland,Wales,5,2,British Home Championship,Kilmarnock,Scotland,False
+1894-03-31,Northern Ireland,Scotland,1,2,British Home Championship,Belfast,Ireland,False
+1894-04-07,Scotland,England,2,2,British Home Championship,Glasgow,Scotland,False
+1895-03-09,England,Northern Ireland,9,0,British Home Championship,Derby,England,False
+1895-03-16,Northern Ireland,Wales,2,2,British Home Championship,Belfast,Ireland,False
+1895-03-18,England,Wales,1,1,British Home Championship,London,England,False

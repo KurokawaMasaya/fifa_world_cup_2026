@@ -22,9 +22,13 @@ model rating, then applies the configured confederation pool correction. The
 Poisson model uses the `total_share` expected-goals mapping and a small tuned
 draw boost for closer matchups.
 
-`v2_tuned_default` is the current config `model_version` and is the default
-non-test model. This is the promoted V1.1 tuned production setup described in
-the project notes.
+`v1` is the current default non-test model. It is the promoted tuned
+team-level setup described in the project notes.
+
+V2 is the player-impacted forecasting model. It keeps the V1 team strength
+available, then adds Transfermarkt squad-value, star-player, and squad-depth
+adjustments from the World Cup squad files. V2 is available through
+`config/model_params_v2.json` and can be selected with `--mode v2`.
 
 ## Default Parameters
 
@@ -36,10 +40,15 @@ points load this file unless another mode is requested:
 - tournament Monte Carlo: `python src/simulation/tournament_simulator.py`
 - historical evaluation: `python src/evaluation/evaluate_match_predictions.py`
 
-Production outputs use `_default.csv` filenames, for example
-`data/processed/tournament_simulation_results_default.csv` and
-`data/processed/evaluation_summary_default.csv`. Test and experimental modes
-write `_test.csv` or `_experimental.csv` outputs.
+V2 player-impact outputs are generated with:
+
+- `python src/ratings/build_player_impacted_strength.py`
+
+Kept simulation outputs are saved under `output/`, for example
+`output/tournament_simulation_results_default.csv`. Durable cleaned/modeling
+artifacts remain under `data/processed/`. Evaluation, diagnostic, tuning, and
+comparison files are treated as temporary rerunnable outputs and are not kept in
+the organized output folder.
 
 Major output files include model metadata columns:
 

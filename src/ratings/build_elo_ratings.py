@@ -12,6 +12,7 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = PROJECT_ROOT / "data" / "raw"
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+OUTPUT_DIR = PROJECT_ROOT / "output"
 
 sys.path.insert(0, str(PROJECT_ROOT / "src" / "data"))
 from clean_results import (  # noqa: E402
@@ -36,7 +37,7 @@ ANCHOR_WEIGHT = 0.70
 MODEL_WEIGHT = 0.30
 RECENT_FORM_ADJUSTMENT_CAPPED = 0.0
 STRENGTH_RECALIBRATION_DIAGNOSTICS_PATH = (
-    PROCESSED_DIR / "diagnostics_strength_recalibration.csv"
+    OUTPUT_DIR / "diagnostics_strength_recalibration.csv"
 )
 
 
@@ -655,9 +656,8 @@ def save_rating_change_diagnostics(run: EloRun) -> None:
     by_tournament = by_tournament.rename(columns={"tournament": "category"})
 
     diagnostics = pd.concat([by_favorite, by_tournament], ignore_index=True)
-    diagnostics.to_csv(
-        PROCESSED_DIR / "elo_rating_change_diagnostics.csv", index=False
-    )
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    diagnostics.to_csv(OUTPUT_DIR / "elo_rating_change_diagnostics.csv", index=False)
 
 
 def save_strength_recalibration_diagnostics(world_cup_output: pd.DataFrame) -> None:
@@ -701,6 +701,7 @@ def save_strength_recalibration_diagnostics(world_cup_output: pd.DataFrame) -> N
         ],
     ].rename(columns={"world_cup_elo_rating": "old_world_cup_elo_rating"})
     diagnostics = diagnostics.sort_values("new_rank")
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     diagnostics.to_csv(STRENGTH_RECALIBRATION_DIAGNOSTICS_PATH, index=False)
     print(f"\nWrote recalibration diagnostics to {STRENGTH_RECALIBRATION_DIAGNOSTICS_PATH}")
 

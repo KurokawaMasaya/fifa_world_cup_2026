@@ -1,15 +1,26 @@
 {
   "model_version": "v2_tuned_validation",
   "model_status": "validation",
-  "source": "data/processed/best_parameters.json",
+  "source": "regenerate with python src/evaluation/tune_parameters.py",
   "base_total_goals": 2.75,
   "share_scale": 220,
   "mismatch_total_bonus": 0.9,
   "mismatch_scale": 650,
   "lambda_min": 0.15,
-  "lambda_max": 4.50,
+  "lambda_max": 4.5,
   "draw_boost_max": 0.045,
   "draw_boost_scale": 300,
   "rating_col": "anchored_final_strength",
-  "bracket_source": "matches.csv"
+  "rating_source_path": "data/processed/team_ratings_world_cup_elo.csv",
+  "bracket_source": "matches.csv",
+  "base_model_version": "v1",
+  "use_v2_probability_stack": true,
+  "player_impact_layers": [
+    "squad_uncertainty",
+    "superstar",
+    "club_form"
+  ],
+  "squad_values_file": "data/raw/squad_values.csv",
+  "superstar_features_file": "data/processed/superstar_features.csv",
+  "club_form_features_file": "data/processed/team_club_form_features.csv"
 }

@@ -15,12 +15,21 @@ if __package__ is None or __package__ == "":
     sys.path.append(str(Path(__file__).resolve().parents[2]))
 
 from src.models.poisson_match_model import predict_from_strength
+from src.models.v2_probability_stack import (
+    apply_v2_probability_stack,
+    is_v2_probability_stack_enabled,
+    load_v2_feature_context,
+    rescale_scoreline_probabilities_to_outcomes,
+)
 from src.config.model_config import (
+    BRACKETS_DIR,
+    DIAGNOSTICS_DIR,
+    SIMULATIONS_DIR,
     draw_calibration_kwargs,
     load_model_config,
     metadata_columns,
-    output_path,
     poisson_parameter_kwargs,
+    simulation_output_path,
 )
 from src.simulation.group_stage_simulator import (
     DEFAULT_MONTE_CARLO_SIMULATIONS,
@@ -44,11 +53,12 @@ from src.simulation.group_stage_simulator import (
 )
 
 
-TOURNAMENT_OUTPUT_PATH = PROCESSED_DATA_DIR / "tournament_simulation_results_default.csv"
-TEAM_STRENGTH_DIAGNOSTICS_PATH = PROCESSED_DATA_DIR / "team_strength_default.csv"
-HEAD_TO_HEAD_DIAGNOSTICS_PATH = PROCESSED_DATA_DIR / "diagnostics_head_to_head_default.csv"
-PATH_DIFFICULTY_DIAGNOSTICS_PATH = PROCESSED_DATA_DIR / "diagnostics_path_difficulty_default.csv"
-SAMPLE_KNOCKOUT_BRACKET_PATH = PROCESSED_DATA_DIR / "sample_knockout_bracket.csv"
+TOURNAMENT_OUTPUT_PATH = SIMULATIONS_DIR / "tournament_simulation_results_default.csv"
+DEFAULT_TOURNAMENT_SIMULATIONS = 100000
+TEAM_STRENGTH_DIAGNOSTICS_PATH = DIAGNOSTICS_DIR / "team_strength_default.csv"
+HEAD_TO_HEAD_DIAGNOSTICS_PATH = DIAGNOSTICS_DIR / "diagnostics_head_to_head_default.csv"
+PATH_DIFFICULTY_DIAGNOSTICS_PATH = DIAGNOSTICS_DIR / "diagnostics_path_difficulty_default.csv"
+SAMPLE_KNOCKOUT_BRACKET_PATH = BRACKETS_DIR / "sample_knockout_bracket_default.csv"
 WEIGHTED_ELO_PATH = PROCESSED_DATA_DIR / "team_ratings_weighted_elo.csv"
 FIFA_ELO_PATH = Path(__file__).resolve().parents[2] / "data" / "raw" / "qualifier_elo_rating.csv"
 KNOCKOUT_SCHEDULE_PATH = Path(__file__).resolve().parents[2] / "data" / "raw" / "matches.csv"
@@ -119,6 +129,8 @@ def precompute_knockout_predictions(
     rating_col: str,
     base_total_goals: float,
     model_kwargs: Mapping[str, object] | None = None,
+    model_config: Mapping[str, object] | None = None,
+    v2_feature_context: Mapping[str, object] | None = None,
 ) -> tuple[dict[tuple[str, str], dict], dict[str, float]]:
     """Precompute neutral-site Poisson grids for every possible team pairing."""
     ratings = ratings_df.set_index("team_name")[rating_col].astype(float).to_dict()
@@ -126,6 +138,9 @@ def precompute_knockout_predictions(
     predictions = {}
     model_kwargs = {} if model_kwargs is None else dict(model_kwargs)
     model_kwargs.setdefault("base_total_goals", base_total_goals)
+    use_v2_stack = model_config is not None and is_v2_probability_stack_enabled(model_config)
+    if use_v2_stack and v2_feature_context is None:
+        v2_feature_context = load_v2_feature_context(model_config)
 
     for team_a in team_names:
         for team_b in team_names:
@@ -138,10 +153,39 @@ def precompute_knockout_predictions(
                 strength_b=ratings[team_b],
                 **model_kwargs,
             )
+            scoreline_probabilities = prediction["scoreline_probabilities"]
+            final_probabilities = {
+                "team_a_win": prediction["p_team_a_win"],
+                "draw": prediction["p_draw"],
+                "team_b_win": prediction["p_team_b_win"],
+            }
+            if use_v2_stack:
+                v2_adjustment = apply_v2_probability_stack(
+                    team_a=team_a,
+                    team_b=team_b,
+                    p_team_a_win=prediction["p_team_a_win"],
+                    p_draw=prediction["p_draw"],
+                    p_team_b_win=prediction["p_team_b_win"],
+                    config=model_config,
+                    feature_context=v2_feature_context,
+                )
+                final_probabilities = {
+                    "team_a_win": v2_adjustment["v2_p_team_a_win"],
+                    "draw": v2_adjustment["v2_p_draw"],
+                    "team_b_win": v2_adjustment["v2_p_team_b_win"],
+                }
+                scoreline_probabilities = rescale_scoreline_probabilities_to_outcomes(
+                    scoreline_probabilities=scoreline_probabilities,
+                    target_outcomes=final_probabilities,
+                )
             predictions[(team_a, team_b)] = {
-                "scoreline_probabilities": prediction["scoreline_probabilities"],
+                "scoreline_probabilities": scoreline_probabilities,
                 "lambda_a": prediction["lambda_a"],
                 "lambda_b": prediction["lambda_b"],
+                "p_team_a_win": final_probabilities["team_a_win"],
+                "p_draw": final_probabilities["draw"],
+                "p_team_b_win": final_probabilities["team_b_win"],
+                "model_probability_stack": "v2" if use_v2_stack else "v1",
             }
 
     return predictions, ratings
@@ -680,6 +724,13 @@ def build_tournament_results(
         "model_status",
         "parameter_config_path",
         "rating_col",
+        "rating_source_path",
+        "base_model_version",
+        "use_v2_probability_stack",
+        "player_impact_layers",
+        "squad_values_file",
+        "superstar_features_file",
+        "club_form_features_file",
         "bracket_mode",
         "bracket_source",
         "uses_random_pairing",
@@ -861,6 +912,8 @@ def save_head_to_head_diagnostics(
         **draw_calibration_kwargs(model_config),
     }
     model_kwargs.setdefault("base_total_goals", base_total_goals)
+    use_v2_stack = is_v2_probability_stack_enabled(model_config)
+    v2_feature_context = load_v2_feature_context(model_config) if use_v2_stack else None
     rows = []
     for team_a, team_b in HEAD_TO_HEAD_MATCHUPS:
         prediction = predict_from_strength(
@@ -870,6 +923,22 @@ def save_head_to_head_diagnostics(
             strength_b=rating_lookup[team_b],
             **model_kwargs,
         )
+        p_team_a_win = prediction["p_team_a_win"]
+        p_draw = prediction["p_draw"]
+        p_team_b_win = prediction["p_team_b_win"]
+        if use_v2_stack:
+            v2_adjustment = apply_v2_probability_stack(
+                team_a=team_a,
+                team_b=team_b,
+                p_team_a_win=p_team_a_win,
+                p_draw=p_draw,
+                p_team_b_win=p_team_b_win,
+                config=model_config,
+                feature_context=v2_feature_context,
+            )
+            p_team_a_win = v2_adjustment["v2_p_team_a_win"]
+            p_draw = v2_adjustment["v2_p_draw"]
+            p_team_b_win = v2_adjustment["v2_p_team_b_win"]
         rows.append(
             {
                 "team_a": team_a,
@@ -879,9 +948,13 @@ def save_head_to_head_diagnostics(
                 "strength_diff": prediction["strength_diff"],
                 "lambda_a": prediction["lambda_a"],
                 "lambda_b": prediction["lambda_b"],
-                "p_team_a_win": prediction["p_team_a_win"],
-                "p_draw": prediction["p_draw"],
-                "p_team_b_win": prediction["p_team_b_win"],
+                "raw_p_team_a_win": prediction["p_team_a_win"],
+                "raw_p_draw": prediction["p_draw"],
+                "raw_p_team_b_win": prediction["p_team_b_win"],
+                "p_team_a_win": p_team_a_win,
+                "p_draw": p_draw,
+                "p_team_b_win": p_team_b_win,
+                "model_probability_stack": "v2_player_impact" if use_v2_stack else "v1",
                 "top_5_scorelines": prediction["top_5_scorelines"],
             }
         )
@@ -952,7 +1025,7 @@ def save_sample_knockout_bracket(
 
 
 def run_tournament_monte_carlo(
-    n_simulations: int = DEFAULT_MONTE_CARLO_SIMULATIONS,
+    n_simulations: int = DEFAULT_TOURNAMENT_SIMULATIONS,
     seed: int = 2026,
     output_path: Path = TOURNAMENT_OUTPUT_PATH,
     save_diagnostics: bool = True,
@@ -979,6 +1052,11 @@ def run_tournament_monte_carlo(
         **poisson_parameter_kwargs(model_config),
         **draw_calibration_kwargs(model_config),
     }
+    v2_feature_context = (
+        load_v2_feature_context(model_config)
+        if is_v2_probability_stack_enabled(model_config)
+        else None
+    )
     run_sanity_checks(fixtures=fixtures, phase="fixtures")
 
     fixture_predictions = precompute_fixture_predictions(
@@ -987,6 +1065,8 @@ def run_tournament_monte_carlo(
         rating_col=rating_col,
         base_total_goals=base_total_goals,
         model_kwargs=model_kwargs,
+        model_config=model_config,
+        v2_feature_context=v2_feature_context,
     )
     knockout_predictions, rating_lookup = precompute_knockout_predictions(
         teams_df=teams_df,
@@ -994,6 +1074,8 @@ def run_tournament_monte_carlo(
         rating_col=rating_col,
         base_total_goals=base_total_goals,
         model_kwargs=model_kwargs,
+        model_config=model_config,
+        v2_feature_context=v2_feature_context,
     )
     grouped_fixtures = {
         group_letter: group.sort_values("match_number").to_dict("records")
@@ -1042,6 +1124,9 @@ def run_tournament_monte_carlo(
         update_knockout_counts(counts=counts, stages=stages)
 
     results = build_tournament_results(counts, model_config=model_config)
+    results["n_simulations"] = n_simulations
+    results["random_seed"] = seed
+    results["config_path"] = model_config.get("parameter_config_path")
     run_tournament_sanity_checks(results=results, n_simulations=n_simulations)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     results.to_csv(output_path, index=False)
@@ -1096,14 +1181,14 @@ def main() -> None:
     parser.add_argument(
         "--mode",
         default="default",
-        choices=["default", "experimental", "test"],
+        choices=["default", "v2", "experimental", "test"],
         help="Model parameter mode.",
     )
     parser.add_argument("--seed", type=int, default=2026, help="Random seed for reproducible sampling.")
     parser.add_argument(
         "--n-simulations",
         type=int,
-        default=DEFAULT_MONTE_CARLO_SIMULATIONS,
+        default=None,
         help="Number of full tournament simulations.",
     )
     parser.add_argument(
@@ -1120,28 +1205,54 @@ def main() -> None:
     )
     args = parser.parse_args()
     model_config = load_model_config(args.mode)
+    n_simulations = (
+        args.n_simulations
+        if args.n_simulations is not None
+        else int(model_config.get("n_simulations", DEFAULT_TOURNAMENT_SIMULATIONS))
+    )
     if args.output == TOURNAMENT_OUTPUT_PATH:
-        args.output = output_path("tournament_simulation_results", model_config)
+        args.output = simulation_output_path("tournament_simulation_results", model_config)
+    team_strength_diagnostics_path = simulation_output_path("team_strength", model_config)
+    head_to_head_diagnostics_path = simulation_output_path("diagnostics_head_to_head", model_config)
+    path_difficulty_diagnostics_path = simulation_output_path("diagnostics_path_difficulty", model_config)
+    sample_bracket_path = simulation_output_path("sample_knockout_bracket", model_config)
 
     results = run_tournament_monte_carlo(
-        n_simulations=args.n_simulations,
+        n_simulations=n_simulations,
         seed=args.seed,
         output_path=args.output,
         bracket_mode=args.bracket_mode,
         model_config=model_config,
+        team_strength_diagnostics_path=team_strength_diagnostics_path,
+        head_to_head_diagnostics_path=head_to_head_diagnostics_path,
+        path_difficulty_diagnostics_path=path_difficulty_diagnostics_path,
+        sample_bracket_path=sample_bracket_path,
     )
     print(
-        f"Ran {args.n_simulations} full tournament simulations with seed {args.seed}."
+        f"Ran {n_simulations} full tournament simulations with seed {args.seed}."
     )
     print(f"Saved tournament output to {args.output}")
-    print(f"Saved sample knockout bracket to {SAMPLE_KNOCKOUT_BRACKET_PATH}")
+    print(f"Saved sample knockout bracket to {sample_bracket_path}")
     print(f"Bracket mode: {BRACKET_MODE}")
     print(f"Model version: {model_config['model_version']}")
     print(f"Parameter config: {model_config['parameter_config_path']}")
     print(f"Uses random pairing: {USES_RANDOM_PAIRING}")
     print(f"Official bracket: {OFFICIAL_BRACKET}")
     print(f"Bracket mapping note: {BRACKET_MAPPING_NOTE}")
-    print_tournament_sanity_report(results=results, n_simulations=args.n_simulations)
+    print_tournament_sanity_report(results=results, n_simulations=n_simulations)
+    print("\nTop 10 champion probabilities")
+    print(
+        results[
+            [
+                "team_name",
+                "qualification_probability",
+                "final_probability",
+                "champion_probability",
+            ]
+        ]
+        .head(10)
+        .to_string(index=False)
+    )
 
 
 if __name__ == "__main__":

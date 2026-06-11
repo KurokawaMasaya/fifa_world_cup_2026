@@ -414,6 +414,12 @@ def summarize_predictions(
         "mean_actual_outcome_probability": predictions[
             "actual_outcome_probability"
         ].mean(),
+        "predicted_draw_rate": predictions["p_draw"].mean(),
+        "predicted_pick_draw_rate": predictions["predicted_outcome"].eq("draw").mean(),
+        "actual_draw_rate": predictions["actual_outcome"].eq("draw").mean(),
+        "draw_calibration_error": abs(
+            predictions["p_draw"].mean() - predictions["actual_outcome"].eq("draw").mean()
+        ),
         "goal_mae": goal_mae,
         "goal_rmse": goal_rmse,
     }
@@ -575,7 +581,16 @@ def save_outputs(
     calibration_output_path: Path = CALIBRATION_OUTPUT_PATH,
 ) -> None:
     model_config = load_model_config() if model_config is None else model_config
-    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    for path in [
+        predictions_output_path,
+        summary_output_path,
+        model_comparison_output_path,
+        favorite_calibration_output_path,
+        draw_calibration_output_path,
+        strength_diff_output_path,
+        calibration_output_path,
+    ]:
+        path.parent.mkdir(parents=True, exist_ok=True)
     prediction_columns = [
         "date",
         "home_team",
@@ -618,7 +633,7 @@ def main() -> None:
     parser.add_argument(
         "--mode",
         default="default",
-        choices=["default", "experimental", "test"],
+        choices=["default", "v2", "experimental", "test"],
         help="Model parameter mode.",
     )
     parser.add_argument("--train-start", default="2014-01-01")

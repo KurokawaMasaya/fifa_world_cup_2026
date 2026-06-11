@@ -1,0 +1,101 @@
+country_id,country_name,country_code,confederation,total_clubs,total_players,average_age,url
+10,Armenia,ARM1,europa,10,265,24.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/10
+100,North Macedonia,MAZ1,europa,12,283,25.4,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/100
+103,Malaysia,MYS1,asien,13,399,28.3,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/103
+106,Malta,MT1N,europa,12,299,26.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/106
+107,Morocco,MAR1,afrika,16,499,27.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/107
+11,Ethiopia,ETP1,afrika,20,652,25.4,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/11
+110,Mexico,MEX1,amerika,18,482,26.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/110
+112,Moldova,MO1N,europa,8,215,23.4,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/112
+116,Myanmar,MYA1,asien,12,383,26.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/116
+12,Australia,AUS1,asien,12,377,24.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/12
+120,New Zealand,NNL1,asien,12,318,23.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/120
+121,Nicaragua,CNIC,amerika,34,467,27.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/121
+122,Netherlands,NL1,europa,18,497,25.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/122
+124,Nigeria,NPFL,afrika,20,920,25.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/124
+125,Norway,NO1,europa,16,418,24.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/125
+126,Oman,OM1L,asien,14,511,27.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/126
+127,Austria,A1,europa,12,343,24.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/127
+13,Azerbaijan,AZ1,europa,12,306,27.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/13
+130,Panama,PN1C,amerika,12,288,25.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/130
+132,Paraguay,PR1A,amerika,12,376,27.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/132
+133,Peru,TDeA,amerika,18,527,27.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/133
+134,Philippines,PFL1,asien,11,341,26.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/134
+135,Poland,PL1,europa,18,515,25.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/135
+136,Portugal,PO1,europa,18,486,25.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/136
+137,Qatar,QSL,asien,12,353,28.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/137
+140,Romania,RO1,europa,16,476,26.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/140
+141,Russia,RU1,europa,16,450,25.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/141
+144,San Marino,SMR1,europa,16,387,26.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/144
+146,Saudi Arabia,SA1,asien,18,503,27.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/146
+147,Sweden,SE1,europa,16,436,24.7,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/147
+148,Switzerland,C1,europa,12,338,25.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/148
+149,Senegal,SEN1,afrika,16,554,22.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/149
+153,Singapore,SIN1,asien,8,196,26.4,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/153
+154,Slovakia,SLO1,europa,12,336,25.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/154
+155,Slovenia,SL1,europa,10,243,24.7,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/155
+157,Spain,ES1,europa,20,518,27.3,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/157
+159,South Africa,SFA1,afrika,16,573,27.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/159
+16,Bangladesh,BGD1,asien,10,338,25.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/16
+164,Chinese Taipei,TFPL,asien,8,230,25.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/164
+165,Tajikistan,TAD1,asien,12,284,25.3,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/165
+167,Thailand,THA1,asien,16,489,28.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/167
+172,Czech Republic,TS1,europa,16,471,25.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/172
+173,Tunisia,TUN1,afrika,16,564,24.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/173
+174,Türkiye,TR1,europa,18,512,26.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/174
+176,Uganda,UGL1,afrika,16,501,26.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/176
+177,Ukraine,UKR1,europa,16,438,25.3,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/177
+178,Hungary,UNG1,europa,12,359,26.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/178
+179,Uruguay,URU1,amerika,16,475,25.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/179
+18,Belarus,WER1,europa,16,405,25.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/18
+180,Uzbekistan,UZ1,asien,16,425,26.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/180
+182,Venezuela,VZ1A,amerika,14,424,25.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/182
+183,United Arab Emirates,UAE1,asien,14,425,26.7,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/183
+184,United States,MLS1,amerika,30,851,25.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/184
+185,Vietnam,VIE1,asien,14,449,26.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/185
+188,Cyprus,ZYP1,europa,14,407,26.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/188
+189,England,GB1,europa,20,527,26.4,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/189
+19,Belgium,BE1,europa,16,452,24.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/19
+190,Scotland,SC1,europa,12,326,26.7,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/190
+191,Wales,WAL2,europa,16,404,25.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/191
+192,Northern Ireland,NIR1,europa,12,311,26.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/192
+2,Egypt,EGY1,afrika,21,707,27.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/2
+208,Faroe Islands,FAR2,europa,10,287,25.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/208
+215,Serbia,SER1,europa,16,476,25.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/215
+216,Montenegro,MNE1,europa,10,247,26.3,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/216
+218,Hongkong,HGKG,asien,10,320,25.7,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/218
+228,Puerto Rico,PRA1,amerika,10,363,23.7,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/228
+23,Bolivia,BO1A,amerika,16,485,26.9,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/23
+24,Bosnia-Herzegovina,BOS1,europa,10,294,26.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/24
+244,Kosovo,KO1,europa,10,275,26.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/244
+26,Brazil,BRA1,amerika,20,668,27.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/26
+266,Gibraltar,GI1,europa,12,331,26.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/266
+28,Bulgaria,BU1,europa,16,403,26.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/28
+3,Albania,ALB1,europa,10,275,25.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/3
+33,Chile,CLPD,amerika,16,417,27.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/33
+34,China,CSL,asien,16,511,26.7,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/34
+35,Comoros,COM1,afrika,30,873,26.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/35
+36,Costa Rica,CRPD,amerika,10,271,27.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/36
+37,Croatia,KR1,europa,10,297,25.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/37
+39,Denmark,DK1,europa,12,321,25.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/39
+4,Algeria,ALG1,afrika,16,420,26.4,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/4
+40,Germany,L1,europa,18,517,25.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/40
+43,Dominican Republic,DO1P,amerika,6,139,26.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/43
+44,Ecuador,EC1N,amerika,16,441,27.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/44
+45,El Salvador,SL1A,amerika,12,319,27.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/45
+47,Estonia,EST2,europa,10,255,21.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/47
+48,Fiji,FIJ1,asien,10,384,26.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/48
+49,Finland,FI1,europa,12,299,23.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/49
+5,Andorra,AND2,europa,8,280,28.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/5
+50,France,FR1,europa,18,478,25.6,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/50
+53,Georgia,GE1N,europa,10,250,24.8,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/53
+54,Ghana,GHPL,afrika,18,604,24.3,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/54
+56,Greece,GR1,europa,14,436,27.1,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/56
+58,Guatemala,GU1A,amerika,12,322,28.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/58
+66,Honduras,HO1A,amerika,11,326,27.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/66
+67,India,IND1,asien,14,395,26.2,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/67
+68,Indonesia,IN1L,asien,18,581,27.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/68
+70,Iraq,IRQ1,asien,20,598,28.0,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/70
+71,Iran,IRN1,asien,16,491,26.5,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/71
+72,Ireland,IR1,europa,10,309,24.3,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/72
+73,Iceland,IS1,europa,12,297,25.3,https://www.transfermarkt.co.uk/wettbewerbe/national/wettbewerbe/73

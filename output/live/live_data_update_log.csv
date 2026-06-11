@@ -1,0 +1,13 @@
+timestamp_utc,task,status,source,message,rows_written,output_path
+2026-06-11T17:29:20+00:00,scoreboard:20260611,success,espn_json,Fetched scoreboard JSON from https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611,0,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/raw/espn_scoreboard_20260611.json
+2026-06-11T17:29:20+00:00,fixtures_results,success,espn_json,Wrote normalized fixtures/results rows for 1 scoreboard request(s),2,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/fixtures_results.csv
+2026-06-11T17:29:21+00:00,standings,success,espn_json,Fetched standings JSON from https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings,0,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/raw/espn_standings.json
+2026-06-11T17:29:21+00:00,group_standings,success,espn_json,Wrote normalized standings,48,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/group_standings.csv
+2026-06-11T17:32:28+00:00,scoreboard:default,success,espn_json,Fetched scoreboard JSON from https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard,0,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/raw/espn_scoreboard_20260611.json
+2026-06-11T17:32:28+00:00,fixtures_results,success,espn_json,Wrote normalized fixtures/results rows for 1 scoreboard request(s),2,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/fixtures_results.csv
+2026-06-11T17:32:28+00:00,standings,success,espn_json,Fetched standings JSON from https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings,0,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/raw/espn_standings.json
+2026-06-11T17:32:28+00:00,group_standings,success,espn_json,Wrote normalized standings,48,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/group_standings.csv
+2026-06-11T17:35:24+00:00,scoreboard:default,success,espn_json,Fetched scoreboard JSON from https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard,0,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/raw/espn_scoreboard_20260611.json
+2026-06-11T17:35:24+00:00,fixtures_results,success,espn_json,Wrote normalized fixtures/results rows for 1 scoreboard request(s),2,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/fixtures_results.csv
+2026-06-11T17:35:24+00:00,standings,success,espn_json,Fetched standings JSON from https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings,0,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/raw/espn_standings.json
+2026-06-11T17:35:24+00:00,group_standings,success,espn_json,Wrote normalized standings,48,/Users/joe/Desktop/McGill/projects/FIFAproject2026/output/live/group_standings.csv

@@ -21,11 +21,18 @@ from src.models.poisson_match_model import (
     predict_from_ratings,
 )
 from src.config.model_config import (
+    SIMULATIONS_DIR,
     draw_calibration_kwargs,
     load_model_config,
     metadata_columns,
-    output_path,
     poisson_parameter_kwargs,
+    simulation_output_path,
+)
+from src.models.v2_probability_stack import (
+    apply_v2_probability_stack,
+    is_v2_probability_stack_enabled,
+    load_v2_feature_context,
+    rescale_scoreline_probabilities_to_outcomes,
 )
 
 
@@ -35,8 +42,8 @@ PROCESSED_DATA_DIR = PROJECT_ROOT / "data" / "processed"
 MATCHES_PATH = RAW_DATA_DIR / "matches.csv"
 TEAMS_PATH = RAW_DATA_DIR / "teams.csv"
 STAGES_PATH = RAW_DATA_DIR / "tournament_stages.csv"
-SAMPLE_OUTPUT_PATH = PROCESSED_DATA_DIR / "group_stage_sample_simulation_default.csv"
-MONTE_CARLO_OUTPUT_PATH = PROCESSED_DATA_DIR / "group_stage_monte_results_default.csv"
+SAMPLE_OUTPUT_PATH = SIMULATIONS_DIR / "group_stage_sample_simulation_default.csv"
+MONTE_CARLO_OUTPUT_PATH = SIMULATIONS_DIR / "group_stage_monte_results_default.csv"
 
 EXPECTED_GROUP_COUNT = 12
 EXPECTED_GROUP_MATCH_COUNT = 72
@@ -118,13 +125,21 @@ def load_group_stage_fixtures(
 
 def load_default_ratings(model_config: dict | None = None) -> tuple[pd.DataFrame, str]:
     """Load anchored final strength when available, otherwise legacy ratings."""
-    if not DEFAULT_RATINGS_PATH.exists() and not CALIBRATED_RATINGS_PATH.exists():
+    model_config = load_model_config() if model_config is None else model_config
+    configured_ratings_path = model_config.get("rating_source_path")
+    ratings_path = (
+        PROJECT_ROOT / configured_ratings_path
+        if configured_ratings_path
+        else DEFAULT_RATINGS_PATH
+    )
+    if not ratings_path.exists() and not DEFAULT_RATINGS_PATH.exists() and not CALIBRATED_RATINGS_PATH.exists():
         raise FileNotFoundError(
-            f"Could not find ratings file: {DEFAULT_RATINGS_PATH}. "
-            "Run src/ratings/build_elo_ratings.py first."
+            f"Could not find ratings file: {ratings_path}. "
+            "Run src/ratings/build_elo_ratings.py or src/ratings/build_player_impacted_strength.py first."
         )
 
-    ratings_path = DEFAULT_RATINGS_PATH
+    if not ratings_path.exists():
+        ratings_path = DEFAULT_RATINGS_PATH
     ratings = pd.read_csv(ratings_path)
     if DEFAULT_RATING_COL not in ratings.columns and CALIBRATED_RATINGS_PATH.exists():
         calibrated = pd.read_csv(CALIBRATED_RATINGS_PATH)
@@ -132,7 +147,6 @@ def load_default_ratings(model_config: dict | None = None) -> tuple[pd.DataFrame
             ratings_path = CALIBRATED_RATINGS_PATH
             ratings = calibrated
 
-    model_config = load_model_config() if model_config is None else model_config
     configured_rating_col = model_config.get("rating_col", DEFAULT_RATING_COL)
     rating_col = configured_rating_col if configured_rating_col in ratings.columns else FALLBACK_RATING_COL
     if rating_col not in ratings.columns:
@@ -214,11 +228,17 @@ def precompute_fixture_predictions(
     rating_col: str,
     base_total_goals: float,
     model_kwargs: Mapping[str, object] | None = None,
+    model_config: Mapping[str, object] | None = None,
+    v2_feature_context: Mapping[str, object] | None = None,
 ) -> dict[int, dict]:
     """Precompute Poisson probabilities once so Monte Carlo runs stay fast."""
     predictions = {}
     model_kwargs = {} if model_kwargs is None else dict(model_kwargs)
     model_kwargs.setdefault("base_total_goals", base_total_goals)
+    use_v2_stack = model_config is not None and is_v2_probability_stack_enabled(model_config)
+    if use_v2_stack and v2_feature_context is None:
+        v2_feature_context = load_v2_feature_context(model_config)
+
     for _, fixture in fixtures.iterrows():
         prediction = predict_from_ratings(
             team_a=fixture["home_team"],
@@ -227,10 +247,39 @@ def precompute_fixture_predictions(
             rating_col=rating_col,
             **model_kwargs,
         )
+        scoreline_probabilities = prediction["scoreline_probabilities"]
+        final_probabilities = {
+            "team_a_win": prediction["p_team_a_win"],
+            "draw": prediction["p_draw"],
+            "team_b_win": prediction["p_team_b_win"],
+        }
+        if use_v2_stack:
+            v2_adjustment = apply_v2_probability_stack(
+                team_a=fixture["home_team"],
+                team_b=fixture["away_team"],
+                p_team_a_win=prediction["p_team_a_win"],
+                p_draw=prediction["p_draw"],
+                p_team_b_win=prediction["p_team_b_win"],
+                config=model_config,
+                feature_context=v2_feature_context,
+            )
+            final_probabilities = {
+                "team_a_win": v2_adjustment["v2_p_team_a_win"],
+                "draw": v2_adjustment["v2_p_draw"],
+                "team_b_win": v2_adjustment["v2_p_team_b_win"],
+            }
+            scoreline_probabilities = rescale_scoreline_probabilities_to_outcomes(
+                scoreline_probabilities=scoreline_probabilities,
+                target_outcomes=final_probabilities,
+            )
         predictions[int(fixture["match_number"])] = {
             "home_xg": prediction["lambda_a"],
             "away_xg": prediction["lambda_b"],
-            "scoreline_probabilities": prediction["scoreline_probabilities"],
+            "scoreline_probabilities": scoreline_probabilities,
+            "p_team_a_win": final_probabilities["team_a_win"],
+            "p_draw": final_probabilities["draw"],
+            "p_team_b_win": final_probabilities["team_b_win"],
+            "model_probability_stack": "v2" if use_v2_stack else "v1",
         }
     return predictions
 
@@ -437,6 +486,14 @@ def simulate_all_groups(
         **poisson_parameter_kwargs(model_config),
         **draw_calibration_kwargs(model_config),
     }
+    fixture_predictions = precompute_fixture_predictions(
+        fixtures=fixtures,
+        ratings_df=ratings_df,
+        rating_col=rating_col,
+        base_total_goals=base_total_goals,
+        model_kwargs=model_kwargs,
+        model_config=model_config,
+    )
 
     run_sanity_checks(fixtures=fixtures, phase="fixtures")
 
@@ -444,15 +501,12 @@ def simulate_all_groups(
     standings_tables = []
     simulated_matches = []
     for group_letter in sorted(fixtures["group_letter"].unique()):
-        standings, matches = simulate_one_group(
+        standings, matches = simulate_one_group_from_predictions(
             group_letter=group_letter,
             fixtures=fixtures,
             teams_df=teams_df,
-            ratings_df=ratings_df,
-            rating_col=rating_col,
-            base_total_goals=base_total_goals,
+            fixture_predictions=fixture_predictions,
             rng=rng,
-            model_kwargs=model_kwargs,
         )
         standings_tables.append(standings)
         simulated_matches.append(matches)
@@ -775,6 +829,7 @@ def run_group_stage_monte_carlo(
         rating_col=rating_col,
         base_total_goals=base_total_goals,
         model_kwargs=model_kwargs,
+        model_config=model_config,
     )
     grouped_fixtures = {
         group_letter: group.sort_values("match_number").to_dict("records")
@@ -883,7 +938,7 @@ def main() -> None:
     parser.add_argument(
         "--mode",
         default="default",
-        choices=["default", "experimental", "test"],
+        choices=["default", "v2", "experimental", "test"],
         help="Model parameter mode.",
     )
     parser.add_argument("--seed", type=int, default=2026, help="Random seed for reproducible sampling.")
@@ -908,9 +963,9 @@ def main() -> None:
     args = parser.parse_args()
     model_config = load_model_config(args.mode)
     if args.output == SAMPLE_OUTPUT_PATH:
-        args.output = output_path("group_stage_sample_simulation", model_config)
+        args.output = simulation_output_path("group_stage_sample_simulation", model_config)
     if args.monte_carlo_output == MONTE_CARLO_OUTPUT_PATH:
-        args.monte_carlo_output = output_path("group_stage_monte_results", model_config)
+        args.monte_carlo_output = simulation_output_path("group_stage_monte_results", model_config)
 
     fixtures = load_group_stage_fixtures()
     standings, matches, qualifiers = simulate_all_groups(

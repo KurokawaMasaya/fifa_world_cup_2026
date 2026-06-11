@@ -1,67 +1,62 @@
-CupCast production model promotion summary
+CupCast final project summary
 
 Project root:
 /Users/joe/Desktop/McGill/projects/FIFAproject2026
 
-Default production model:
-- Config path: config/model_params_default.json
-- model_version: v2_tuned_default
-- model_status: default
-- rating_col: anchored_final_strength
-- bracket_source: matches.csv
-- uses_random_pairing: False
-- random_seed_used_for: scoreline_sampling, tiebreakers
+Current default model:
+- V2 player-impact probability model is now the default.
+- V1 anchored_final_strength remains the base team-strength layer.
+- V2 does not replace team strength directly; it post-processes W/D/L probabilities.
+- Active player-impact layers: squad_uncertainty, superstar, club_form.
+- Config: config/model_params_default.json
+- Model version: v2_uncertainty_superstar_club_form
 
-Accepted validation performance:
-- n_matches: 1123
-- accuracy: 0.6100
-- mean_brier_score: 0.5135
-- mean_log_loss: 0.8735
-- mean_actual_outcome_probability: 0.4893
-- goal_mae: 0.9942
-- goal_rmse: 1.2950
-- predicted_draw_rate: 0.2166
-- actual_draw_rate: 0.2378
-- draw_calibration_error: 0.0212
+Prediction/simulation flow:
+Raw team + player data
+  -> anchored team strength
+  -> calibrated Poisson W/D/L probabilities
+  -> V2 player-impact probability stack
+  -> deterministic prediction outputs and Monte Carlo simulation outputs
 
-Default tuned parameters:
-- base_total_goals: 2.75
-- share_scale: 220
-- mismatch_total_bonus: 0.9
-- mismatch_scale: 650
-- lambda_min: 0.15
-- lambda_max: 4.50
-- draw_boost_max: 0.045
-- draw_boost_scale: 300
+API:
+- Read-only FastAPI server added under src/api/.
+- It only reads existing files from output/.
+- It does not fetch ESPN, run evaluation, generate predictions, run tuning, or run simulations.
+- Run with: uvicorn src.api.main:app --reload
+- Swagger: http://127.0.0.1:8000/docs
 
-Updated implementation:
-- src/config/model_config.py now provides default, experimental, and test modes.
-- src/models/poisson_match_model.py loads the default config for user-facing predictions.
-- src/simulation/group_stage_simulator.py uses config-driven model parameters and default output names.
-- src/simulation/tournament_simulator.py uses config-driven model parameters and fixed bracket resolution from data/raw/matches.csv.
-- src/evaluation/evaluate_match_predictions.py uses the default tuned parameters and writes mode-specific outputs.
-- src/evaluation/tune_parameters.py keeps tuning-specific versioning separate from production evaluation.
-- docs/model_versioning.md documents model lineage, modes, output naming, and random-seed rules.
+Main API endpoints:
+- GET /health
+- GET /model/summary
+- GET /predictions/group-stage
+- GET /predictions/matches
+- GET /predictions/teams
+- GET /predictions/group-stage/{match_id}
+- GET /live/results
+- GET /live/standings
+- GET /live/evaluation
+- GET /simulation/tournament
+- GET /simulation/teams
+- GET /simulation/team/{team}
+- GET /bracket/sample
 
-Default output files:
-- data/processed/tournament_simulation_results_default.csv
-- data/processed/evaluation_summary_default.csv
-- data/processed/team_strength_default.csv
-- data/processed/evaluation_predictions_default.csv
-- data/processed/evaluation_model_comparison_default.csv
-- data/processed/evaluation_favorite_calibration_default.csv
-- data/processed/evaluation_draw_calibration_default.csv
-- data/processed/evaluation_by_strength_diff_default.csv
+API handoff package:
+- deliverables/cupcast_api_package.zip
 
-Smoke-test results:
-- Single-match prediction for Spain vs France completed; probabilities summed to 1.0.
-- Tournament simulation with 100 runs completed.
-- Tournament bracket used matches.csv.
-- uses_random_pairing was False.
-- Tournament sanity checks passed for R32, R16, QF, SF, Final, and champion counts.
-- Evaluation run completed and produced default output files with model metadata.
-- Full unit suite passed: 40 tests OK.
+Recent squad update:
+- Japan squad source updated: Wataru Endo removed, Shuto Machino added.
+- Player-derived squad value, superstar, club-form, and prediction outputs were rebuilt.
 
-Important note:
-The real working directory for this project is:
-/Users/joe/Desktop/McGill/projects/FIFAproject2026
+Output organization:
+- output/predictions/: deterministic frontend prediction CSVs
+- output/simulations/: Monte Carlo simulation CSVs
+- output/diagnostics/: model comparison and quality reports
+- output/brackets/: sample bracket outputs
+- output/live/: ESPN/live validation outputs
+- output/reports/: report artifacts
+
+Validation performed:
+- API modules py_compile passed.
+- API smoke tests passed for list and detail endpoints.
+- Prediction outputs include 72 group-stage matches.
+- Simulation outputs include V2 player-impact metadata.

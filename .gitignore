@@ -1,2 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE / local workspace
+.idea/
+
+# macOS
 .DS_Store
 
+# Secrets
+.env
+
+# Local deliverables
+deliverables/
+
+# Large raw/intermediate datasets
+data/raw/
+data/external/
+data/interim/
+
+# Large live raw outputs
+output/live/raw/
+
+# Large generated outputs
+output/simulations/
+output/brackets/
+output/diagnostics/
+
+# Large full prediction files
+output/predictions/*v2_uncertainty_tuned.csv
+
+# Keep lightweight demo files if intentionally tracked
+!output/predictions/group_stage_predictions_clean.csv
+!output/live/fixtures_results.csv
+!output/live/worldcup_group_stage_live_summary.csv
+
+# Keep sample data
+!data/sample/

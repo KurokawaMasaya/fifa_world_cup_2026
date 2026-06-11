@@ -1,0 +1,101 @@
+date,home_team,away_team,team,scorer,minute,own_goal,penalty
+1916-07-02,Chile,Uruguay,Uruguay,José Piendibene,44,False,False
+1916-07-02,Chile,Uruguay,Uruguay,Isabelino Gradín,55,False,False
+1916-07-02,Chile,Uruguay,Uruguay,Isabelino Gradín,70,False,False
+1916-07-02,Chile,Uruguay,Uruguay,José Piendibene,75,False,False
+1916-07-06,Argentina,Chile,Argentina,Alberto Ohaco,2,False,False
+1916-07-06,Argentina,Chile,Chile,Telésforo Báez,44,False,False
+1916-07-06,Argentina,Chile,Argentina,Juan Domingo Brown,60,False,True
+1916-07-06,Argentina,Chile,Argentina,Juan Domingo Brown,62,False,True
+1916-07-06,Argentina,Chile,Argentina,Alberto Marcovecchio,67,False,False
+1916-07-06,Argentina,Chile,Argentina,Alberto Ohaco,75,False,False
+1916-07-06,Argentina,Chile,Argentina,Alberto Marcovecchio,81,False,False
+1916-07-08,Brazil,Chile,Brazil,Demóstenes Correia de Syllos,29,False,False
+1916-07-08,Brazil,Chile,Chile,Hernando Salazar,85,False,False
+1916-07-10,Argentina,Brazil,Argentina,José Durand Laguna,10,False,False
+1916-07-10,Argentina,Brazil,Brazil,Manoel Alencar Monte,23,False,False
+1916-07-12,Brazil,Uruguay,Brazil,Arthur Friedenreich,8,False,False
+1916-07-12,Brazil,Uruguay,Uruguay,Isabelino Gradín,58,False,False
+1916-07-12,Brazil,Uruguay,Uruguay,Jose Tognola,77,False,False
+1917-09-30,Uruguay,Chile,Uruguay,Carlos Scarone,20,False,False
+1917-09-30,Uruguay,Chile,Uruguay,Ángel Romano,44,False,False
+1917-09-30,Uruguay,Chile,Uruguay,Carlos Scarone,62,False,True
+1917-09-30,Uruguay,Chile,Uruguay,Ángel Romano,75,False,False
+1917-10-03,Argentina,Brazil,Brazil,Neco,8,False,False
+1917-10-03,Argentina,Brazil,Argentina,Pedro Calomino,15,False,False
+1917-10-03,Argentina,Brazil,Brazil,Silvio Lagreca,39,False,True
+1917-10-03,Argentina,Brazil,Argentina,Alberto Ohaco,56,False,True
+1917-10-03,Argentina,Brazil,Argentina,Alberto Ohaco,58,False,True
+1917-10-03,Argentina,Brazil,Argentina,Antonio Blanco,80,False,False
+1917-10-06,Argentina,Chile,Argentina,Luis García,76,True,False
+1917-10-07,Uruguay,Brazil,Uruguay,Héctor Scarone,8,False,False
+1917-10-07,Uruguay,Brazil,Uruguay,Ángel Romano,17,False,False
+1917-10-07,Uruguay,Brazil,Uruguay,Ángel Romano,77,False,False
+1917-10-07,Uruguay,Brazil,Uruguay,Carlos Scarone,86,False,False
+1917-10-12,Brazil,Chile,Brazil,Caetano Izzo,21,False,False
+1917-10-12,Brazil,Chile,Brazil,Neco,23,False,False
+1917-10-12,Brazil,Chile,Brazil,Haroldo Domingues,26,False,False
+1917-10-12,Brazil,Chile,Brazil,Amílcar Barbuy,41,False,False
+1917-10-12,Brazil,Chile,Brazil,Haroldo Domingues,59,False,False
+1917-10-14,Uruguay,Argentina,Uruguay,Héctor Scarone,62,False,False
+1919-05-11,Brazil,Chile,Brazil,Arthur Friedenreich,19,False,False
+1919-05-11,Brazil,Chile,Brazil,Neco,21,False,False
+1919-05-11,Brazil,Chile,Brazil,Arthur Friedenreich,38,False,False
+1919-05-11,Brazil,Chile,Brazil,Arthur Friedenreich,76,False,False
+1919-05-11,Brazil,Chile,Brazil,Haroldo Domingues,79,False,False
+1919-05-11,Brazil,Chile,Brazil,Neco,83,False,False
+1919-05-13,Argentina,Uruguay,Uruguay,Carlos Scarone,19,False,False
+1919-05-13,Argentina,Uruguay,Uruguay,Héctor Scarone,23,False,False
+1919-05-13,Argentina,Uruguay,Argentina,Carlos Izaguirre,34,False,False
+1919-05-13,Argentina,Uruguay,Argentina,Manuel Varela,79,True,False
+1919-05-13,Argentina,Uruguay,Uruguay,Isabelino Gradín,85,False,False
+1919-05-17,Chile,Uruguay,Uruguay,Carlos Scarone,31,False,False
+1919-05-17,Chile,Uruguay,Uruguay,José Pérez,43,False,False
+1919-05-18,Brazil,Argentina,Brazil,Heitor,22,False,False
+1919-05-18,Brazil,Argentina,Brazil,Amílcar Barbuy,57,False,False
+1919-05-18,Brazil,Argentina,Argentina,Carlos Izaguirre,65,False,False
+1919-05-18,Brazil,Argentina,Brazil,Adolpho Millón Junior,77,False,False
+1919-05-22,Argentina,Chile,Argentina,Edwin Clarcke,10,False,False
+1919-05-22,Argentina,Chile,Argentina,Carlos Izaguirre,13,False,False
+1919-05-22,Argentina,Chile,Argentina,Edwin Clarcke,23,False,False
+1919-05-22,Argentina,Chile,Chile,Alfredo France,33,False,False
+1919-05-22,Argentina,Chile,Argentina,Edwin Clarcke,62,False,False
+1919-05-26,Brazil,Uruguay,Uruguay,Isabelino Gradín,13,False,False
+1919-05-26,Brazil,Uruguay,Uruguay,Carlos Scarone,17,False,False
+1919-05-26,Brazil,Uruguay,Brazil,Neco,29,False,False
+1919-05-26,Brazil,Uruguay,Brazil,Neco,63,False,False
+1919-05-29,Brazil,Uruguay,Brazil,Arthur Friedenreich,122,False,False
+1920-09-11,Chile,Brazil,Brazil,Ismael Alvariza,53,False,False
+1920-09-12,Uruguay,Argentina,Uruguay,José Piendibene,10,False,False
+1920-09-12,Uruguay,Argentina,Argentina,Raúl Echeverría,75,False,False
+1920-09-18,Brazil,Uruguay,Uruguay,Ángel Romano,23,False,False
+1920-09-18,Brazil,Uruguay,Uruguay,Antonio Urdinarán,26,False,True
+1920-09-18,Brazil,Uruguay,Uruguay,José Pérez,29,False,False
+1920-09-18,Brazil,Uruguay,Uruguay,Antonio Campolo,48,False,False
+1920-09-18,Brazil,Uruguay,Uruguay,Ángel Romano,60,False,False
+1920-09-18,Brazil,Uruguay,Uruguay,José Pérez,65,False,False
+1920-09-20,Chile,Argentina,Argentina,Miguel Dellavalle,13,False,False
+1920-09-20,Chile,Argentina,Chile,Hernando Bolados,30,False,False
+1920-09-25,Argentina,Brazil,Argentina,Raúl Echeverría,40,False,False
+1920-09-25,Argentina,Brazil,Argentina,Julio Libonatti,73,False,False
+1920-10-03,Chile,Uruguay,Uruguay,Ángel Romano,37,False,False
+1920-10-03,Chile,Uruguay,Chile,Aurelio Domínguez,60,False,False
+1920-10-03,Chile,Uruguay,Uruguay,José Pérez,65,False,False
+1921-10-02,Argentina,Brazil,Argentina,Julio Libonatti,27,False,False
+1921-10-09,Paraguay,Uruguay,Paraguay,Gerardo Rivas,9,False,False
+1921-10-09,Paraguay,Uruguay,Paraguay,Ildefonso López,66,False,False
+1921-10-09,Paraguay,Uruguay,Uruguay,José Piendibene,83,False,False
+1921-10-12,Brazil,Paraguay,Brazil,Ernesto Duarte Machado da Silva,21,False,False
+1921-10-12,Brazil,Paraguay,Brazil,Ernesto Duarte Machado da Silva,44,False,False
+1921-10-12,Brazil,Paraguay,Brazil,Aníbal Médicis Candiota,46,False,False
+1921-10-16,Argentina,Paraguay,Argentina,Julio Libonatti,1,False,False
+1921-10-16,Argentina,Paraguay,Argentina,Blas Saruppo,71,False,False
+1921-10-16,Argentina,Paraguay,Argentina,Raúl Echeverría,76,False,False
+1921-10-23,Brazil,Uruguay,Uruguay,Ángel Romano,1,False,False
+1921-10-23,Brazil,Uruguay,Uruguay,Ángel Romano,8,False,False
+1921-10-23,Brazil,Uruguay,Brazil,José Carlos Guimarães,53,False,False
+1921-10-30,Argentina,Uruguay,Argentina,Julio Libonatti,57,False,False
+1922-09-17,Brazil,Chile,Brazil,Altino Marcondes,9,False,False
+1922-09-17,Brazil,Chile,Chile,Manuel Bravo Paredes,41,False,False
+1922-09-23,Chile,Uruguay,Uruguay,Juan Carlos Heguy,10,False,False
+1922-09-23,Chile,Uruguay,Uruguay,Antonio Urdinarán,19,False,True

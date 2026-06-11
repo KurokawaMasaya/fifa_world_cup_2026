@@ -1,0 +1,101 @@
+game_id,club_id,own_goals,own_position,own_manager_name,opponent_id,opponent_goals,opponent_position,opponent_manager_name,hosting,is_win
+1026846,3449,2,,Óscar Tabárez,3589,1,,Jung-moo Huh,Home,1
+1026846,3589,1,,Jung-moo Huh,3449,2,,Óscar Tabárez,Away,0
+1026847,3437,3,,Diego Maradona,6303,1,,Javier Aguirre,Home,1
+1026847,6303,1,,Javier Aguirre,3437,3,,Diego Maradona,Away,0
+1027001,3441,2,,Milovan Rajevac,3505,1,,Bob Bradley,Away,1
+1027001,3505,1,,Bob Bradley,3441,2,,Milovan Rajevac,Home,0
+1027002,3262,4,,Joachim Löw,3299,1,,Fabio Capello,Home,1
+1027002,3299,1,,Fabio Capello,3262,4,,Joachim Löw,Away,0
+1027048,3379,2,,Bert van Marwijk,3503,1,,Vladimír Weiss,Home,1
+1027048,3503,1,,Vladimír Weiss,3379,2,,Bert van Marwijk,Away,0
+1027049,3435,3,,Takeshi Okada,3581,5,,Gerardo Martino,Away,0
+1027049,3581,5,,Gerardo Martino,3435,3,,Takeshi Okada,Home,1
+1027635,3439,3,,Dunga,3700,0,,Marcelo Bielsa,Home,1
+1027635,3700,0,,Marcelo Bielsa,3439,3,,Dunga,Away,0
+1027636,3300,0,,Carlos Queiroz,3375,1,,Vicente del Bosque,Away,0
+1027636,3375,1,,Vicente del Bosque,3300,0,,Carlos Queiroz,Home,1
+1027723,3441,3,,Milovan Rajevac,3449,5,,Óscar Tabárez,Away,0
+1027723,3449,5,,Óscar Tabárez,3441,3,,Milovan Rajevac,Home,1
+1027750,3262,4,,Joachim Löw,3437,0,,Diego Maradona,Away,1
+1027750,3437,0,,Diego Maradona,3262,4,,Joachim Löw,Home,0
+1028533,3379,2,,Bert van Marwijk,3439,1,,Dunga,Home,1
+1028533,3439,1,,Dunga,3379,2,,Bert van Marwijk,Away,0
+1028686,3375,1,,Vicente del Bosque,3581,0,,Gerardo Martino,Away,1
+1028686,3581,0,,Gerardo Martino,3375,1,,Vicente del Bosque,Home,0
+1029770,3379,3,,Bert van Marwijk,3449,2,,Óscar Tabárez,Away,1
+1029770,3449,2,,Óscar Tabárez,3379,3,,Bert van Marwijk,Home,0
+1029789,3262,0,,Joachim Löw,3375,1,,Vicente del Bosque,Home,0
+1029789,3375,1,,Vicente del Bosque,3262,0,,Joachim Löw,Away,1
+1030710,3375,1,,Vicente del Bosque,3379,0,,Bert van Marwijk,Away,1
+1030710,3379,0,,Bert van Marwijk,3375,1,,Vicente del Bosque,Home,0
+1030711,3262,3,,Joachim Löw,3449,2,,Óscar Tabárez,Away,1
+1030711,3449,2,,Óscar Tabárez,3262,3,,Joachim Löw,Home,0
+1126203,3379,1,,Marco van Basten,23380,0,,Ilija Petkovic,Away,1
+1126203,23380,0,,Ilija Petkovic,3379,1,,Marco van Basten,Home,0
+1126204,3437,6,,José Néstor Pekerman,23380,0,,Ilija Petkovic,Home,1
+1126204,23380,0,,Ilija Petkovic,3437,6,,José Néstor Pekerman,Away,0
+1126205,3591,3,,Henri Michel,23380,2,,Ilija Petkovic,Home,1
+1126205,23380,2,,Ilija Petkovic,3591,3,,Henri Michel,Away,0
+1168992,3378,1,,Fernando Santos,3442,1,,Franciszek Smuda,Away,0
+1168992,3442,1,,Franciszek Smuda,3378,1,,Fernando Santos,Home,0
+1168993,3445,1,,Michal Bilek,3448,4,,Dick Advocaat,Away,0
+1168993,3448,4,,Dick Advocaat,3445,1,,Michal Bilek,Home,1
+1168994,3378,1,,Fernando Santos,3445,2,,Michal Bilek,Home,0
+1168994,3445,2,,Michal Bilek,3378,1,,Fernando Santos,Away,1
+1168995,3442,1,,Franciszek Smuda,3448,1,,Dick Advocaat,Home,0
+1168995,3448,1,,Dick Advocaat,3442,1,,Franciszek Smuda,Away,0
+1168996,3378,1,,Fernando Santos,3448,0,,Dick Advocaat,Home,1
+1168996,3448,0,,Dick Advocaat,3378,1,,Fernando Santos,Away,0
+1168997,3442,0,,Franciszek Smuda,3445,1,,Michal Bilek,Away,0
+1168997,3445,1,,Michal Bilek,3442,0,,Franciszek Smuda,Home,1
+1168998,3379,0,,Bert van Marwijk,3436,1,,Morten Olsen,Home,0
+1168998,3436,1,,Morten Olsen,3379,0,,Bert van Marwijk,Away,1
+1168999,3262,1,,Joachim Löw,3300,0,,Paulo Bento,Home,1
+1168999,3300,0,,Paulo Bento,3262,1,,Joachim Löw,Away,0
+1169000,3262,2,,Joachim Löw,3379,1,,Bert van Marwijk,Away,1
+1169000,3379,1,,Bert van Marwijk,3262,2,,Joachim Löw,Home,0
+1169001,3300,3,,Paulo Bento,3436,2,,Morten Olsen,Away,1
+1169001,3436,2,,Morten Olsen,3300,3,,Paulo Bento,Home,0
+1169002,3300,2,,Paulo Bento,3379,1,,Bert van Marwijk,Home,1
+1169002,3379,1,,Bert van Marwijk,3300,2,,Paulo Bento,Away,0
+1169003,3262,2,,Joachim Löw,3436,1,,Morten Olsen,Away,1
+1169003,3436,1,,Morten Olsen,3262,2,,Joachim Löw,Home,0
+1169004,3375,1,,Vicente del Bosque,3376,1,,Cesare Prandelli,Home,0
+1169004,3376,1,,Cesare Prandelli,3375,1,,Vicente del Bosque,Away,0
+1169005,3509,1,,Giovanni Trapattoni,3556,3,,Slaven Bilic,Home,0
+1169005,3556,3,,Slaven Bilic,3509,1,,Giovanni Trapattoni,Away,1
+1169006,3376,1,,Cesare Prandelli,3556,1,,Slaven Bilic,Home,0
+1169006,3556,1,,Slaven Bilic,3376,1,,Cesare Prandelli,Away,0
+1169007,3375,4,,Vicente del Bosque,3509,0,,Giovanni Trapattoni,Home,1
+1169007,3509,0,,Giovanni Trapattoni,3375,4,,Vicente del Bosque,Away,0
+1169008,3375,1,,Vicente del Bosque,3556,0,,Slaven Bilic,Away,1
+1169008,3556,0,,Slaven Bilic,3375,1,,Vicente del Bosque,Home,0
+1169009,3376,2,,Cesare Prandelli,3509,0,,Giovanni Trapattoni,Home,1
+1169009,3509,0,,Giovanni Trapattoni,3376,2,,Cesare Prandelli,Away,0
+1169010,3299,1,,Roy Hodgson,3377,1,,Laurent Blanc,Away,0
+1169010,3377,1,,Laurent Blanc,3299,1,,Roy Hodgson,Home,0
+1169011,3557,1,,Erik Hamrén,3699,2,,Oleg Blokhin,Away,0
+1169011,3699,2,,Oleg Blokhin,3557,1,,Erik Hamrén,Home,1
+1169012,3299,3,,Roy Hodgson,3557,2,,Erik Hamrén,Away,1
+1169012,3557,2,,Erik Hamrén,3299,3,,Roy Hodgson,Home,0
+1169013,3377,2,,Laurent Blanc,3699,0,,Oleg Blokhin,Away,1
+1169013,3699,0,,Oleg Blokhin,3377,2,,Laurent Blanc,Home,0
+1169014,3377,0,,Laurent Blanc,3557,2,,Erik Hamrén,Away,0
+1169014,3557,2,,Erik Hamrén,3377,0,,Laurent Blanc,Home,1
+1169015,3299,1,,Roy Hodgson,3699,0,,Oleg Blokhin,Home,1
+1169015,3699,0,,Oleg Blokhin,3299,1,,Roy Hodgson,Away,0
+2211607,383,4,,Dick Advocaat,610,2,,Frank de Boer,Home,1
+2211607,610,2,,Frank de Boer,383,4,,Dick Advocaat,Away,0
+2218677,506,4,,Massimo Carrera,6195,2,,Walter Mazzarri,Home,1
+2218677,6195,2,,Walter Mazzarri,506,4,,Massimo Carrera,Away,0
+2219366,3300,1,,Paulo Bento,3445,0,,Michal Bilek,Away,1
+2219366,3445,0,,Michal Bilek,3300,1,,Paulo Bento,Home,0
+2219367,3262,4,,Joachim Löw,3378,2,,Fernando Santos,Home,1
+2219367,3378,2,,Fernando Santos,3262,4,,Joachim Löw,Away,0
+2219615,3375,2,,Vicente del Bosque,3377,0,,Laurent Blanc,Home,1
+2219615,3377,0,,Laurent Blanc,3375,2,,Vicente del Bosque,Away,0
+2219616,3299,2,,Roy Hodgson,3376,4,,Cesare Prandelli,Home,0
+2219616,3376,4,,Cesare Prandelli,3299,2,,Roy Hodgson,Away,1
+2219794,58,3,,John van den Brom,498,2,,Peter Maes,Home,1
+2219794,498,2,,Peter Maes,58,3,,John van den Brom,Away,0
