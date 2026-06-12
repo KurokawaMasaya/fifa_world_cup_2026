@@ -4,36 +4,55 @@ __pycache__/
 .venv/
 venv/
 
-# IDE / local workspace
-.idea/
-
 # macOS
 .DS_Store
 
+# IDE
+.idea/
+
 # Secrets
 .env
+*.pem
+*.key
+*secret*
+*credential*
+
+# Logs
+*.log
+output/live/live_pipeline_run_log.csv
+output/live/live_pipeline_cron.log
+output/live/live_pipeline_launchd.err.log
+output/live/live_pipeline_launchd.out.log
+
+# Local deployment scripts
+scripts/sync_to_server.sh
 
 # Local deliverables
 deliverables/
 
-# Large raw/intermediate datasets
+# Raw / large data
 data/
 data/raw/
 data/external/
 data/interim/
 
-# Large live raw outputs
+# Live raw snapshots
 output/live/raw/
 
-# Large generated outputs
+# Large / noisy outputs
 output/simulations/
 output/brackets/
 output/diagnostics/
 
-# Large full prediction files
+# Large full prediction/debug files
 output/predictions/*v2_uncertainty_tuned.csv
+output/predictions/group_stage_predictions_v2_uncertainty.csv
 
-# Keep lightweight demo files if intentionally tracked
+# Keep selected lightweight demo outputs if intentionally tracked
 !output/predictions/group_stage_predictions_clean.csv
 !output/live/fixtures_results.csv
+!output/live/group_standings.csv
+!output/live/worldcup_group_stage_actual_results.csv
 !output/live/worldcup_group_stage_live_summary.csv
+!output/live/live_tournament_simulation.csv
+!output/live/live_data_update_log.csv
