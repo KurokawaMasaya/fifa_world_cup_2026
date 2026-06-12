@@ -5,69 +5,69 @@ match_id,group,team_a,team_b,team_a_win_pct,draw_pct,team_b_win_pct,predicted_sc
 4,D,USA,Paraguay,49,27,25,1-1,11
 5,B,Qatar,Switzerland,10,18,72,0-2,11
 6,C,Brazil,Morocco,37,30,33,1-1,11
-7,C,Haiti,Scotland,15,22,63,0-1,11
+7,C,Haiti,Scotland,15,22,63,0-2,10
 8,D,Australia,Turkey,28,27,45,1-1,11
 9,E,Germany,Curacao,87,10,3,2-0,14
-10,F,Netherlands,Japan,51,26,23,1-1,10
-11,E,Cote d'Ivoire,Ecuador,25,28,48,1-1,11
+10,F,Netherlands,Japan,51,26,23,1-0,10
+11,E,Cote d'Ivoire,Ecuador,25,28,48,0-1,10
 12,F,Sweden,Tunisia,42,28,29,1-1,11
-13,H,Spain,Cabo Verde,91,7,2,2-0,15
+13,H,Spain,Cabo Verde,91,7,2,3-0,14
 14,G,Belgium,Egypt,59,23,18,1-0,10
 15,H,Saudi Arabia,Uruguay,9,17,74,0-2,12
 16,G,IR Iran,New Zealand,75,16,8,2-0,12
-17,I,France,Senegal,63,22,15,1-0,11
+17,I,France,Senegal,63,22,15,2-0,10
 18,I,Iraq,Norway,18,23,59,0-1,10
 19,J,Argentina,Algeria,76,16,8,2-0,12
-20,J,Austria,Jordan,64,21,15,1-0,11
+20,J,Austria,Jordan,64,21,15,2-0,10
 21,K,Portugal,DR Congo,73,18,9,2-0,12
-22,L,England,Croatia,51,26,23,1-1,10
-23,L,Ghana,Panama,17,24,59,0-1,11
+22,L,England,Croatia,51,26,23,1-0,10
+23,L,Ghana,Panama,17,24,59,0-2,10
 24,K,Uzbekistan,Colombia,12,20,68,0-2,11
-25,A,Czechia,South Africa,48,27,25,1-1,11
+25,A,Czechia,South Africa,48,27,25,1-0,10
 26,B,Switzerland,Bosnia and Herzegovina,70,19,11,2-0,11
 27,B,Canada,Qatar,56,25,20,1-0,10
-28,A,Mexico,South Korea,48,27,25,1-1,11
+28,A,Mexico,South Korea,48,27,25,1-0,10
 29,D,USA,Australia,43,28,29,1-1,11
 30,C,Scotland,Morocco,12,20,68,0-2,11
-31,C,Brazil,Haiti,88,10,2,2-0,14
-32,D,Turkey,Paraguay,50,26,24,1-1,11
+31,C,Brazil,Haiti,88,10,2,3-0,13
+32,D,Turkey,Paraguay,50,26,24,1-0,10
 33,F,Netherlands,Sweden,68,20,12,2-0,11
-34,E,Germany,Cote d'Ivoire,63,22,15,1-0,11
+34,E,Germany,Cote d'Ivoire,63,22,15,2-0,10
 35,E,Ecuador,Curacao,77,16,7,2-0,13
-36,F,Tunisia,Japan,17,23,60,0-1,10
-37,H,Spain,Saudi Arabia,91,8,1,2-0,14
+36,F,Tunisia,Japan,17,23,60,0-2,10
+37,H,Spain,Saudi Arabia,91,8,1,3-0,14
 38,G,Belgium,IR Iran,55,24,20,1-0,10
 39,H,Uruguay,Cabo Verde,75,17,8,2-0,12
 40,G,New Zealand,Egypt,10,19,72,0-2,12
 41,J,Argentina,Austria,72,18,10,2-0,12
 42,I,France,Iraq,88,10,2,2-0,14
 43,I,Norway,Senegal,26,26,47,1-1,11
-44,J,Jordan,Algeria,18,23,59,0-1,10
+44,J,Jordan,Algeria,18,23,59,0-2,10
 45,K,Portugal,Uzbekistan,74,17,9,2-0,12
-46,L,England,Ghana,89,9,2,2-0,14
-47,L,Panama,Croatia,16,22,62,0-1,11
+46,L,England,Ghana,89,9,2,3-0,13
+47,L,Panama,Croatia,16,22,62,0-2,10
 48,K,Colombia,DR Congo,66,21,13,2-0,11
-49,B,Switzerland,Canada,52,26,22,1-1,10
+49,B,Switzerland,Canada,52,26,22,1-0,10
 50,B,Bosnia and Herzegovina,Qatar,38,30,32,1-1,11
 51,C,Scotland,Brazil,11,19,70,0-2,11
 52,C,Morocco,Haiti,86,11,3,2-0,14
 53,A,Czechia,Mexico,20,25,55,0-1,10
 54,A,South Africa,South Korea,20,25,55,0-1,10
 55,E,Curacao,Cote d'Ivoire,12,20,68,0-2,11
-56,E,Ecuador,Germany,23,26,51,1-1,10
-57,F,Japan,Sweden,53,25,22,1-1,10
+56,E,Ecuador,Germany,23,26,51,0-1,10
+57,F,Japan,Sweden,53,25,22,1-0,10
 58,F,Tunisia,Netherlands,9,17,74,0-2,12
 59,D,Turkey,USA,37,30,34,1-1,11
 60,D,Paraguay,Australia,31,29,40,1-1,11
 61,I,Norway,France,10,17,73,0-2,12
 62,I,Senegal,Iraq,70,19,11,2-0,11
 63,H,Cabo Verde,Saudi Arabia,34,30,36,1-1,11
-64,H,Uruguay,Spain,14,21,66,0-1,11
+64,H,Uruguay,Spain,14,21,66,0-2,10
 65,G,Egypt,IR Iran,33,28,39,1-1,11
-66,G,New Zealand,Belgium,3,10,87,0-2,14
+66,G,New Zealand,Belgium,3,10,87,0-3,13
 67,L,Panama,England,8,17,75,0-2,12
 68,L,Croatia,Ghana,81,13,5,2-0,13
 69,K,Colombia,Portugal,29,28,43,1-1,11
 70,K,DR Congo,Uzbekistan,37,29,34,1-1,11
 71,J,Algeria,Austria,31,29,41,1-1,11
-72,J,Jordan,Argentina,3,9,88,0-2,14
+72,J,Jordan,Argentina,3,9,88,0-3,13

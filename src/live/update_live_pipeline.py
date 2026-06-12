@@ -20,6 +20,7 @@ FIXTURES_RESULTS_PATH = LIVE_DIR / "fixtures_results.csv"
 LIVE_SUMMARY_PATH = LIVE_DIR / "worldcup_group_stage_live_summary.csv"
 LIVE_EVALUATION_PATH = LIVE_DIR / "worldcup_group_stage_live_evaluation.csv"
 LIVE_CALIBRATION_PATH = LIVE_DIR / "worldcup_group_stage_live_calibration.csv"
+LIVE_TOURNAMENT_SIMULATION_PATH = LIVE_DIR / "live_tournament_simulation.csv"
 LOG_COLUMNS = ["timestamp_utc", "step", "command", "status", "return_code", "message"]
 
 
@@ -115,6 +116,15 @@ def main() -> None:
     )
     parser.add_argument("--skip-standings", action="store_true")
     parser.add_argument("--skip-cleanup", action="store_true")
+    parser.add_argument("--skip-live-simulation", action="store_true")
+    parser.add_argument(
+        "--live-sim-n-sims",
+        "--live-simulations",
+        dest="live_sim_n_sims",
+        type=int,
+        default=100000,
+        help="Number of state-conditioned live tournament simulations to run.",
+    )
     args = parser.parse_args()
 
     fetch_command = [
@@ -145,6 +155,26 @@ def main() -> None:
                 return_code=0,
                 message="Live evaluation completed with zero completed matches.",
             )
+
+    if not args.skip_live_simulation:
+        run_step(
+            step="live_tournament_simulation",
+            command=[
+                sys.executable,
+                "src/live/live_tournament_simulation.py",
+                "--n-sims",
+                str(args.live_sim_n_sims),
+            ],
+            stop_on_failure=False,
+        )
+    else:
+        append_pipeline_log(
+            step="live_tournament_simulation",
+            command="",
+            status="skipped",
+            return_code=0,
+            message="Skipped by --skip-live-simulation",
+        )
 
     if not args.skip_cleanup:
         run_step(
@@ -189,6 +219,7 @@ def main() -> None:
         LIVE_EVALUATION_PATH,
         LIVE_CALIBRATION_PATH,
         PIPELINE_LOG_PATH,
+        LIVE_TOURNAMENT_SIMULATION_PATH,
     ]:
         print(f"- {path}")
 

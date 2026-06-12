@@ -314,6 +314,59 @@ def fetch_scoreboards(date_values: list[str | None]) -> pd.DataFrame:
     return pd.DataFrame(rows, columns=FIXTURE_COLUMNS)
 
 
+def merge_with_existing_fixtures(new_fixtures: pd.DataFrame, output_path: Path) -> pd.DataFrame:
+    """Merge new ESPN rows into the existing live fixture file.
+
+    ESPN scoreboard responses can be date/window specific. Keeping a cumulative
+    file prevents completed matches from disappearing from live evaluation after
+    the default scoreboard moves on to later fixtures.
+    """
+    if not output_path.exists():
+        return new_fixtures
+    try:
+        existing = pd.read_csv(output_path)
+    except Exception as exc:
+        append_log(
+            task="fixtures_results",
+            status="warning",
+            message=f"Could not read existing fixtures for cumulative merge: {exc}",
+            output_path=output_path,
+        )
+        return new_fixtures
+
+    if existing.empty:
+        return new_fixtures
+    combined = pd.concat([existing, new_fixtures], ignore_index=True)
+    for column in FIXTURE_COLUMNS:
+        if column not in combined.columns:
+            combined[column] = pd.NA
+
+    status_rank = {
+        "unknown": 0,
+        "scheduled": 1,
+        "postponed": 1,
+        "cancelled": 1,
+        "in_progress": 2,
+        "final": 3,
+    }
+    combined["_status_rank"] = combined["status"].map(status_rank).fillna(0)
+    combined["_last_updated_sort"] = pd.to_datetime(
+        combined["last_updated"],
+        errors="coerce",
+        utc=True,
+    )
+    combined["_dedupe_key"] = (
+        combined["espn_event_id"].fillna(combined["match_id"]).astype(str)
+    )
+    combined = combined.sort_values(
+        ["_dedupe_key", "_status_rank", "_last_updated_sort"],
+        na_position="first",
+    )
+    combined = combined.drop_duplicates("_dedupe_key", keep="last")
+    combined = combined.drop(columns=["_status_rank", "_last_updated_sort", "_dedupe_key"])
+    return combined[FIXTURE_COLUMNS].sort_values(["date", "kickoff_time_utc", "match_id"])
+
+
 def standings_stat_value(entry: dict[str, Any], *names: str) -> int | None:
     wanted = {name.lower() for name in names}
     for stat in entry.get("stats") or []:
@@ -433,6 +486,7 @@ def main() -> None:
     ensure_dirs()
     date_values = requested_scoreboard_dates(args)
     fixtures = fetch_scoreboards(date_values)
+    fixtures = merge_with_existing_fixtures(fixtures, args.output)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fixtures.to_csv(args.output, index=False)
     append_log(

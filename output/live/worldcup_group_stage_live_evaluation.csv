@@ -1,1 +1,3 @@
 match_id,group,team_a,team_b,p_team_a_win,p_draw,p_team_b_win,pick_cn,pick_probability,actual_result,correct,actual_outcome_probability,brier_score,log_loss,risk_level,draw_risk_level,model_version
+1,A,Mexico,South Africa,0.7230474918843612,0.1961271152128837,0.0808253929027549,Mexico win,0.7230474918843612,team_a_win,True,0.7230474918843612,0.12170128121115541,0.32428037172707386,low,low,v2
+2,A,South Korea,Czechia,0.3696002043579821,0.348663236501979,0.2817365591400387,South Korea win,0.3696002043579821,team_a_win,True,0.3696002043579821,0.5983454435896015,0.9953333862981426,high,high,v2

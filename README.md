@@ -110,6 +110,14 @@ output/brackets/
 
 Large simulation and bracket outputs are not tracked in GitHub.
 
+The project also includes a live state-conditioned tournament simulator. This is separate from the pre-tournament simulator. It does not update team strength, retrain the model, or change W/D/L probabilities. It only conditions the tournament state on completed real match results, then simulates the remaining group-stage and knockout path.
+
+Live simulation output is stored at:
+
+```text
+output/live/live_tournament_simulation.csv
+```
+
 ## Live Data and Evaluation
 
 The live pipeline uses ESPN JSON endpoints to prepare fixture and result files. It does not scrape ESPN HTML.
@@ -128,6 +136,31 @@ status = waiting_for_matches
 ```
 
 Scheduled, not-started, postponed, cancelled, unknown, and in-progress matches are not treated as completed evaluation data.
+
+The live pipeline runs in this order:
+
+```text
+1. Fetch ESPN live fixtures/results
+2. Evaluate completed matches against locked predictions
+3. Run live tournament simulation from the current tournament state
+4. Write live outputs under output/live/
+```
+
+The live tournament simulation uses completed real scores from ESPN and existing model probabilities for remaining matches. It is a state-conditioned simulation, not a dynamic strength update model.
+
+Example commands:
+
+```bash
+python3 src/live/update_live_pipeline.py
+python3 src/live/update_live_pipeline.py --live-sim-n-sims 50000
+python3 src/live/update_live_pipeline.py --skip-live-simulation
+```
+
+For local cron testing, the project uses:
+
+```bash
+python3 src/live/update_live_pipeline.py --live-sim-n-sims 10000
+```
 
 ## API Backend
 
@@ -158,7 +191,10 @@ GET /simulation/teams
 GET /simulation/team/{team}
 GET /live/results
 GET /live/evaluation
+GET /live/tournament-simulation
 ```
+
+The `/live/tournament-simulation` endpoint only reads the latest `output/live/live_tournament_simulation.csv`. It does not run simulations on request.
 
 ## Data Availability
 

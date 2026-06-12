@@ -253,6 +253,7 @@ def predict_group_stage_v2_uncertainty(
     superstar_features_path: Path = DEFAULT_SUPERSTAR_FEATURES_PATH,
     club_form_features_path: Path = DEFAULT_CLUB_FORM_FEATURES_PATH,
     nb_dispersion_k: float = 12,
+    nb_max_goals: int = 10,
 ) -> pd.DataFrame:
     fixtures = load_group_stage_fixtures()
     if len(fixtures) != EXPECTED_GROUP_STAGE_MATCHES:
@@ -319,7 +320,7 @@ def predict_group_stage_v2_uncertainty(
             lambda_a=v1_prediction["lambda_a"],
             lambda_b=v1_prediction["lambda_b"],
             dispersion_k=nb_dispersion_k,
-            max_goals=8,
+            max_goals=nb_max_goals,
         )
         nb_sum = sum(nb_grid.values())
         if abs(nb_sum - 1.0) > PROBABILITY_TOLERANCE:
@@ -437,6 +438,7 @@ def main() -> None:
     parser.add_argument("--superstar-features", type=Path, default=DEFAULT_SUPERSTAR_FEATURES_PATH)
     parser.add_argument("--club-form-features", type=Path, default=DEFAULT_CLUB_FORM_FEATURES_PATH)
     parser.add_argument("--nb-dispersion-k", type=float, default=12)
+    parser.add_argument("--nb-max-goals", type=int, default=10)
     args = parser.parse_args()
 
     v1_config = load_model_config("default")
@@ -459,6 +461,7 @@ def main() -> None:
         superstar_features_path=args.superstar_features,
         club_form_features_path=args.club_form_features,
         nb_dispersion_k=args.nb_dispersion_k,
+        nb_max_goals=args.nb_max_goals,
     )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     predictions.to_csv(output_path, index=False)

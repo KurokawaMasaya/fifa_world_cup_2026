@@ -28,6 +28,7 @@ PREDICTIONS_DETAIL_PATH = (
 LIVE_RESULTS_PATH = OUTPUT_DIR / "live" / "fixtures_results.csv"
 LIVE_STANDINGS_PATH = OUTPUT_DIR / "live" / "group_standings.csv"
 LIVE_EVALUATION_PATH = OUTPUT_DIR / "live" / "worldcup_group_stage_live_summary.csv"
+LIVE_TOURNAMENT_SIMULATION_PATH = OUTPUT_DIR / "live" / "live_tournament_simulation.csv"
 MODEL_SUMMARY_PATH = OUTPUT_DIR / "diagnostics" / "model_performance_summary.csv"
 SIMULATIONS_DIR = OUTPUT_DIR / "simulations"
 BRACKETS_DIR = OUTPUT_DIR / "brackets"
@@ -38,6 +39,7 @@ HEALTH_FILES = {
     "live_results": LIVE_RESULTS_PATH,
     "live_standings": LIVE_STANDINGS_PATH,
     "live_evaluation": LIVE_EVALUATION_PATH,
+    "live_tournament_simulation": LIVE_TOURNAMENT_SIMULATION_PATH,
     "model_summary": MODEL_SUMMARY_PATH,
 }
 
@@ -160,6 +162,11 @@ def live_standings() -> dict:
 @app.get("/live/evaluation", response_model=DatasetResponse, response_model_exclude_none=True)
 def live_evaluation() -> dict:
     return dataset_response(LIVE_EVALUATION_PATH, freshness=True)
+
+
+@app.get("/live/tournament-simulation", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_tournament_simulation() -> dict:
+    return dataset_response(LIVE_TOURNAMENT_SIMULATION_PATH, freshness=True)
 
 
 @app.get("/simulation/tournament", response_model=DatasetResponse, response_model_exclude_none=True)
