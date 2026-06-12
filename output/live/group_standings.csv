@@ -1,49 +1,49 @@
 group,rank,team,team_id,played,wins,draws,losses,goals_for,goals_against,goal_difference,points,source,last_updated
-Group A,1,Mexico,203,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group A,4,Czechia,450,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group A,3,South Korea,451,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group A,2,South Africa,467,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group B,1,Canada,206,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group B,2,Bosnia-Herzegovina,452,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group B,4,Switzerland,475,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group B,3,Qatar,4398,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group C,1,Brazil,205,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group C,4,Scotland,580,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group C,3,Haiti,2654,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group C,2,Morocco,2869,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group D,2,Paraguay,210,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group D,4,Türkiye,465,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group D,3,Australia,628,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group D,1,United States,660,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group E,4,Ecuador,209,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group E,1,Germany,481,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group E,3,Ivory Coast,4789,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group E,2,Curaçao,11678,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group F,1,Netherlands,449,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group F,3,Sweden,466,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group F,2,Japan,627,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group F,4,Tunisia,659,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group G,1,Belgium,459,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group G,3,Iran,469,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group G,2,Egypt,2620,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group G,4,New Zealand,2666,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group H,1,Spain,164,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group H,4,Uruguay,212,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group H,3,Saudi Arabia,655,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group H,2,Cape Verde,2597,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group I,4,Norway,464,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group I,1,France,478,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group I,2,Senegal,654,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group I,3,Iraq,4375,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group J,1,Argentina,202,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group J,3,Austria,474,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group J,2,Algeria,624,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group J,4,Jordan,2917,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group K,4,Colombia,208,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group K,1,Portugal,482,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group K,3,Uzbekistan,2570,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group K,2,Congo DR,2850,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group L,1,England,448,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group L,2,Croatia,477,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group L,4,Panama,2659,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
-Group L,3,Ghana,4469,0,0,0,0,0,0,0,0,espn_json,2026-06-11T17:35:24+00:00
+Group A,1,Mexico,203,1,1,0,0,2,0,2,3,espn_json,2026-06-12T05:17:41+00:00
+Group A,3,Czechia,450,1,0,0,1,1,2,-1,0,espn_json,2026-06-12T05:17:41+00:00
+Group A,2,South Korea,451,1,1,0,0,2,1,1,3,espn_json,2026-06-12T05:17:41+00:00
+Group A,4,South Africa,467,1,0,0,1,0,2,-2,0,espn_json,2026-06-12T05:17:41+00:00
+Group B,1,Canada,206,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group B,2,Bosnia-Herzegovina,452,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group B,4,Switzerland,475,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group B,3,Qatar,4398,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group C,1,Brazil,205,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group C,4,Scotland,580,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group C,3,Haiti,2654,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group C,2,Morocco,2869,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group D,2,Paraguay,210,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group D,4,Türkiye,465,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group D,3,Australia,628,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group D,1,United States,660,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group E,4,Ecuador,209,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group E,1,Germany,481,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group E,3,Ivory Coast,4789,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group E,2,Curaçao,11678,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group F,1,Netherlands,449,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group F,3,Sweden,466,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group F,2,Japan,627,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group F,4,Tunisia,659,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group G,1,Belgium,459,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group G,3,Iran,469,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group G,2,Egypt,2620,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group G,4,New Zealand,2666,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group H,1,Spain,164,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group H,4,Uruguay,212,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group H,3,Saudi Arabia,655,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group H,2,Cape Verde,2597,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group I,4,Norway,464,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group I,1,France,478,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group I,2,Senegal,654,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group I,3,Iraq,4375,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group J,1,Argentina,202,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group J,3,Austria,474,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group J,2,Algeria,624,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group J,4,Jordan,2917,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group K,4,Colombia,208,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group K,1,Portugal,482,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group K,3,Uzbekistan,2570,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group K,2,Congo DR,2850,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group L,1,England,448,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group L,2,Croatia,477,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group L,4,Panama,2659,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
+Group L,3,Ghana,4469,0,0,0,0,0,0,0,0,espn_json,2026-06-12T05:17:41+00:00
