@@ -12,7 +12,7 @@ PREFERRED_PLAYER_VALUES_PATH = (
     PROJECT_ROOT / "data" / "processed" / "player_values_standardized.csv"
 )
 FALLBACK_PLAYER_VALUES_PATH = (
-    PROJECT_ROOT / "output" / "diagnostics" / "player_values_standardized.csv"
+    PROJECT_ROOT / "output" / "diagnostics" / "player_data" / "player_values_standardized.csv"
 )
 APPEARANCES_PATH = PROJECT_ROOT / "data" / "raw" / "appearances.csv"
 GAMES_PATH = PROJECT_ROOT / "data" / "raw" / "games.csv"
@@ -38,7 +38,7 @@ def resolve_player_values_path(path: Path | None = None) -> Path:
     if FALLBACK_PLAYER_VALUES_PATH.exists():
         return FALLBACK_PLAYER_VALUES_PATH
     raise FileNotFoundError(
-        "Could not find player_values_standardized.csv in data/processed or output/diagnostics"
+        "Could not find player_values_standardized.csv in data/processed or output/diagnostics/player_data"
     )
 
 

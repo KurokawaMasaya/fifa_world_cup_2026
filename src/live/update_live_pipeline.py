@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import os
+import shutil
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
@@ -21,11 +24,44 @@ LIVE_SUMMARY_PATH = LIVE_DIR / "worldcup_group_stage_live_summary.csv"
 LIVE_EVALUATION_PATH = LIVE_DIR / "worldcup_group_stage_live_evaluation.csv"
 LIVE_CALIBRATION_PATH = LIVE_DIR / "worldcup_group_stage_live_calibration.csv"
 LIVE_TOURNAMENT_SIMULATION_PATH = LIVE_DIR / "live_tournament_simulation.csv"
+SIMULATIONS_DIR = PROJECT_ROOT / "output" / "simulations"
+LIVE_TOURNAMENT_SIMULATION_FALLBACK_PATH = SIMULATIONS_DIR / "live_tournament_simulation.csv"
+LIVE_GROUP_PROJECTION_PATH = LIVE_DIR / "live_group_projection.csv"
+LIVE_PACKAGE_SYNC_PATHS = [
+    ([FIXTURES_RESULTS_PATH], FIXTURES_RESULTS_PATH.name),
+    ([LIVE_DIR / "group_standings.csv"], "group_standings.csv"),
+    ([LIVE_GROUP_PROJECTION_PATH], LIVE_GROUP_PROJECTION_PATH.name),
+    ([LIVE_SUMMARY_PATH], LIVE_SUMMARY_PATH.name),
+    ([LIVE_EVALUATION_PATH], LIVE_EVALUATION_PATH.name),
+    ([LIVE_CALIBRATION_PATH], LIVE_CALIBRATION_PATH.name),
+    (
+        [LIVE_TOURNAMENT_SIMULATION_PATH, LIVE_TOURNAMENT_SIMULATION_FALLBACK_PATH],
+        LIVE_TOURNAMENT_SIMULATION_PATH.name,
+    ),
+]
 LOG_COLUMNS = ["timestamp_utc", "step", "command", "status", "return_code", "message"]
+BEIJING_TZ = ZoneInfo("Asia/Shanghai")
+
+
+def local_api_package_live_dir() -> Path | None:
+    configured = os.getenv("CUPCAST_API_PACKAGE_LIVE_DIR")
+    if configured:
+        return Path(configured).expanduser()
+
+    candidates = [PROJECT_ROOT / "cupcast_api_package" / "output" / "live"]
+    for ancestor in PROJECT_ROOT.parents:
+        candidates.append(
+            ancestor / "FIFAproject2026" / "cupcast_api_package" / "output" / "live"
+        )
+    return next((path for path in candidates if path.exists()), None)
 
 
 def utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def beijing_today_yyyymmdd() -> str:
+    return datetime.now(BEIJING_TZ).strftime("%Y%m%d")
 
 
 def append_pipeline_log(
@@ -110,6 +146,45 @@ def completed_match_count() -> int | None:
     return int(value)
 
 
+def sync_local_api_package() -> None:
+    """Keep the local API package live outputs aligned with the source project."""
+    package_live_dir = local_api_package_live_dir()
+    if package_live_dir is None:
+        append_pipeline_log(
+            step="sync_local_api_package",
+            command="",
+            status="skipped",
+            return_code=0,
+            message="Package live directory not found",
+        )
+        return
+
+    copied = []
+    missing = []
+    package_live_dir.mkdir(parents=True, exist_ok=True)
+    for source_candidates, destination_name in LIVE_PACKAGE_SYNC_PATHS:
+        source_path = next((path for path in source_candidates if path.exists()), None)
+        if source_path is None:
+            missing.append(" or ".join(str(path) for path in source_candidates))
+            continue
+        destination = package_live_dir / destination_name
+        shutil.copy2(source_path, destination)
+        copied.append(destination_name)
+
+    status = "success" if not missing else "warning"
+    message = f"Copied to local API package: {', '.join(copied) if copied else 'none'}"
+    if missing:
+        message += f"; missing: {', '.join(missing)}"
+    append_pipeline_log(
+        step="sync_local_api_package",
+        command="",
+        status=status,
+        return_code=0,
+        message=message,
+    )
+    print(message)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Run the lightweight ESPN live update and evaluation pipeline."
@@ -117,6 +192,7 @@ def main() -> None:
     parser.add_argument("--skip-standings", action="store_true")
     parser.add_argument("--skip-cleanup", action="store_true")
     parser.add_argument("--skip-live-simulation", action="store_true")
+    parser.add_argument("--skip-daily-beijing-table", action="store_true")
     parser.add_argument(
         "--live-sim-n-sims",
         "--live-simulations",
@@ -137,6 +213,34 @@ def main() -> None:
         command=fetch_command,
         stop_on_failure=True,
     )
+
+    beijing_fetch_command = [
+        sys.executable,
+        "src/live/fetch_espn_worldcup_live.py",
+        "--date",
+        beijing_today_yyyymmdd(),
+        "--no-standings",
+    ]
+    run_step(
+        step="fetch_espn_worldcup_live_beijing_date",
+        command=beijing_fetch_command,
+        stop_on_failure=False,
+    )
+
+    if not args.skip_daily_beijing_table:
+        run_step(
+            step="export_daily_beijing_predictions",
+            command=[sys.executable, "src/live/export_daily_beijing_predictions.py"],
+            stop_on_failure=False,
+        )
+    else:
+        append_pipeline_log(
+            step="export_daily_beijing_predictions",
+            command="",
+            status="skipped",
+            return_code=0,
+            message="Skipped by --skip-daily-beijing-table",
+        )
 
     eval_result = run_step(
         step="evaluate_live_group_stage",
@@ -191,6 +295,8 @@ def main() -> None:
             message="Skipped by --skip-cleanup",
         )
 
+    sync_local_api_package()
+
     rows = fixture_row_count()
     completed = completed_match_count()
     fixtures = pd.read_csv(FIXTURES_RESULTS_PATH) if FIXTURES_RESULTS_PATH.exists() else pd.DataFrame()
@@ -219,6 +325,7 @@ def main() -> None:
         LIVE_EVALUATION_PATH,
         LIVE_CALIBRATION_PATH,
         PIPELINE_LOG_PATH,
+        PROJECT_ROOT / "output" / "predictions" / "group_stage_games_today_beijing_top5.csv",
         LIVE_TOURNAMENT_SIMULATION_PATH,
     ]:
         print(f"- {path}")

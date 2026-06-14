@@ -122,11 +122,12 @@ def load_completed_results(path: Path) -> pd.DataFrame:
     if missing:
         raise ValueError(f"Actual-results file is missing columns: {sorted(missing)}")
     actual = actual.copy()
+    # When a status column is present, restrict to completed (final) matches.
+    # When it is absent, treat every supplied row as a completed result and let
+    # actual_result_from_goals derive the outcome from goals_a/goals_b.
     if "status" in actual.columns:
         actual["status"] = actual["status"].astype(str).str.strip().str.lower()
         actual = actual.loc[actual["status"].eq("final")].copy()
-    else:
-        return actual.iloc[0:0].copy()
     if "actual_result" not in actual.columns:
         actual["actual_result"] = pd.NA
     actual["actual_result"] = actual.apply(actual_result_from_goals, axis=1)

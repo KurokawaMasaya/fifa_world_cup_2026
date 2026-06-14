@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -9,7 +10,16 @@ from fastapi import HTTPException
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_DIR = PROJECT_ROOT / "output"
+OUTPUT_DIR = Path(os.getenv("CUPCAST_OUTPUT_DIR", PROJECT_ROOT / "output")).expanduser()
+
+
+def _display_path(path: Path) -> str:
+    for base in [PROJECT_ROOT, OUTPUT_DIR.parent]:
+        try:
+            return str(path.relative_to(base))
+        except ValueError:
+            continue
+    return str(path)
 
 
 def _ensure_output_path(path: Path) -> Path:
@@ -35,14 +45,14 @@ def read_csv_or_503(path: Path) -> pd.DataFrame:
     if not safe_path.exists():
         raise HTTPException(
             status_code=503,
-            detail=f"Required output file is missing: {safe_path.relative_to(PROJECT_ROOT)}",
+            detail=f"Required output file is missing: {_display_path(safe_path)}",
         )
     try:
         return pd.read_csv(safe_path)
     except Exception as exc:  # pragma: no cover - defensive API boundary.
         raise HTTPException(
             status_code=503,
-            detail=f"Could not read output file {safe_path.relative_to(PROJECT_ROOT)}: {exc}",
+            detail=f"Could not read output file {_display_path(safe_path)}: {exc}",
         ) from exc
 
 
@@ -66,13 +76,13 @@ def latest_csv(directory: Path, pattern: str = "*.csv") -> Path:
     if not safe_dir.exists():
         raise HTTPException(
             status_code=503,
-            detail=f"Output directory is missing: {safe_dir.relative_to(PROJECT_ROOT)}",
+            detail=f"Output directory is missing: {_display_path(safe_dir)}",
         )
     files = sorted(safe_dir.glob(pattern), key=lambda path: path.stat().st_mtime, reverse=True)
     if not files:
         raise HTTPException(
             status_code=503,
-            detail=f"No CSV files found under {safe_dir.relative_to(PROJECT_ROOT)}",
+            detail=f"No CSV files found under {_display_path(safe_dir)}",
         )
     return files[0]
 
@@ -83,7 +93,7 @@ def file_metadata(path: Path) -> dict[str, Any]:
     df = read_csv_or_503(safe_path)
     modified = datetime.fromtimestamp(safe_path.stat().st_mtime, tz=timezone.utc)
     return {
-        "source_file": str(safe_path.relative_to(PROJECT_ROOT)),
+        "source_file": _display_path(safe_path),
         "file_last_modified": modified.isoformat(),
         "row_count": int(len(df)),
     }
@@ -126,7 +136,7 @@ def existing_and_missing(paths: dict[str, Path]) -> tuple[dict[str, str], dict[s
     missing = {}
     for label, path in paths.items():
         safe_path = _ensure_output_path(path)
-        rel_path = str(safe_path.relative_to(PROJECT_ROOT))
+        rel_path = _display_path(safe_path)
         if safe_path.exists():
             available[label] = rel_path
         else:

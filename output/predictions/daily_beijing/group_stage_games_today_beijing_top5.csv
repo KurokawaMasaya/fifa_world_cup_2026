@@ -1,0 +1,5 @@
+beijing_date,beijing_kickoff_time,espn_match_id,group,team_a,team_b,team_a_win_pct,draw_pct,team_b_win_pct,top_5_scorelines,top_5_scoreline_probability_pct,top_5_display,status,venue,city
+2026-06-14,03:00,760420,B,Qatar,Switzerland,10,18,72,"[""0-2"", ""0-1"", ""0-3"", ""1-2"", ""1-1""]","[11, 11, 8, 8, 8]","0-2 (11%), 0-1 (11%), 0-3 (8%), 1-2 (8%), 1-1 (8%)",final,Levi's Stadium,"Santa Clara, California"
+2026-06-14,06:00,760419,C,Brazil,Morocco,37,30,33,"[""1-1"", ""1-0"", ""0-1"", ""2-1"", ""1-2""]","[11, 9, 9, 8, 7]","1-1 (11%), 1-0 (9%), 0-1 (9%), 2-1 (8%), 1-2 (7%)",final,MetLife Stadium,"East Rutherford, New Jersey"
+2026-06-14,09:00,760418,C,Haiti,Scotland,15,22,63,"[""0-1"", ""0-2"", ""1-1"", ""1-2"", ""0-3""]","[11, 10, 9, 9, 7]","0-1 (11%), 0-2 (10%), 1-1 (9%), 1-2 (9%), 0-3 (7%)",in_progress,Gillette Stadium,"Foxborough, Massachusetts"
+2026-06-14,12:00,760421,D,Australia,Turkey,28,27,45,"[""1-1"", ""0-1"", ""1-2"", ""1-0"", ""0-2""]","[11, 10, 8, 8, 7]","1-1 (11%), 0-1 (10%), 1-2 (8%), 1-0 (8%), 0-2 (7%)",scheduled,BC Place,Vancouver

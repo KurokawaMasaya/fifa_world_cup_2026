@@ -297,17 +297,17 @@ def select_display_scoreline_from_grid(
 def get_top_scorelines(
     scoreline_grid: Mapping[str, float],
     top_n: int = 3,
-    mode: str = "balanced",
+    mode: str = "mode",
     top_n_candidates: int = 10,
     lambda_a: float | None = None,
     lambda_b: float | None = None,
 ) -> list[dict[str, float | str]]:
     """Return displayed scorelines with probabilities and implied W/D/L result.
 
-    The first row is the selected displayed scoreline. In ``mode='mode'`` this
-    is the raw NB mode. In ``balanced`` or ``aggressive`` mode, raw NB
-    probabilities remain unchanged but the displayed scoreline may choose a
-    close-probability alternative that better represents matchup imbalance.
+    The production default is ``mode='mode'``: the first row is the raw NB
+    mode. V2.1/V2.2 selector modes remain available for diagnostics only. In
+    all modes, this function affects displayed scorelines only and never
+    changes calibrated W/D/L probabilities.
     """
     if top_n <= 0:
         raise ValueError("top_n must be positive")

@@ -36,6 +36,23 @@ class HealthResponse(BaseModel):
     timestamp_utc: str
 
 
+class LiveScoreResponse(BaseModel):
+    provider: str
+    provider_league: str
+    provider_fetched_at_utc: str
+    cache_seconds: int
+    row_count: int
+    data: list[dict[str, Any]]
+
+
+class LiveScoreDetailResponse(BaseModel):
+    provider: str
+    provider_league: str
+    provider_fetched_at_utc: str
+    cache_seconds: int
+    data: dict[str, Any]
+
+
 class MessageResponse(BaseModel):
     model_config = ConfigDict(extra="allow")
 

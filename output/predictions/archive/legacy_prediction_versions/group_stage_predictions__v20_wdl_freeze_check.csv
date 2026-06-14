@@ -1,0 +1,2 @@
+scoreline_version,rows_compared,max_abs_diff_team_a_win_pct,max_abs_diff_draw_pct,max_abs_diff_team_b_win_pct,rows_wdl_changed,scoreline_rows_changed,status
+v20_stable,72,0,0,0,0,33,PASS

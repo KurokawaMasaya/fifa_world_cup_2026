@@ -18,7 +18,8 @@ from src.api.data_loader import (
     latest_csv,
     read_csv_or_503,
 )
-from src.api.schemas import DatasetResponse, HealthResponse
+from src.api.live_scores import DEFAULT_LEAGUE, get_live_score, get_live_scores
+from src.api.schemas import DatasetResponse, HealthResponse, LiveScoreDetailResponse, LiveScoreResponse
 
 
 PREDICTIONS_CLEAN_PATH = OUTPUT_DIR / "predictions" / "group_stage_predictions_clean.csv"
@@ -28,6 +29,9 @@ PREDICTIONS_DETAIL_PATH = (
 LIVE_RESULTS_PATH = OUTPUT_DIR / "live" / "fixtures_results.csv"
 LIVE_STANDINGS_PATH = OUTPUT_DIR / "live" / "group_standings.csv"
 LIVE_EVALUATION_PATH = OUTPUT_DIR / "live" / "worldcup_group_stage_live_summary.csv"
+LIVE_EVALUATION_DETAIL_PATH = OUTPUT_DIR / "live" / "worldcup_group_stage_live_evaluation.csv"
+LIVE_CALIBRATION_PATH = OUTPUT_DIR / "live" / "worldcup_group_stage_live_calibration.csv"
+LIVE_GROUP_PROJECTION_PATH = OUTPUT_DIR / "live" / "live_group_projection.csv"
 LIVE_TOURNAMENT_SIMULATION_PATH = OUTPUT_DIR / "live" / "live_tournament_simulation.csv"
 MODEL_SUMMARY_PATH = OUTPUT_DIR / "diagnostics" / "model_performance_summary.csv"
 SIMULATIONS_DIR = OUTPUT_DIR / "simulations"
@@ -39,6 +43,9 @@ HEALTH_FILES = {
     "live_results": LIVE_RESULTS_PATH,
     "live_standings": LIVE_STANDINGS_PATH,
     "live_evaluation": LIVE_EVALUATION_PATH,
+    "live_evaluation_detail": LIVE_EVALUATION_DETAIL_PATH,
+    "live_calibration": LIVE_CALIBRATION_PATH,
+    "live_group_projection": LIVE_GROUP_PROJECTION_PATH,
     "live_tournament_simulation": LIVE_TOURNAMENT_SIMULATION_PATH,
     "model_summary": MODEL_SUMMARY_PATH,
 }
@@ -100,14 +107,14 @@ def group_stage_predictions() -> dict:
 
 @app.get("/predictions/group-stage/{match_id}")
 def group_stage_prediction(match_id: str) -> dict:
-    df = read_csv_or_503(PREDICTIONS_DETAIL_PATH)
+    df = read_csv_or_503(PREDICTIONS_CLEAN_PATH)
     if "match_id" not in df.columns:
         raise HTTPException(status_code=503, detail="Prediction file is missing match_id column")
     match = df.loc[df["match_id"].astype(str) == str(match_id)]
     if match.empty:
         raise HTTPException(status_code=404, detail=f"No group-stage prediction for match_id={match_id}")
     return {
-        **file_metadata(PREDICTIONS_DETAIL_PATH),
+        **file_metadata(PREDICTIONS_CLEAN_PATH),
         "data": dataframe_records(match)[0],
     }
 
@@ -154,6 +161,21 @@ def live_results() -> dict:
     return dataset_response(LIVE_RESULTS_PATH, freshness=True)
 
 
+@app.get("/live/scores", response_model=LiveScoreResponse)
+def live_scores(league: str = DEFAULT_LEAGUE, date: str | None = None) -> dict:
+    """Return in-game scores from the live-score provider.
+
+    `date` accepts YYYY-MM-DD or YYYYMMDD. Clients should poll this endpoint
+    every 10-30 seconds for live match scoreboards.
+    """
+    return get_live_scores(league=league, date=date)
+
+
+@app.get("/live/scores/{match_id}", response_model=LiveScoreDetailResponse)
+def live_score(match_id: str, league: str = DEFAULT_LEAGUE, date: str | None = None) -> dict:
+    return get_live_score(match_id=match_id, league=league, date=date)
+
+
 @app.get("/live/standings", response_model=DatasetResponse, response_model_exclude_none=True)
 def live_standings() -> dict:
     return dataset_response(LIVE_STANDINGS_PATH, freshness=True)
@@ -162,6 +184,21 @@ def live_standings() -> dict:
 @app.get("/live/evaluation", response_model=DatasetResponse, response_model_exclude_none=True)
 def live_evaluation() -> dict:
     return dataset_response(LIVE_EVALUATION_PATH, freshness=True)
+
+
+@app.get("/live/evaluation/detail", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_evaluation_detail() -> dict:
+    return dataset_response(LIVE_EVALUATION_DETAIL_PATH, freshness=True)
+
+
+@app.get("/live/calibration", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_calibration() -> dict:
+    return dataset_response(LIVE_CALIBRATION_PATH, freshness=True)
+
+
+@app.get("/live/group-projection", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_group_projection() -> dict:
+    return dataset_response(LIVE_GROUP_PROJECTION_PATH, freshness=True)
 
 
 @app.get("/live/tournament-simulation", response_model=DatasetResponse, response_model_exclude_none=True)

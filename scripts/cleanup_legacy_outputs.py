@@ -101,6 +101,13 @@ def legacy_candidates() -> list[Path]:
         for path in root.rglob("*"):
             if not path.is_file():
                 continue
+            if path == OUTPUT_DIR / "START_HERE.md":
+                continue
+            if is_under(path, OUTPUT_DIR) and path.parent != OUTPUT_DIR:
+                # Files already inside an output subfolder are considered
+                # organized. Do not flatten nested reports/diagnostics back
+                # into top-level output category folders.
+                continue
             category = target_category(path)
             if (
                 category is not None

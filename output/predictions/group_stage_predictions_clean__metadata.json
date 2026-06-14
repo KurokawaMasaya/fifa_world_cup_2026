@@ -1,0 +1,13 @@
+{
+  "production_scoreline_version": "v24_abcd_no_e",
+  "production_status": "production",
+  "scoreline_presentation": "top_5_scorelines",
+  "previous_scoreline_presentation": "single_top1_scoreline",
+  "WDL_frozen": true,
+  "generated_at": "2026-06-13T12:17:24.649856+00:00",
+  "source_shadow_file": "legacy/outputs/predictions/v24_shadow/group_stage_predictions__scoreline_v24_abcd_no_e_shadow.csv",
+  "production_output": "output/predictions/group_stage_predictions_clean.csv",
+  "versioned_output": "output/predictions/versioned_scoreline/group_stage_predictions__scoreline_v24_abcd_no_e_production.csv",
+  "wdl_freeze_check": "output/predictions/versioned_scoreline/group_stage_predictions__top5_presentation_wdl_freeze_check.csv",
+  "notes": "Clean presentation now exposes top-5 scorelines and top-5 probability percentages instead of a single exact top-1 scoreline. W/D/L percentages are unchanged."
+}

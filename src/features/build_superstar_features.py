@@ -14,6 +14,9 @@ if __package__ is None or __package__ == "":
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PREFERRED_PLAYER_VALUES_PATH = PROJECT_ROOT / "data" / "processed" / "player_values_standardized.csv"
 FALLBACK_PLAYER_VALUES_PATH = PROJECT_ROOT / "output" / "diagnostics" / "player_values_standardized.csv"
+ORGANIZED_PLAYER_VALUES_PATH = (
+    PROJECT_ROOT / "output" / "diagnostics" / "player_data" / "player_values_standardized.csv"
+)
 OUTPUT_PATH = PROJECT_ROOT / "data" / "processed" / "superstar_features.csv"
 
 
@@ -24,8 +27,11 @@ def resolve_player_values_path(path: Path | None = None) -> Path:
         return PREFERRED_PLAYER_VALUES_PATH
     if FALLBACK_PLAYER_VALUES_PATH.exists():
         return FALLBACK_PLAYER_VALUES_PATH
+    if ORGANIZED_PLAYER_VALUES_PATH.exists():
+        return ORGANIZED_PLAYER_VALUES_PATH
     raise FileNotFoundError(
-        f"Could not find {PREFERRED_PLAYER_VALUES_PATH} or {FALLBACK_PLAYER_VALUES_PATH}"
+        "Could not find player_values_standardized.csv in data/processed, "
+        "output/diagnostics, or output/diagnostics/player_data"
     )
 
 

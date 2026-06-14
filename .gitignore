@@ -9,6 +9,7 @@ venv/
 
 # IDE
 .idea/
+.obsidian/
 
 # Secrets
 .env
@@ -29,6 +30,10 @@ scripts/sync_to_server.sh
 
 # Local deliverables
 deliverables/
+
+# Local archive / working notes
+legacy/
+docs/chat_notes/
 
 # Raw / large data
 data/

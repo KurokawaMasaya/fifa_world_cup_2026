@@ -28,35 +28,86 @@ CLEAN_COLUMNS = [
     "team_a_win_pct",
     "draw_pct",
     "team_b_win_pct",
-    "predicted_scoreline",
-    "scoreline_probability_pct",
+    "top_5_scorelines",
+    "top_5_scoreline_probability_pct",
 ]
 
 
 def export_clean_predictions(input_path: Path, output_path: Path) -> pd.DataFrame:
     predictions = pd.read_csv(input_path)
-    required = {
-        "match_id",
-        "group",
-        "team_a",
-        "team_b",
-        "v2_p_team_a_win",
-        "v2_p_draw",
-        "v2_p_team_b_win",
-        "nb_top_scoreline_1",
-        "nb_top_scoreline_1_probability",
-    }
+    required = {"match_id", "group", "team_a", "team_b"}
+    probability_columns = {"v2_p_team_a_win", "v2_p_draw", "v2_p_team_b_win"}
+    percentage_columns = {"team_a_win_pct", "draw_pct", "team_b_win_pct"}
+    if probability_columns.issubset(predictions.columns):
+        required |= probability_columns
+    else:
+        required |= percentage_columns
+
+    if "top_5_scorelines" in predictions.columns and "top_5_scoreline_probs" in predictions.columns:
+        top5_source = "v24_top5"
+    elif all(
+        col in predictions.columns
+        for col in [
+            "nb_top_scoreline_1",
+            "nb_top_scoreline_1_probability",
+            "nb_top_scoreline_2",
+            "nb_top_scoreline_2_probability",
+            "nb_top_scoreline_3",
+            "nb_top_scoreline_3_probability",
+        ]
+    ):
+        top5_source = "nb_top3"
+    else:
+        top5_source = "single_scoreline"
+        required |= {"predicted_scoreline", "scoreline_probability_pct"}
+
     missing = required - set(predictions.columns)
     if missing:
         raise ValueError(f"{input_path} is missing required columns: {sorted(missing)}")
 
-    probability_sum = (
-        predictions["v2_p_team_a_win"]
-        + predictions["v2_p_draw"]
-        + predictions["v2_p_team_b_win"]
-    )
-    if (probability_sum - 1.0).abs().max() > 1e-9:
-        raise ValueError("Official V2 probabilities must sum to 1 before clean export")
+    if probability_columns.issubset(predictions.columns):
+        probability_sum = (
+            predictions["v2_p_team_a_win"]
+            + predictions["v2_p_draw"]
+            + predictions["v2_p_team_b_win"]
+        )
+        if (probability_sum - 1.0).abs().max() > 1e-9:
+            raise ValueError("Official V2 probabilities must sum to 1 before clean export")
+        team_a_win_pct = (predictions["v2_p_team_a_win"] * 100).round().astype(int)
+        draw_pct = (predictions["v2_p_draw"] * 100).round().astype(int)
+        team_b_win_pct = (predictions["v2_p_team_b_win"] * 100).round().astype(int)
+    else:
+        team_a_win_pct = predictions["team_a_win_pct"].round().astype(int)
+        draw_pct = predictions["draw_pct"].round().astype(int)
+        team_b_win_pct = predictions["team_b_win_pct"].round().astype(int)
+
+    if top5_source == "v24_top5":
+        top_5_scorelines = predictions["top_5_scorelines"]
+        top_5_probs = predictions["top_5_scoreline_probs"]
+    elif top5_source == "nb_top3":
+        top_5_scorelines = predictions.apply(
+            lambda row: str(
+                [
+                    row["nb_top_scoreline_1"],
+                    row["nb_top_scoreline_2"],
+                    row["nb_top_scoreline_3"],
+                ]
+            ),
+            axis=1,
+        )
+        top_5_probs = predictions.apply(
+            lambda row: str(
+                [
+                    float(row["nb_top_scoreline_1_probability"]),
+                    float(row["nb_top_scoreline_2_probability"]),
+                    float(row["nb_top_scoreline_3_probability"]),
+                ]
+            ),
+            axis=1,
+        )
+    else:
+        top_5_scorelines = predictions["predicted_scoreline"].map(lambda value: str([str(value)]))
+        top_5_probs = predictions["scoreline_probability_pct"].map(lambda value: str([float(value) / 100]))
 
     clean = pd.DataFrame(
         {
@@ -64,15 +115,11 @@ def export_clean_predictions(input_path: Path, output_path: Path) -> pd.DataFram
             "group": predictions["group"],
             "team_a": predictions["team_a"],
             "team_b": predictions["team_b"],
-            "team_a_win_pct": (predictions["v2_p_team_a_win"] * 100).round().astype(int),
-            "draw_pct": (predictions["v2_p_draw"] * 100).round().astype(int),
-            "team_b_win_pct": (predictions["v2_p_team_b_win"] * 100).round().astype(int),
-            "predicted_scoreline": predictions["nb_top_scoreline_1"],
-            "scoreline_probability_pct": (
-                predictions["nb_top_scoreline_1_probability"] * 100
-            )
-            .round()
-            .astype(int),
+            "team_a_win_pct": team_a_win_pct,
+            "draw_pct": draw_pct,
+            "team_b_win_pct": team_b_win_pct,
+            "top_5_scorelines": top_5_scorelines,
+            "top_5_scoreline_probability_pct": top_5_probs,
         }
     )[CLEAN_COLUMNS]
 

@@ -1,24 +1,89 @@
 # FIFAproject2026
 
-## Project Overview
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-read--only-009688)](https://fastapi.tiangolo.com/)
+![Status](https://img.shields.io/badge/status-live%20demo-brightgreen)
 
-FIFAproject2026 is a forecasting system for the 2026 FIFA World Cup. It produces match-level probabilities, scoreline displays, tournament simulation probabilities, live result tracking, live evaluation outputs, and a read-only API for frontend or desktop gadget integration.
+A 2026 FIFA World Cup forecasting system that combines calibrated match prediction, roster-aware adjustments, tournament simulation, live result evaluation, live tournament simulation, and a read-only FastAPI backend.
 
-The project is designed to answer questions such as:
+This is not just a one-time prediction table. CupCast is built as a live forecasting system: it produces pre-match probabilities, tracks completed results, evaluates calibration as matches finish, re-simulates the tournament from the current state, and exposes the latest outputs through an API.
 
-- What are the group-stage win/draw/loss probabilities for each fixture?
-- What is the most likely displayed scoreline for a match?
-- Which teams are most likely to advance through each tournament stage?
-- How do live results compare with locked pre-match predictions?
-- How can a frontend read predictions and live outputs without rerunning model code?
+## What It Does
+
+- Predicts group-stage win/draw/loss probabilities.
+- Displays likely scorelines using a separate scoreline layer.
+- Simulates tournament advancement and champion probabilities.
+- Fetches live match results from ESPN JSON endpoints.
+- Evaluates predictions automatically after completed matches.
+- Runs live tournament simulation conditioned on real completed results.
+- Exposes outputs through a read-only FastAPI backend.
+
+## Why This Project Is Interesting
+
+Most sports prediction projects stop at pre-match probabilities. This project treats forecasting as a live system:
+
+1. Predictions are generated before matches.
+2. Completed matches are fetched automatically.
+3. Accuracy and calibration are evaluated live.
+4. Tournament probabilities are re-simulated based on actual results.
+5. Outputs are exposed through a deployed API-ready backend.
+
+## System Architecture
+
+```text
+Historical Results + Ratings + Squad Data
+        |
+        v
+Calibrated W/D/L Model
+        |
+        v
+Roster-Aware Adjustment
+        |
+        v
+Scoreline Display Layer
+        |
+        v
+Tournament Simulation
+        |
+        v
+ESPN Live Results -> Live Evaluation -> Live Tournament Simulation
+        |
+        v
+Read-only FastAPI Backend
+```
+
+## Quick Demo
+
+Run the local API:
+
+```bash
+PYTHONPATH=. python3 -m uvicorn src.api.main:app --reload
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Example read-only endpoints:
+
+- `GET /health`
+- `GET /predictions/group-stage`
+- `GET /predictions/matches`
+- `GET /live/evaluation`
+- `GET /live/tournament-simulation`
+- `GET /simulation/tournament`
 
 ## Current Status
 
 - V1 calibrated team-strength model: completed.
 - V2 player-informed / roster-aware probability layer: completed and current.
+- Production scoreline display layer: V2.4 ABCD no-E gated blowout mixture.
 - Read-only FastAPI backend: completed.
 - ESPN live updater: prepared.
 - Live evaluation: handles pre-tournament state with zero completed matches.
+- Live tournament simulation: completed as a state-conditioned simulator.
 - Large datasets and heavy generated outputs: moved outside GitHub and documented separately.
 
 ## Model Architecture
@@ -74,8 +139,8 @@ Football draws can have meaningful probability even when the highest single outc
 - team A win probability
 - draw probability
 - team B win probability
-- displayed scoreline
-- scoreline probability
+- top-5 displayed scorelines
+- top-5 scoreline probabilities
 
 The clean frontend/API prediction file is:
 
@@ -84,6 +149,8 @@ output/predictions/group_stage_predictions_clean.csv
 ```
 
 This file is designed for presentation and API use. It avoids internal diagnostics, model parameters, and debug fields.
+
+The current production scoreline version is `v24_abcd_no_e`. W/D/L probabilities remain produced by the calibrated V2 probability stack; the V2.4 ABCD no-E promotion only changes the displayed scoreline layer. The presentation output now shows top-5 scoreline candidates instead of a single exact top-1 scoreline.
 
 ## Tournament Simulation
 
@@ -141,9 +208,10 @@ The live pipeline runs in this order:
 
 ```text
 1. Fetch ESPN live fixtures/results
-2. Evaluate completed matches against locked predictions
-3. Run live tournament simulation from the current tournament state
-4. Write live outputs under output/live/
+2. Export the daily Beijing-time prediction table
+3. Evaluate completed matches against locked predictions
+4. Run live tournament simulation from the current tournament state
+5. Write live outputs under output/live/ and output/predictions/
 ```
 
 The live tournament simulation uses completed real scores from ESPN and existing model probabilities for remaining matches. It is a state-conditioned simulation, not a dynamic strength update model.
@@ -154,6 +222,14 @@ Example commands:
 python3 src/live/update_live_pipeline.py
 python3 src/live/update_live_pipeline.py --live-sim-n-sims 50000
 python3 src/live/update_live_pipeline.py --skip-live-simulation
+python3 src/live/export_daily_beijing_predictions.py --date 2026-06-14
+```
+
+The daily Beijing-time table defaults to the current date in `Asia/Shanghai` and writes:
+
+```text
+output/predictions/group_stage_games_today_beijing_top5.csv
+output/reports/group_stage_games_today_beijing_top5.md
 ```
 
 For local cron testing, the project uses:
@@ -162,9 +238,25 @@ For local cron testing, the project uses:
 python3 src/live/update_live_pipeline.py --live-sim-n-sims 10000
 ```
 
+If the FastAPI package is outside this source project, set the API package live
+output directory before running the live pipeline:
+
+```bash
+export CUPCAST_API_PACKAGE_LIVE_DIR=/Users/joe/Desktop/FIFAproject2026/cupcast_api_package/output/live
+python3 src/live/update_live_pipeline.py --live-sim-n-sims 10000
+```
+
 ## API Backend
 
 The API backend is a read-only FastAPI service. It reads existing CSV outputs and returns JSON for frontend or gadget use.
+
+When running an extracted API package from another folder, point it at this
+project's generated output directory:
+
+```bash
+export CUPCAST_OUTPUT_DIR=/Users/joe/Desktop/McGill/projects/FIFAproject2026/output
+uvicorn src.api.main:app --reload
+```
 
 The API does not:
 
@@ -195,6 +287,10 @@ GET /live/tournament-simulation
 ```
 
 The `/live/tournament-simulation` endpoint only reads the latest `output/live/live_tournament_simulation.csv`. It does not run simulations on request.
+
+## Early Live Validation
+
+The first completed match was correctly predicted with an exact 2-0 displayed scoreline. This single match is not statistically meaningful evidence by itself, but it confirms that the prediction output, live result update, evaluation pipeline, and API layer are working end to end.
 
 ## Data Availability
 
@@ -228,6 +324,8 @@ data/sample/
 
 See `docs/DATA.md` for the external data handoff instructions.
 
+Sample and demo outputs are included only for schema inspection, API testing, and lightweight frontend integration. They are not a replacement for the full local data package.
+
 ## Key Issues Encountered and Fixes
 
 | Issue | Cause | Fix |
@@ -240,27 +338,7 @@ See `docs/DATA.md` for the external data handoff instructions.
 | API usability issue. | Detail endpoints require `match_id` or exact team name. | Added list/index endpoints for matches and teams so frontend users do not manually type IDs. |
 | Local cron limitation. | Local cron only runs when the computer is awake. | Recommend server-side cron for deployed API and live updates. |
 
-## Local API Run
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Run the API:
-
-```bash
-PYTHONPATH=. python3 -m uvicorn src.api.main:app --reload
-```
-
-Open the interactive API documentation:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-## Repository Policy
+## Repository Safety / Public Release Notes
 
 GitHub tracks:
 
@@ -277,5 +355,14 @@ GitHub does not track:
 - heavy generated simulation outputs
 - full diagnostics outputs
 - local archive files
+
+The public repository is configured to exclude:
+
+- private keys
+- `.env` files
+- raw large datasets
+- local deployment scripts with credentials
+- log files
+- IDE metadata
 
 Do not commit large raw data or simulation outputs. Restore full data locally from the Google Drive package when reproducing the complete workflow.

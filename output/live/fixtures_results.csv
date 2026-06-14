@@ -1,3 +1,13 @@
 match_id,espn_event_id,date,kickoff_time_utc,group,team_a,team_b,team_a_id,team_b_id,goals_a,goals_b,status,status_detail,actual_result,venue,city,source,last_updated
-760415,760415,2026-06-11,2026-06-11T19:00Z,,Mexico,South Africa,203,467,2,0,final,FT,team_a_win,Estadio Banorte,Mexico City,espn_json,2026-06-12T05:17:40+00:00
-760414,760414,2026-06-12,2026-06-12T02:00Z,,South Korea,Czechia,451,450,2,1,final,FT,team_a_win,Estadio Akron,Guadalajara,espn_json,2026-06-12T05:17:40+00:00
+760415,760415,2026-06-11,2026-06-11T19:00Z,,Mexico,South Africa,203,467,2,0,final,FT,team_a_win,Estadio Banorte,Mexico City,espn_json,2026-06-12T07:00:03+00:00
+760414,760414,2026-06-12,2026-06-12T02:00Z,,South Korea,Czechia,451,450,2,1,final,FT,team_a_win,Estadio Akron,Guadalajara,espn_json,2026-06-12T07:00:03+00:00
+760416,760416,2026-06-12,2026-06-12T19:00Z,,Canada,Bosnia-Herzegovina,206,452,1,1,final,FT,draw,BMO Field,Toronto,espn_json,2026-06-13T07:06:44+00:00
+760417,760417,2026-06-13,2026-06-13T01:00Z,,United States,Paraguay,660,210,4,1,final,FT,team_a_win,SoFi Stadium,"Inglewood, California",espn_json,2026-06-13T07:06:44+00:00
+760420,760420,2026-06-13,2026-06-13T19:00Z,,Qatar,Switzerland,4398,475,1,1,final,FT,draw,Levi's Stadium,"Santa Clara, California",espn_json,2026-06-14T02:40:17+00:00
+760419,760419,2026-06-13,2026-06-13T22:00Z,,Brazil,Morocco,205,2869,1,1,final,FT,draw,MetLife Stadium,"East Rutherford, New Jersey",espn_json,2026-06-14T02:40:17+00:00
+760418,760418,2026-06-14,2026-06-14T01:00Z,,Haiti,Scotland,2654,580,0,1,in_progress,76',in_progress,Gillette Stadium,"Foxborough, Massachusetts",espn_json,2026-06-14T02:40:17+00:00
+760421,760421,2026-06-14,2026-06-14T04:00Z,,Australia,Türkiye,628,465,0,0,scheduled,"Sun, June 13th at 12:00 AM EDT",not_started,BC Place,Vancouver,espn_json,2026-06-14T02:40:19+00:00
+760422,760422,2026-06-14,2026-06-14T17:00Z,,Germany,Curaçao,481,11678,0,0,scheduled,"Sun, June 14th at 1:00 PM EDT",not_started,NRG Stadium,"Houston, Texas",espn_json,2026-06-14T02:40:19+00:00
+760425,760425,2026-06-14,2026-06-14T20:00Z,,Netherlands,Japan,449,627,0,0,scheduled,"Sun, June 14th at 4:00 PM EDT",not_started,AT&T Stadium,"Arlington, Texas",espn_json,2026-06-14T02:40:19+00:00
+760423,760423,2026-06-14,2026-06-14T23:00Z,,Ivory Coast,Ecuador,4789,209,0,0,scheduled,"Sun, June 14th at 7:00 PM EDT",not_started,Lincoln Financial Field,"Philadelphia, Pennsylvania",espn_json,2026-06-14T02:40:19+00:00
+760424,760424,2026-06-15,2026-06-15T02:00Z,,Sweden,Tunisia,466,659,0,0,scheduled,"Sun, June 14th at 10:00 PM EDT",not_started,Estadio BBVA,Guadalupe,espn_json,2026-06-14T02:40:19+00:00
