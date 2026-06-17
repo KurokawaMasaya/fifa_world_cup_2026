@@ -3,11 +3,23 @@ match_id,espn_event_id,date,kickoff_time_utc,group,team_a,team_b,team_a_id,team_
 760414,760414,2026-06-12,2026-06-12T02:00Z,,South Korea,Czechia,451,450,2,1,final,FT,team_a_win,Estadio Akron,Guadalajara,espn_json,2026-06-12T07:00:03+00:00
 760416,760416,2026-06-12,2026-06-12T19:00Z,,Canada,Bosnia-Herzegovina,206,452,1,1,final,FT,draw,BMO Field,Toronto,espn_json,2026-06-13T07:06:44+00:00
 760417,760417,2026-06-13,2026-06-13T01:00Z,,United States,Paraguay,660,210,4,1,final,FT,team_a_win,SoFi Stadium,"Inglewood, California",espn_json,2026-06-13T07:06:44+00:00
-760420,760420,2026-06-13,2026-06-13T19:00Z,,Qatar,Switzerland,4398,475,1,1,final,FT,draw,Levi's Stadium,"Santa Clara, California",espn_json,2026-06-14T02:40:17+00:00
-760419,760419,2026-06-13,2026-06-13T22:00Z,,Brazil,Morocco,205,2869,1,1,final,FT,draw,MetLife Stadium,"East Rutherford, New Jersey",espn_json,2026-06-14T02:40:17+00:00
-760418,760418,2026-06-14,2026-06-14T01:00Z,,Haiti,Scotland,2654,580,0,1,in_progress,76',in_progress,Gillette Stadium,"Foxborough, Massachusetts",espn_json,2026-06-14T02:40:17+00:00
-760421,760421,2026-06-14,2026-06-14T04:00Z,,Australia,Türkiye,628,465,0,0,scheduled,"Sun, June 13th at 12:00 AM EDT",not_started,BC Place,Vancouver,espn_json,2026-06-14T02:40:19+00:00
-760422,760422,2026-06-14,2026-06-14T17:00Z,,Germany,Curaçao,481,11678,0,0,scheduled,"Sun, June 14th at 1:00 PM EDT",not_started,NRG Stadium,"Houston, Texas",espn_json,2026-06-14T02:40:19+00:00
-760425,760425,2026-06-14,2026-06-14T20:00Z,,Netherlands,Japan,449,627,0,0,scheduled,"Sun, June 14th at 4:00 PM EDT",not_started,AT&T Stadium,"Arlington, Texas",espn_json,2026-06-14T02:40:19+00:00
-760423,760423,2026-06-14,2026-06-14T23:00Z,,Ivory Coast,Ecuador,4789,209,0,0,scheduled,"Sun, June 14th at 7:00 PM EDT",not_started,Lincoln Financial Field,"Philadelphia, Pennsylvania",espn_json,2026-06-14T02:40:19+00:00
-760424,760424,2026-06-15,2026-06-15T02:00Z,,Sweden,Tunisia,466,659,0,0,scheduled,"Sun, June 14th at 10:00 PM EDT",not_started,Estadio BBVA,Guadalupe,espn_json,2026-06-14T02:40:19+00:00
+760420,760420,2026-06-13,2026-06-13T19:00Z,,Qatar,Switzerland,4398,475,1,1,final,FT,draw,Levi's Stadium,"Santa Clara, California",espn_json,2026-06-14T06:36:44+00:00
+760419,760419,2026-06-13,2026-06-13T22:00Z,,Brazil,Morocco,205,2869,1,1,final,FT,draw,MetLife Stadium,"East Rutherford, New Jersey",espn_json,2026-06-14T06:36:44+00:00
+760418,760418,2026-06-14,2026-06-14T01:00Z,,Haiti,Scotland,2654,580,0,1,final,FT,team_b_win,Gillette Stadium,"Foxborough, Massachusetts",espn_json,2026-06-14T06:36:44+00:00
+760421,760421,2026-06-14,2026-06-14T04:00Z,,Australia,Türkiye,628,465,2,0,final,FT,team_a_win,BC Place,Vancouver,espn_json,2026-06-15T07:10:23+00:00
+760422,760422,2026-06-14,2026-06-14T17:00Z,,Germany,Curaçao,481,11678,7,1,final,FT,team_a_win,NRG Stadium,"Houston, Texas",espn_json,2026-06-15T07:10:23+00:00
+760425,760425,2026-06-14,2026-06-14T20:00Z,,Netherlands,Japan,449,627,2,2,final,FT,draw,AT&T Stadium,"Arlington, Texas",espn_json,2026-06-15T07:10:23+00:00
+760423,760423,2026-06-14,2026-06-14T23:00Z,,Ivory Coast,Ecuador,4789,209,1,0,final,FT,team_a_win,Lincoln Financial Field,"Philadelphia, Pennsylvania",espn_json,2026-06-15T07:10:23+00:00
+760424,760424,2026-06-15,2026-06-15T02:00Z,,Sweden,Tunisia,466,659,5,1,final,FT,team_a_win,Estadio BBVA,Guadalupe,espn_json,2026-06-15T07:10:23+00:00
+760428,760428,2026-06-15,2026-06-15T16:00Z,,Spain,Cape Verde,164,2597,0,0,final,FT,draw,Mercedes-Benz Stadium,"Atlanta, Georgia",espn_json,2026-06-16T06:45:52+00:00
+760426,760426,2026-06-15,2026-06-15T19:00Z,,Belgium,Egypt,459,2620,1,1,final,FT,draw,Lumen Field,"Seattle, Washington",espn_json,2026-06-16T06:45:52+00:00
+760429,760429,2026-06-15,2026-06-15T22:00Z,,Saudi Arabia,Uruguay,655,212,1,1,final,FT,draw,Hard Rock Stadium,"Miami Gardens, Florida",espn_json,2026-06-16T06:45:52+00:00
+760427,760427,2026-06-16,2026-06-16T01:00Z,,Iran,New Zealand,469,2666,2,2,final,FT,draw,SoFi Stadium,"Inglewood, California",espn_json,2026-06-16T06:45:52+00:00
+760432,760432,2026-06-16,2026-06-16T19:00Z,,France,Senegal,478,654,3,1,final,FT,team_a_win,MetLife Stadium,"East Rutherford, New Jersey",espn_json,2026-06-17T04:22:29+00:00
+760430,760430,2026-06-16,2026-06-16T22:00Z,,Iraq,Norway,4375,464,1,4,final,FT,team_b_win,Gillette Stadium,"Foxborough, Massachusetts",espn_json,2026-06-17T04:22:29+00:00
+760433,760433,2026-06-17,2026-06-17T01:00Z,,Argentina,Algeria,202,624,3,0,final,FT,team_a_win,GEHA Field at Arrowhead Stadium,"Kansas City, Missouri",espn_json,2026-06-17T04:22:29+00:00
+760431,760431,2026-06-17,2026-06-17T04:00Z,,Austria,Jordan,474,2917,3,1,final,FT,team_a_win,Levi's Stadium,"Santa Clara, California",espn_json,2026-06-17T09:25:55+00:00
+760435,760435,2026-06-17,2026-06-17T17:00Z,,Portugal,Congo DR,482,2850,0,0,scheduled,"Wed, June 17th at 1:00 PM EDT",not_started,NRG Stadium,"Houston, Texas",espn_json,2026-06-17T09:25:55+00:00
+760437,760437,2026-06-17,2026-06-17T20:00Z,,England,Croatia,448,477,0,0,scheduled,"Wed, June 17th at 4:00 PM EDT",not_started,AT&T Stadium,"Arlington, Texas",espn_json,2026-06-17T09:25:55+00:00
+760434,760434,2026-06-17,2026-06-17T23:00Z,,Ghana,Panama,4469,2659,0,0,scheduled,"Wed, June 17th at 7:00 PM EDT",not_started,BMO Field,Toronto,espn_json,2026-06-17T09:25:55+00:00
+760436,760436,2026-06-18,2026-06-18T02:00Z,,Uzbekistan,Colombia,2570,208,0,0,scheduled,"Wed, June 17th at 10:00 PM EDT",not_started,Estadio Banorte,Mexico City,espn_json,2026-06-17T09:25:55+00:00

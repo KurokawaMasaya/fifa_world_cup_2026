@@ -1,0 +1,12 @@
+{
+  "production_output": "output/predictions/live/group_stage_round1_predictions__v24_abcd_no_e.csv",
+  "prediction_scope": "group_stage_round1_only",
+  "scoreline_version": "v24_abcd_no_e",
+  "rating_state": "initial_static",
+  "dynamic_ratings_used": false,
+  "future_results_used": false,
+  "full_static_snapshot_file": "output/predictions/static_snapshots/group_stage_full_72_static_initial__v24_abcd_no_e.csv",
+  "diagnostic_report": "output/diagnostics/output_scope/group_stage_round1_output_report.md",
+  "generated_at": "2026-06-14T05:28:15.444856+00:00",
+  "notes": "Round 2 and Round 3 predictions should be generated later after prior rounds complete."
+}

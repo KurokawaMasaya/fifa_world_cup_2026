@@ -1,0 +1,5 @@
+beijing_date,beijing_kickoff_time,espn_match_id,group,team_a,team_b,team_a_win_pct,draw_pct,team_b_win_pct,top_5_scorelines,top_5_scoreline_probability_pct,top_5_display,status,venue,city
+2026-06-16,00:00,760428,H,Spain,Cabo Verde,91,7,2,"[""3-0"", ""2-0"", ""4-0"", ""1-0"", ""5-0""]","[12, 12, 11, 9, 8]","3-0 (12%), 2-0 (12%), 4-0 (11%), 1-0 (9%), 5-0 (8%)",final,Mercedes-Benz Stadium,"Atlanta, Georgia"
+2026-06-16,03:00,760426,G,Belgium,Egypt,59,23,18,"[""1-0"", ""1-1"", ""2-0"", ""2-1"", ""3-0""]","[10, 10, 10, 9, 6]","1-0 (10%), 1-1 (10%), 2-0 (10%), 2-1 (9%), 3-0 (6%)",final,Lumen Field,"Seattle, Washington"
+2026-06-16,06:00,760429,H,Saudi Arabia,Uruguay,9,17,74,"[""0-2"", ""0-1"", ""0-3"", ""1-2"", ""1-1""]","[11, 10, 9, 8, 7]","0-2 (11%), 0-1 (10%), 0-3 (9%), 1-2 (8%), 1-1 (7%)",final,Hard Rock Stadium,"Miami Gardens, Florida"
+2026-06-16,09:00,760427,G,IR Iran,New Zealand,75,16,8,"[""2-0"", ""1-0"", ""3-0"", ""2-1"", ""4-0""]","[12, 10, 10, 7, 7]","2-0 (12%), 1-0 (10%), 3-0 (10%), 2-1 (7%), 4-0 (7%)",final,SoFi Stadium,"Inglewood, California"

@@ -1,0 +1,5 @@
+beijing_date,beijing_kickoff_time,espn_match_id,group,team_a,team_b,team_a_win_pct,draw_pct,team_b_win_pct,top_5_scorelines,top_5_scoreline_probability_pct,top_5_display,status,venue,city
+2026-06-15,01:00,760422,E,Germany,Curacao,87,10,3,"[""2-0"", ""3-0"", ""4-0"", ""1-0"", ""5-0""]","[11, 11, 9, 9, 7]","2-0 (11%), 3-0 (11%), 4-0 (9%), 1-0 (9%), 5-0 (7%)",final,NRG Stadium,"Houston, Texas"
+2026-06-15,04:00,760425,F,Netherlands,Japan,51,26,23,"[""1-1"", ""1-0"", ""2-1"", ""2-0"", ""0-1""]","[10, 10, 9, 8, 7]","1-1 (10%), 1-0 (10%), 2-1 (9%), 2-0 (8%), 0-1 (7%)",final,AT&T Stadium,"Arlington, Texas"
+2026-06-15,07:00,760423,E,Cote d'Ivoire,Ecuador,25,28,48,"[""1-1"", ""0-1"", ""1-2"", ""0-2"", ""1-0""]","[11, 10, 9, 8, 7]","1-1 (11%), 0-1 (10%), 1-2 (9%), 0-2 (8%), 1-0 (7%)",final,Lincoln Financial Field,"Philadelphia, Pennsylvania"
+2026-06-15,10:00,760424,F,Sweden,Tunisia,42,28,29,"[""1-1"", ""1-0"", ""2-1"", ""0-1"", ""2-0""]","[11, 10, 8, 8, 7]","1-1 (11%), 1-0 (10%), 2-1 (8%), 0-1 (8%), 2-0 (7%)",final,Estadio BBVA,Guadalupe
