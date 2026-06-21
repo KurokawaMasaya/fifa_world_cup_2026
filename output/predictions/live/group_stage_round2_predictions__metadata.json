@@ -9,7 +9,7 @@
   "detailed_prediction_file": "output/predictions/live/group_stage_round2_predictions.csv",
   "clean_prediction_file": "output/predictions/live/group_stage_round2_predictions_clean.csv",
   "source_script": "src/live/update_round1_processed_ratings.py",
-  "generated_at": "2026-06-21T08:30:38.916647+00:00",
+  "generated_at": "2026-06-21T08:36:08.518370+00:00",
   "notes": "Round 2 predictions use the existing production pipeline with the post-Round-1 rating CSV state. Model probabilities and scoreline logic were not changed.",
   "rows": 24,
   "scoreline_top5_mode": "tail_augmented_group_stage_round2",

@@ -17,6 +17,7 @@ DEFAULT_DETAIL = (
     PROJECT_ROOT / "output" / "predictions" / "live" / "group_stage_round2_predictions.csv"
 )
 DEFAULT_OUTPUT = DEFAULT_INPUT
+DEFAULT_BACKUP = DEFAULT_INPUT.with_name(DEFAULT_INPUT.stem + "__pre_tail_backup.csv")
 DEFAULT_METADATA = (
     PROJECT_ROOT
     / "output"
@@ -230,8 +231,23 @@ def load_predicted_mean_goals(clean: pd.DataFrame, detail_path: Path) -> pd.Data
     return clean
 
 
-def apply_tail_augmented_scorelines(input_path: Path, detail_path: Path, output_path: Path) -> pd.DataFrame:
-    clean = pd.read_csv(input_path)
+def source_for_apply(input_path: Path, output_path: Path, backup_path: Path) -> Path:
+    if input_path.resolve() == output_path.resolve() and backup_path.exists():
+        return backup_path
+    return input_path
+
+
+def apply_tail_augmented_scorelines(
+    input_path: Path,
+    detail_path: Path,
+    output_path: Path,
+    backup_path: Path,
+) -> pd.DataFrame:
+    source_path = source_for_apply(input_path, output_path, backup_path)
+    if input_path.resolve() == output_path.resolve() and not backup_path.exists():
+        backup_path.parent.mkdir(parents=True, exist_ok=True)
+        pd.read_csv(input_path).to_csv(backup_path, index=False)
+    clean = pd.read_csv(source_path)
     original_wdl = clean[["match_id", "team_a_win_pct", "draw_pct", "team_b_win_pct"]].copy()
     working = load_predicted_mean_goals(clean, detail_path)
     changed_rows = []
@@ -260,7 +276,28 @@ def apply_tail_augmented_scorelines(input_path: Path, detail_path: Path, output_
     clean.to_csv(output_path, index=False)
     audit_path = output_path.with_name(output_path.stem + "__tail_augmented_audit.csv")
     pd.DataFrame(changed_rows).to_csv(audit_path, index=False)
+    update_detail_file(output_path, detail_path)
     return pd.DataFrame(changed_rows)
+
+
+def update_detail_file(clean_path: Path, detail_path: Path) -> None:
+    if not detail_path.exists():
+        return
+    clean = pd.read_csv(clean_path)
+    detail = pd.read_csv(detail_path)
+    if "match_id" not in detail.columns:
+        return
+    clean_top5 = clean[["match_id", "top_5_scorelines", "top_5_scoreline_probability_pct"]].copy()
+    detail = detail.drop(
+        columns=[
+            column
+            for column in ["top_5_scorelines", "top_5_scoreline_probability_pct"]
+            if column in detail.columns
+        ],
+        errors="ignore",
+    )
+    detail = detail.merge(clean_top5, on="match_id", how="left")
+    detail.to_csv(detail_path, index=False)
 
 
 def write_metadata(metadata_path: Path, input_path: Path, output_path: Path, changed: pd.DataFrame) -> None:
@@ -296,10 +333,11 @@ def main() -> None:
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--detail", type=Path, default=DEFAULT_DETAIL)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--backup", type=Path, default=DEFAULT_BACKUP)
     parser.add_argument("--metadata", type=Path, default=DEFAULT_METADATA)
     args = parser.parse_args()
 
-    changed = apply_tail_augmented_scorelines(args.input, args.detail, args.output)
+    changed = apply_tail_augmented_scorelines(args.input, args.detail, args.output, args.backup)
     write_metadata(args.metadata, args.input, args.output, changed)
     print(f"Saved tail-augmented predictions to {args.output}")
     print(f"Rows changed: {len(changed)}")

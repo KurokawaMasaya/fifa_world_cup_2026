@@ -1,5 +1,5 @@
 beijing_date,beijing_kickoff_time,espn_match_id,group,team_a,team_b,team_a_win_pct,draw_pct,team_b_win_pct,top_5_scorelines,top_5_scoreline_probability_pct,top_5_display,status,venue,city
-2026-06-21,01:00,760447,F,Netherlands,Sweden,68,20,12,"[""2-0"", ""1-0"", ""2-1"", ""1-1"", ""3-0""]","[11, 11, 9, 8, 8]","2-0 (11%), 1-0 (11%), 2-1 (9%), 1-1 (8%), 3-0 (8%)",final,NRG Stadium,"Houston, Texas"
-2026-06-21,04:00,760448,E,Germany,Cote d'Ivoire,63,22,15,"[""1-0"", ""2-0"", ""1-1"", ""2-1"", ""3-0""]","[11, 10, 9, 9, 7]","1-0 (11%), 2-0 (10%), 1-1 (9%), 2-1 (9%), 3-0 (7%)",final,BMO Field,Toronto
-2026-06-21,08:00,760446,E,Ecuador,Curacao,77,16,7,"[""2-0"", ""1-0"", ""3-0"", ""2-1"", ""4-0""]","[12, 10, 10, 7, 7]","2-0 (12%), 1-0 (10%), 3-0 (10%), 2-1 (7%), 4-0 (7%)",final,GEHA Field at Arrowhead Stadium,"Kansas City, Missouri"
-2026-06-21,12:00,760449,F,Tunisia,Japan,17,23,60,"[""0-1"", ""0-2"", ""1-1"", ""1-2"", ""0-3""]","[10, 10, 10, 9, 6]","0-1 (10%), 0-2 (10%), 1-1 (10%), 1-2 (9%), 0-3 (6%)",final,Estadio BBVA,Guadalupe
+2026-06-21,01:00,760447,F,Netherlands,Sweden,66,20,13,"[""2-0"", ""1-0"", ""2-1"", ""1-1"", ""3-1""]","[11, 11, 9, 9, 8]","2-0 (11%), 1-0 (11%), 2-1 (9%), 1-1 (9%), 3-1 (8%)",final,NRG Stadium,"Houston, Texas"
+2026-06-21,04:00,760448,E,Germany,Cote d'Ivoire,63,22,15,"[""1-0"", ""2-0"", ""1-1"", ""4-0"", ""3-1""]","[11, 10, 9, 9, 7]","1-0 (11%), 2-0 (10%), 1-1 (9%), 4-0 (9%), 3-1 (7%)",final,BMO Field,Toronto
+2026-06-21,08:00,760446,E,Ecuador,Curacao,77,16,7,"[""2-0"", ""1-0"", ""3-0"", ""3-1"", ""1-1""]","[13, 11, 10, 8, 7]","2-0 (13%), 1-0 (11%), 3-0 (10%), 3-1 (8%), 1-1 (7%)",final,GEHA Field at Arrowhead Stadium,"Kansas City, Missouri"
+2026-06-21,12:00,760449,F,Tunisia,Japan,16,23,62,"[""0-1"", ""0-2"", ""1-1"", ""0-4"", ""1-3""]","[10, 10, 9, 9, 7]","0-1 (10%), 0-2 (10%), 1-1 (9%), 0-4 (9%), 1-3 (7%)",final,Estadio BBVA,Guadalupe

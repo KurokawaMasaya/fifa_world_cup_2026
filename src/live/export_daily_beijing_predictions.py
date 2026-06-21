@@ -10,6 +10,7 @@ or model files.
 """
 
 import argparse
+import ast
 import json
 import re
 import sys
@@ -28,6 +29,10 @@ if __package__ is None or __package__ == "":
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_FIXTURES_PATH = PROJECT_ROOT / "output" / "live" / "fixtures_results.csv"
 DEFAULT_PREDICTIONS_PATH = PROJECT_ROOT / "output" / "predictions" / "group_stage_predictions_clean.csv"
+DEFAULT_LIVE_OVERRIDE_PREDICTION_PATHS = [
+    PROJECT_ROOT / "output" / "predictions" / "live" / "group_stage_round1_predictions__v24_abcd_no_e.csv",
+    PROJECT_ROOT / "output" / "predictions" / "live" / "group_stage_round2_predictions_clean.csv",
+]
 DEFAULT_MATCHES_PATH = PROJECT_ROOT / "data" / "raw" / "matches.csv"
 DEFAULT_TEAMS_PATH = PROJECT_ROOT / "data" / "raw" / "teams.csv"
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output" / "predictions" / "daily_beijing"
@@ -71,7 +76,30 @@ def parse_json_list(value: object) -> list:
         parsed = json.loads(str(value))
         return parsed if isinstance(parsed, list) else []
     except json.JSONDecodeError:
-        return []
+        try:
+            parsed = ast.literal_eval(str(value))
+            return parsed if isinstance(parsed, list) else []
+        except (SyntaxError, ValueError):
+            return []
+
+
+def load_prediction_inputs(predictions_path: Path) -> pd.DataFrame:
+    paths = [predictions_path]
+    if predictions_path.resolve() == DEFAULT_PREDICTIONS_PATH.resolve():
+        paths.extend(path for path in DEFAULT_LIVE_OVERRIDE_PREDICTION_PATHS if path.exists())
+
+    frames = []
+    for path in paths:
+        if not path.exists():
+            continue
+        frame = pd.read_csv(path)
+        frame["prediction_source_file"] = str(path.relative_to(PROJECT_ROOT))
+        frames.append(frame)
+    if not frames:
+        raise FileNotFoundError(f"Predictions file not found: {predictions_path}")
+    predictions = pd.concat(frames, ignore_index=True)
+    predictions = predictions.drop_duplicates(subset=["match_id"], keep="last")
+    return predictions
 
 
 def today_beijing() -> str:
@@ -85,10 +113,7 @@ def build_daily_table(
     teams_path: Path,
     beijing_date: str,
 ) -> pd.DataFrame:
-    if not predictions_path.exists():
-        raise FileNotFoundError(f"Predictions file not found: {predictions_path}")
-
-    predictions = pd.read_csv(predictions_path)
+    predictions = load_prediction_inputs(predictions_path)
     required_prediction_columns = {
         "match_id",
         "group",
