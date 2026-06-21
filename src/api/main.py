@@ -26,6 +26,15 @@ PREDICTIONS_CLEAN_PATH = OUTPUT_DIR / "predictions" / "group_stage_predictions_c
 PREDICTIONS_DETAIL_PATH = (
     OUTPUT_DIR / "predictions" / "group_stage_predictions_v2_uncertainty_tuned.csv"
 )
+LIVE_ROUND1_PREDICTIONS_PATH = (
+    OUTPUT_DIR / "predictions" / "live" / "group_stage_round1_predictions__v24_abcd_no_e.csv"
+)
+LIVE_ROUND2_PREDICTIONS_PATH = (
+    OUTPUT_DIR / "predictions" / "live" / "group_stage_round2_predictions_clean.csv"
+)
+LIVE_ROUND2_PREDICTIONS_DETAIL_PATH = (
+    OUTPUT_DIR / "predictions" / "live" / "group_stage_round2_predictions.csv"
+)
 LIVE_RESULTS_PATH = OUTPUT_DIR / "live" / "fixtures_results.csv"
 LIVE_STANDINGS_PATH = OUTPUT_DIR / "live" / "group_standings.csv"
 LIVE_EVALUATION_PATH = OUTPUT_DIR / "live" / "worldcup_group_stage_live_summary.csv"
@@ -40,6 +49,9 @@ BRACKETS_DIR = OUTPUT_DIR / "brackets"
 HEALTH_FILES = {
     "group_stage_predictions_clean": PREDICTIONS_CLEAN_PATH,
     "group_stage_predictions_detail": PREDICTIONS_DETAIL_PATH,
+    "live_round1_predictions": LIVE_ROUND1_PREDICTIONS_PATH,
+    "live_round2_predictions": LIVE_ROUND2_PREDICTIONS_PATH,
+    "live_round2_predictions_detail": LIVE_ROUND2_PREDICTIONS_DETAIL_PATH,
     "live_results": LIVE_RESULTS_PATH,
     "live_standings": LIVE_STANDINGS_PATH,
     "live_evaluation": LIVE_EVALUATION_PATH,
@@ -72,6 +84,54 @@ def _latest_simulation_path() -> Path:
 
 def _latest_bracket_path() -> Path:
     return latest_csv(BRACKETS_DIR, pattern="*.csv")
+
+
+def _match_index_response(path: Path) -> dict:
+    df = read_csv_or_503(path)
+    required = {"match_id", "group", "team_a", "team_b"}
+    missing = required - set(df.columns)
+    if missing:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Prediction file is missing columns: {sorted(missing)}",
+        )
+    index = df[["match_id", "group", "team_a", "team_b"]].copy()
+    index["match_id"] = index["match_id"].astype(str)
+    index["label"] = index["team_a"].astype(str) + " vs " + index["team_b"].astype(str)
+    return dataframe_response(path, index)
+
+
+def _prediction_teams_response(path: Path) -> dict:
+    df = read_csv_or_503(path)
+    required = {"group", "team_a", "team_b"}
+    missing = required - set(df.columns)
+    if missing:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Prediction file is missing columns: {sorted(missing)}",
+        )
+    teams = pd.concat(
+        [
+            df[["team_a", "group"]].rename(columns={"team_a": "team"}),
+            df[["team_b", "group"]].rename(columns={"team_b": "team"}),
+        ],
+        ignore_index=True,
+    )
+    teams = teams.drop_duplicates().sort_values(["group", "team"]).reset_index(drop=True)
+    return dataframe_response(path, teams)
+
+
+def _prediction_detail_response(path: Path, match_id: str) -> dict:
+    df = read_csv_or_503(path)
+    if "match_id" not in df.columns:
+        raise HTTPException(status_code=503, detail="Prediction file is missing match_id column")
+    match = df.loc[df["match_id"].astype(str) == str(match_id)]
+    if match.empty:
+        raise HTTPException(status_code=404, detail=f"No prediction for match_id={match_id}")
+    return {
+        **file_metadata(path),
+        "data": dataframe_records(match)[0],
+    }
 
 
 @app.get("/health", response_model=HealthResponse)
@@ -107,53 +167,47 @@ def group_stage_predictions() -> dict:
 
 @app.get("/predictions/group-stage/{match_id}")
 def group_stage_prediction(match_id: str) -> dict:
-    df = read_csv_or_503(PREDICTIONS_CLEAN_PATH)
-    if "match_id" not in df.columns:
-        raise HTTPException(status_code=503, detail="Prediction file is missing match_id column")
-    match = df.loc[df["match_id"].astype(str) == str(match_id)]
-    if match.empty:
-        raise HTTPException(status_code=404, detail=f"No group-stage prediction for match_id={match_id}")
-    return {
-        **file_metadata(PREDICTIONS_CLEAN_PATH),
-        "data": dataframe_records(match)[0],
-    }
+    return _prediction_detail_response(PREDICTIONS_CLEAN_PATH, match_id)
 
 
 @app.get("/predictions/matches", response_model=DatasetResponse, response_model_exclude_none=True)
 def prediction_matches() -> dict:
-    df = read_csv_or_503(PREDICTIONS_CLEAN_PATH)
-    required = {"match_id", "group", "team_a", "team_b"}
-    missing = required - set(df.columns)
-    if missing:
-        raise HTTPException(
-            status_code=503,
-            detail=f"Prediction file is missing columns: {sorted(missing)}",
-        )
-    index = df[["match_id", "group", "team_a", "team_b"]].copy()
-    index["match_id"] = index["match_id"].astype(str)
-    index["label"] = index["team_a"].astype(str) + " vs " + index["team_b"].astype(str)
-    return dataframe_response(PREDICTIONS_CLEAN_PATH, index)
+    return _match_index_response(PREDICTIONS_CLEAN_PATH)
 
 
 @app.get("/predictions/teams", response_model=DatasetResponse, response_model_exclude_none=True)
 def prediction_teams() -> dict:
-    df = read_csv_or_503(PREDICTIONS_CLEAN_PATH)
-    required = {"group", "team_a", "team_b"}
-    missing = required - set(df.columns)
-    if missing:
-        raise HTTPException(
-            status_code=503,
-            detail=f"Prediction file is missing columns: {sorted(missing)}",
-        )
-    teams = pd.concat(
-        [
-            df[["team_a", "group"]].rename(columns={"team_a": "team"}),
-            df[["team_b", "group"]].rename(columns={"team_b": "team"}),
-        ],
-        ignore_index=True,
-    )
-    teams = teams.drop_duplicates().sort_values(["group", "team"]).reset_index(drop=True)
-    return dataframe_response(PREDICTIONS_CLEAN_PATH, teams)
+    return _prediction_teams_response(PREDICTIONS_CLEAN_PATH)
+
+
+@app.get("/predictions/live/round1", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round1_predictions() -> dict:
+    return dataset_response(LIVE_ROUND1_PREDICTIONS_PATH)
+
+
+@app.get("/predictions/live/round2", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round2_predictions() -> dict:
+    return dataset_response(LIVE_ROUND2_PREDICTIONS_PATH)
+
+
+@app.get("/predictions/live/round2/detail", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round2_predictions_detail() -> dict:
+    return dataset_response(LIVE_ROUND2_PREDICTIONS_DETAIL_PATH)
+
+
+@app.get("/predictions/live/round2/matches", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round2_prediction_matches() -> dict:
+    return _match_index_response(LIVE_ROUND2_PREDICTIONS_PATH)
+
+
+@app.get("/predictions/live/round2/teams", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round2_prediction_teams() -> dict:
+    return _prediction_teams_response(LIVE_ROUND2_PREDICTIONS_PATH)
+
+
+@app.get("/predictions/live/round2/{match_id}")
+def live_round2_prediction(match_id: str) -> dict:
+    return _prediction_detail_response(LIVE_ROUND2_PREDICTIONS_PATH, match_id)
 
 
 @app.get("/live/results", response_model=DatasetResponse, response_model_exclude_none=True)

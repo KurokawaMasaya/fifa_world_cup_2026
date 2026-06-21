@@ -23,6 +23,9 @@ DEFAULT_PREDICTIONS_PATH = (
     / "live"
     / "group_stage_round1_predictions__v24_abcd_no_e.csv"
 )
+DEFAULT_ADDITIONAL_PREDICTION_PATHS = [
+    PROJECT_ROOT / "output" / "predictions" / "live" / "group_stage_round2_predictions_clean.csv",
+]
 FALLBACK_PREDICTIONS_PATH = (
     PROJECT_ROOT / "output" / "predictions" / "group_stage_predictions_clean.csv"
 )
@@ -52,6 +55,10 @@ def normalize_team_name(value: object) -> str:
         "turkiye": "turkey",
         "turkey": "turkey",
         "morroco": "morocco",
+        "dr congo": "dr congo",
+        "congo dr": "dr congo",
+        "congo democratic republic": "dr congo",
+        "democratic republic of congo": "dr congo",
     }
     return aliases.get(collapsed, collapsed)
 
@@ -94,7 +101,7 @@ def parse_probability_list(value: object) -> list[float]:
     return []
 
 
-DEFAULT_CLOSE_WIN_RATE_THRESHOLD = 20.0
+DEFAULT_CLOSE_WIN_RATE_THRESHOLD = 25.0
 
 
 def outcome_from_goals(goals_a: int, goals_b: int) -> str:
@@ -138,8 +145,6 @@ def wdl_evaluation_outcome(
 
     * If team win rates are within the threshold and the top-1 scoreline is a
       draw that exactly hits, count the W/D/L as correct for a draw.
-    * If team win rates are within the threshold and the higher win-rate team
-      wins, count the W/D/L as correct even when the top-1 scoreline is draw.
 
     The rule is evaluation-only and keeps the argmax outcome visible for audit.
     """
@@ -156,8 +161,7 @@ def wdl_evaluation_outcome(
         and close_win_rates
         and actual_outcome == "draw"
     )
-    close_favorite_credit = close_win_rates and actual_outcome == higher_win_side
-    daily_rule_correct = exact_draw_credit or close_favorite_credit or argmax_outcome == actual_outcome
+    daily_rule_correct = exact_draw_credit or argmax_outcome == actual_outcome
     evaluation_outcome = "draw" if exact_draw_credit else argmax_outcome
     return evaluation_outcome, argmax_outcome, exact_draw_credit, daily_rule_correct
 
@@ -171,8 +175,7 @@ def actual_probability(row: pd.Series, actual_outcome: str) -> float:
     return float(row[column])
 
 
-def load_predictions(path: Path) -> tuple[pd.DataFrame, Path]:
-    source_path = path if path.exists() else FALLBACK_PREDICTIONS_PATH
+def _load_prediction_file(source_path: Path) -> pd.DataFrame:
     predictions = pd.read_csv(source_path)
     required = {
         "match_id",
@@ -187,11 +190,29 @@ def load_predictions(path: Path) -> tuple[pd.DataFrame, Path]:
     if missing:
         raise ValueError(f"{source_path} is missing required columns: {sorted(missing)}")
     predictions = predictions.copy()
+    predictions["prediction_source_file"] = str(source_path.relative_to(PROJECT_ROOT))
+    return predictions
+
+
+def load_predictions(path: Path) -> tuple[pd.DataFrame, list[Path]]:
+    if path != DEFAULT_PREDICTIONS_PATH:
+        source_paths = [path if path.exists() else FALLBACK_PREDICTIONS_PATH]
+    else:
+        source_paths = [path] if path.exists() else [FALLBACK_PREDICTIONS_PATH]
+        source_paths.extend(
+            additional_path
+            for additional_path in DEFAULT_ADDITIONAL_PREDICTION_PATHS
+            if additional_path.exists()
+        )
+
+    frames = [_load_prediction_file(source_path) for source_path in source_paths]
+    predictions = pd.concat(frames, ignore_index=True)
+    predictions = predictions.drop_duplicates(subset=["match_id"], keep="last")
     predictions["_match_key"] = predictions.apply(
         lambda row: match_key(row["team_a"], row["team_b"]),
         axis=1,
     )
-    return predictions, source_path
+    return predictions, source_paths
 
 
 def load_completed_actuals(path: Path) -> pd.DataFrame:
@@ -287,7 +308,7 @@ def evaluate(
             [
                 {
                     "matches_evaluated": 0,
-                    "prediction_source": str(prediction_source.relative_to(PROJECT_ROOT)),
+                    "prediction_source": ";".join(str(path.relative_to(PROJECT_ROOT)) for path in prediction_source),
                     "actual_source": str(actuals_path.relative_to(PROJECT_ROOT)),
                     "generated_at": datetime.now(timezone.utc).isoformat(),
                 }
@@ -308,10 +329,9 @@ def evaluate(
                     "wdl_exact_draw_credit_count": int(match_level["wdl_exact_draw_credit_used"].sum()),
                     "close_win_rate_threshold_pct": close_win_rate_threshold,
                     "wdl_evaluation_rule": (
-                        "argmax plus close-win-rate credit for exact draw top1 hits "
-                        "and higher-win-side results"
+                        "argmax plus close-win-rate credit only when top-1 draw scoreline exactly hits"
                     ),
-                    "prediction_source": str(prediction_source.relative_to(PROJECT_ROOT)),
+                    "prediction_source": ";".join(str(path.relative_to(PROJECT_ROOT)) for path in prediction_source),
                     "actual_source": str(actuals_path.relative_to(PROJECT_ROOT)),
                     "generated_at": datetime.now(timezone.utc).isoformat(),
                 }

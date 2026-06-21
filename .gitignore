@@ -48,11 +48,14 @@ output/live/raw/
 output/simulations/
 output/brackets/
 output/diagnostics/
+output/experiments/
 
 # Large full prediction/debug files
 output/predictions/*v2_uncertainty_tuned.csv
 output/predictions/group_stage_predictions_v2_uncertainty.csv
 output/predictions/archive/legacy_prediction_versions/
+output/predictions/**/*__pre_tail_backup.csv
+output/predictions/**/*__tail_augmented_audit.csv
 
 # Keep selected lightweight demo outputs if intentionally tracked
 !output/predictions/group_stage_predictions_clean.csv

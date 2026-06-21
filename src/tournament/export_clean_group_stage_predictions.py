@@ -9,6 +9,11 @@ import pandas as pd
 if __package__ is None or __package__ == "":
     sys.path.append(str(Path(__file__).resolve().parents[2]))
 
+from src.models.negative_binomial_scoreline import (
+    get_top_scorelines,
+    negative_binomial_scoreline_grid,
+)
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT_PATH = (
@@ -85,26 +90,38 @@ def export_clean_predictions(input_path: Path, output_path: Path) -> pd.DataFram
         top_5_scorelines = predictions["top_5_scorelines"]
         top_5_probs = predictions["top_5_scoreline_probs"]
     elif top5_source == "nb_top3":
-        top_5_scorelines = predictions.apply(
-            lambda row: str(
-                [
-                    row["nb_top_scoreline_1"],
-                    row["nb_top_scoreline_2"],
-                    row["nb_top_scoreline_3"],
+        def nb_top5(row: pd.Series) -> tuple[str, str]:
+            if {"lambda_a", "lambda_b"}.issubset(predictions.columns):
+                grid = negative_binomial_scoreline_grid(
+                    float(row["lambda_a"]),
+                    float(row["lambda_b"]),
+                    dispersion_k=float(row.get("nb_dispersion_k", 12)),
+                    max_goals=10,
+                )
+                top = get_top_scorelines(grid, top_n=5, mode="mode")
+            else:
+                top = [
+                    {
+                        "scoreline": row["nb_top_scoreline_1"],
+                        "probability": float(row["nb_top_scoreline_1_probability"]),
+                    },
+                    {
+                        "scoreline": row["nb_top_scoreline_2"],
+                        "probability": float(row["nb_top_scoreline_2_probability"]),
+                    },
+                    {
+                        "scoreline": row["nb_top_scoreline_3"],
+                        "probability": float(row["nb_top_scoreline_3_probability"]),
+                    },
                 ]
-            ),
-            axis=1,
-        )
-        top_5_probs = predictions.apply(
-            lambda row: str(
-                [
-                    float(row["nb_top_scoreline_1_probability"]),
-                    float(row["nb_top_scoreline_2_probability"]),
-                    float(row["nb_top_scoreline_3_probability"]),
-                ]
-            ),
-            axis=1,
-        )
+            return (
+                str([item["scoreline"] for item in top]),
+                str([round(float(item["probability"]) * 100) for item in top]),
+            )
+
+        top5_values = predictions.apply(nb_top5, axis=1)
+        top_5_scorelines = top5_values.map(lambda value: value[0])
+        top_5_probs = top5_values.map(lambda value: value[1])
     else:
         top_5_scorelines = predictions["predicted_scoreline"].map(lambda value: str([str(value)]))
         top_5_probs = predictions["scoreline_probability_pct"].map(lambda value: str([float(value) / 100]))
