@@ -1,0 +1,17 @@
+match_id,Section,team_a,team_b,team_a_win_pct,team_b_win_pct,draw_pct,top5 scoreline,top5 scoreline_probability_pct,predicted_90min_score,predicted_90min_result,predicted_120min_score,predicted_120min_result,extra_time_goal_increment,penalty_winner,penalty_win_prob_team_a,penalty_win_prob_team_b,final_winner,match_resolution,final_advancing_team,risk,favourite_fail_to_win_risk
+760486,A,South Africa,Canada,21,53,26,"[""0-1"", ""1-1"", ""0-2"", ""1-2"", ""0-0""]","[10, 10, 9, 9, 6]",0-1,team_b_win,,,,,47.1,52.9,Canada,90min,Canada,25,47
+760487,B,Brazil,Japan,50,23,26,"[""1-1"", ""1-0"", ""2-1"", ""2-0"", ""0-1""]","[10, 10, 9, 8, 7]",1-1,draw,1-1,draw,0-0,Brazil,52.4,47.6,Brazil,penalties,Brazil,27,49
+760489,A,Germany,Paraguay,67,13,20,"[""1-0"", ""2-0"", ""1-1"", ""2-1"", ""3-0""]","[11, 11, 9, 9, 7]",1-0,team_a_win,,,,,54.8,45.2,Germany,90min,Germany,21,33
+760488,A,Netherlands,Morocco,38,33,29,"[""1-1"", ""1-0"", ""0-1"", ""2-1"", ""1-2""]","[11, 9, 9, 8, 7]",1-1,draw,1-1,draw,0-0,Netherlands,50.4,49.6,Netherlands,penalties,Netherlands,37,62
+760490,B,Cote d'Ivoire,Norway,27,45,28,"[""1-1"", ""0-1"", ""1-2"", ""1-0"", ""0-2""]","[11, 10, 8, 8, 8]",1-1,draw,1-1,draw,0-0,Norway,48.5,51.5,Norway,penalties,Norway,31,55
+760492,A,France,Sweden,81,6,13,"[""2-0"", ""3-0"", ""1-0"", ""4-0"", ""2-1""]","[12, 10, 10, 8, 6]",2-0,team_a_win,,,,,55.0,45.0,France,90min,France,13,19
+760491,B,Mexico,Ecuador,44,28,28,"[""1-1"", ""1-0"", ""2-1"", ""2-0"", ""0-1""]","[11, 10, 8, 8, 7]",1-1,draw,1-1,draw,0-0,Mexico,51.7,48.3,Mexico,penalties,Mexico,32,56
+760495,B,England,DR Congo,78,7,16,"[""2-0"", ""1-0"", ""3-0"", ""2-1"", ""4-0""]","[12, 10, 10, 7, 7]",2-0,team_a_win,,,,,55.0,45.0,England,90min,England,14,23
+760493,B,Belgium,Senegal,41,30,29,"[""1-1"", ""1-0"", ""0-1"", ""2-1"", ""0-0""]","[11, 10, 8, 8, 7]",1-1,draw,1-1,draw,0-0,Belgium,50.9,49.1,Belgium,penalties,Belgium,34,59
+760494,A,USA,Bosnia and Herzegovina,68,12,20,"[""2-0"", ""1-0"", ""2-1"", ""1-1"", ""3-0""]","[11, 11, 9, 8, 8]",2-0,team_a_win,,,,,55.0,45.0,USA,90min,USA,20,32
+760497,A,Spain,Austria,72,10,18,"[""2-0"", ""1-0"", ""3-0"", ""2-1"", ""1-1""]","[11, 11, 9, 8, 8]",2-0,team_a_win,,,,,55.0,45.0,Spain,90min,Spain,17,28
+760496,A,Portugal,Croatia,43,29,28,"[""1-1"", ""1-0"", ""2-1"", ""0-1"", ""2-0""]","[11, 10, 8, 8, 7]",1-1,draw,1-1,draw,0-0,Portugal,51.2,48.8,Portugal,penalties,Portugal,33,57
+760498,B,Switzerland,Algeria,48,25,27,"[""1-1"", ""1-0"", ""2-1"", ""2-0"", ""0-1""]","[11, 10, 9, 8, 7]",1-1,draw,1-1,draw,0-0,Switzerland,52.0,48.0,Switzerland,penalties,Switzerland,29,52
+760499,B,Australia,Egypt,35,36,29,"[""1-1"", ""1-0"", ""0-1"", ""2-1"", ""1-2""]","[11, 9, 9, 8, 7]",1-1,draw,1-1,draw,0-0,Australia,50.1,49.9,Australia,penalties,Australia,39,64
+760500,B,Argentina,Cabo Verde,90,2,8,"[""3-0"", ""2-0"", ""4-0"", ""1-0"", ""5-0""]","[12, 12, 10, 9, 8]",3-0,team_a_win,,,,,55.0,45.0,Argentina,90min,Argentina,7,10
+760501,B,Colombia,Ghana,79,6,15,"[""2-0"", ""3-0"", ""1-0"", ""4-0"", ""2-1""]","[12, 10, 10, 7, 7]",2-0,team_a_win,,,,,55.0,45.0,Colombia,90min,Colombia,12,21

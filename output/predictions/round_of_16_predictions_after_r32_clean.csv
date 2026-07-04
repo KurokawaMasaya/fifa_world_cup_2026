@@ -1,0 +1,9 @@
+match_id,Round,kickoff_time_utc,team_a,team_b,team_a_win_pct,team_b_win_pct,draw_pct,top5 scoreline,top5 scoreline_probability_pct,predicted_90min_score,predicted_90min_result,predicted_120min_score,predicted_120min_result,extra_time_goal_increment,penalty_winner,penalty_win_prob_team_a,penalty_win_prob_team_b,final_winner,match_resolution,final_advancing_team,risk,favourite_fail_to_win_risk
+760502,R16,2026-07-04T17:00Z,Canada,Morocco,14.7,63.3,22.0,"['0-1', '0-2', '1-1', '1-2', '0-3']","[11, 10, 9, 9, 7]",0-1,team_b_win,0-1,team_b_win,,,45.5,54.5,Morocco,90min,Morocco,15,37
+760503,R16,2026-07-04T21:00Z,Paraguay,France,5.0,81.7,13.3,"['0-2', '0-3', '0-1', '0-4', '1-2']","[12, 10, 10, 8, 7]",0-2,team_b_win,0-2,team_b_win,,,45.0,55.0,France,90min,France,5,18
+760504,R16,2026-07-05T20:00Z,Brazil,Norway,56.0,19.8,24.2,"['1-0', '1-1', '2-0', '2-1', '0-0']","[10, 10, 9, 9, 6]",1-0,team_a_win,1-0,team_a_win,,,53.3,46.7,Brazil,90min,Brazil,20,44
+760505,R16,2026-07-06T00:00Z,Mexico,England,20.2,55.2,24.6,"['0-1', '1-1', '0-2', '1-2', '0-0']","[10, 10, 9, 9, 6]",0-1,team_b_win,0-1,team_b_win,,,47.0,53.0,England,90min,England,20,45
+760506,R16,2026-07-06T19:00Z,Portugal,Spain,22.4,51.3,26.2,"['1-1', '0-1', '1-2', '0-2', '1-0']","[10, 10, 9, 9, 7]",1-1,draw,1-1,draw,0-0,Spain,47.4,52.6,Spain,penalties,Spain,22,49
+760507,R16,2026-07-07T00:00Z,USA,Belgium,28.1,43.7,28.2,"['1-1', '0-1', '1-2', '1-0', '0-2']","[11, 10, 8, 8, 7]",1-1,draw,1-1,draw,0-0,Belgium,48.6,51.4,Belgium,penalties,Belgium,28,56
+760509,R16,2026-07-07T16:00Z,Argentina,Egypt,77.6,7.4,15.0,"['2-0', '1-0', '3-0', '2-1', '4-0']","[12, 10, 10, 7, 7]",2-0,team_a_win,2-0,team_a_win,,,55.0,45.0,Argentina,90min,Argentina,7,22
+760508,R16,2026-07-07T20:00Z,Switzerland,Colombia,28.7,42.9,28.5,"['1-1', '0-1', '1-2', '1-0', '0-2']","[11, 10, 8, 8, 7]",1-1,draw,1-1,draw,0-0,Colombia,48.7,51.3,Colombia,penalties,Colombia,28,57

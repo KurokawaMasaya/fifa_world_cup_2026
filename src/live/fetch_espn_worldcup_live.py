@@ -31,6 +31,11 @@ DEFAULT_FIXTURES_OUTPUT = LIVE_DIR / "fixtures_results.csv"
 STANDINGS_OUTPUT = LIVE_DIR / "group_standings.csv"
 UPDATE_LOG_PATH = LIVE_DIR / "live_data_update_log.csv"
 SOURCE = "espn_json"
+REQUESTS_SESSION = requests.Session()
+# ESPN JSON endpoints should be fetched directly. Local desktop proxy variables
+# can be stale under launchd and previously caused the pipeline to rewrite old
+# fixture rows while the actual ESPN request failed.
+REQUESTS_SESSION.trust_env = False
 LOG_COLUMNS = [
     "timestamp_utc",
     "task",
@@ -153,7 +158,7 @@ def raw_scoreboard_path(date_value: str | None) -> Path:
 
 def get_json(url: str, task: str) -> tuple[dict[str, Any] | None, str]:
     try:
-        response = requests.get(url, timeout=30)
+        response = REQUESTS_SESSION.get(url, timeout=30)
         if response.status_code != 200:
             message = f"HTTP {response.status_code}: {response.text[:200]}"
             append_log(task=task, status="failed", message=message)
@@ -269,8 +274,9 @@ def normalize_event(event: dict[str, Any], last_updated: str) -> dict[str, Any]:
     }
 
 
-def fetch_scoreboards(date_values: list[str | None]) -> pd.DataFrame:
+def fetch_scoreboards(date_values: list[str | None]) -> tuple[pd.DataFrame, int]:
     rows: list[dict[str, Any]] = []
+    successful_requests = 0
     last_updated = utc_now_iso()
     for date_value in date_values:
         url = scoreboard_url_for_date(date_value)
@@ -279,6 +285,7 @@ def fetch_scoreboards(date_values: list[str | None]) -> pd.DataFrame:
         if data is None:
             continue
 
+        successful_requests += 1
         raw_path = raw_scoreboard_path(date_value)
         save_raw_json(data, raw_path)
         append_log(
@@ -311,7 +318,7 @@ def fetch_scoreboards(date_values: list[str | None]) -> pd.DataFrame:
                     output_path=raw_path,
                 )
 
-    return pd.DataFrame(rows, columns=FIXTURE_COLUMNS)
+    return pd.DataFrame(rows, columns=FIXTURE_COLUMNS), successful_requests
 
 
 def merge_with_existing_fixtures(new_fixtures: pd.DataFrame, output_path: Path) -> pd.DataFrame:
@@ -485,7 +492,22 @@ def main() -> None:
 
     ensure_dirs()
     date_values = requested_scoreboard_dates(args)
-    fixtures = fetch_scoreboards(date_values)
+    fixtures, successful_requests = fetch_scoreboards(date_values)
+    if successful_requests == 0:
+        message = (
+            "No ESPN scoreboard requests succeeded; keeping existing "
+            "fixtures_results.csv unchanged."
+        )
+        append_log(
+            task="fixtures_results",
+            status="failed",
+            message=message,
+            rows_written=0,
+            output_path=args.output,
+        )
+        print(message)
+        raise SystemExit(1)
+
     fixtures = merge_with_existing_fixtures(fixtures, args.output)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fixtures.to_csv(args.output, index=False)

@@ -81,6 +81,105 @@ def favorite_side(row: pd.Series) -> str:
     return "team_a" if float(row["team_a_win_pct"]) >= float(row["team_b_win_pct"]) else "team_b"
 
 
+def upset_risk_tier(favorite_win_pct: float) -> str:
+    if favorite_win_pct >= 80:
+        return "major_upset_risk"
+    if favorite_win_pct >= 65:
+        return "moderate_upset_risk"
+    if favorite_win_pct >= 55:
+        return "minor_upset_risk"
+    return "balanced_match"
+
+
+def draw_pressure_weight(favorite_win_pct: float) -> float:
+    """Convert draw probability into partial upset pressure.
+
+    An underdog win is a direct upset path. A draw is not the same event, but it
+    can be part of favorite-fail pressure, especially when the favorite is very
+    strong. This keeps the displayed risk from being a literal draw + underdog
+    win sum.
+    """
+    if favorite_win_pct >= 80:
+        return 0.60
+    if favorite_win_pct >= 65:
+        return 0.45
+    if favorite_win_pct >= 55:
+        return 0.30
+    return 0.20
+
+
+def upset_pressure_probability(
+    favorite_win_pct: pd.Series,
+    draw_pct: pd.Series,
+    underdog_win_pct: pd.Series,
+) -> pd.Series:
+    favorite_win_pct = pd.to_numeric(favorite_win_pct, errors="coerce")
+    draw_pct = pd.to_numeric(draw_pct, errors="coerce")
+    underdog_win_pct = pd.to_numeric(underdog_win_pct, errors="coerce")
+    weights = favorite_win_pct.apply(lambda value: draw_pressure_weight(float(value)))
+    underdog_hazard = underdog_win_pct / 100.0
+    draw_pressure_hazard = (draw_pct / 100.0) * weights
+    return (1.0 - (1.0 - underdog_hazard) * (1.0 - draw_pressure_hazard)) * 100.0
+
+
+def add_risk_column(clean: pd.DataFrame) -> pd.DataFrame:
+    clean = clean.copy()
+    favorite_win_pct = clean[["team_a_win_pct", "team_b_win_pct"]].max(axis=1)
+    underdog_win_pct = clean[["team_a_win_pct", "team_b_win_pct"]].min(axis=1)
+    clean["draw_risk"] = pd.to_numeric(clean["draw_pct"], errors="coerce")
+    clean["upset_win_risk"] = pd.to_numeric(underdog_win_pct, errors="coerce")
+    clean["draw_pressure_weight"] = favorite_win_pct.apply(
+        lambda value: draw_pressure_weight(float(value))
+    )
+    clean["risk"] = upset_pressure_probability(
+        favorite_win_pct,
+        clean["draw_risk"],
+        clean["upset_win_risk"],
+    ).round().astype("Int64")
+    clean["favorite_fail_to_win_risk"] = clean["draw_risk"] + clean["upset_win_risk"]
+    return clean
+
+
+def add_detail_risk_columns(clean: pd.DataFrame) -> pd.DataFrame:
+    clean = clean.copy()
+    p_team_a = pd.to_numeric(clean["v2_p_team_a_win"], errors="coerce") * 100
+    p_draw = pd.to_numeric(clean["v2_p_draw"], errors="coerce") * 100
+    p_team_b = pd.to_numeric(clean["v2_p_team_b_win"], errors="coerce") * 100
+    win_probs = pd.concat([p_team_a, p_team_b], axis=1)
+    favorite_win_pct = win_probs.max(axis=1)
+    underdog_win_pct = win_probs.min(axis=1)
+    clean["draw_risk"] = p_draw.round().astype("Int64")
+    clean["upset_win_risk"] = underdog_win_pct.round().astype("Int64")
+    clean["draw_pressure_weight"] = favorite_win_pct.apply(
+        lambda value: draw_pressure_weight(float(value))
+    )
+    clean["risk"] = upset_pressure_probability(
+        favorite_win_pct,
+        p_draw,
+        underdog_win_pct,
+    ).round().astype("Int64")
+    clean["favorite_fail_to_win_risk"] = clean["draw_risk"] + clean["upset_win_risk"]
+    return clean
+
+
+def ensure_risk_columns(clean: pd.DataFrame) -> pd.DataFrame:
+    if {"team_a_win_pct", "draw_pct", "team_b_win_pct"}.issubset(clean.columns):
+        return add_risk_column(clean)
+    if {"v2_p_team_a_win", "v2_p_draw", "v2_p_team_b_win"}.issubset(clean.columns):
+        return add_detail_risk_columns(clean)
+    clean = clean.copy()
+    for column in [
+        "draw_risk",
+        "upset_win_risk",
+        "draw_pressure_weight",
+        "risk",
+        "favorite_fail_to_win_risk",
+    ]:
+        if column not in clean.columns:
+            clean[column] = pd.NA
+    return clean
+
+
 def donor_templates(side: str) -> set[str]:
     if side == "team_a":
         return {"1-0", "2-0", "2-1", "3-0", "3-1"}
@@ -272,6 +371,7 @@ def apply_tail_augmented_scorelines(
         if not merged[column].equals(merged[f"{column}_original"]):
             raise ValueError(f"W/D/L column changed unexpectedly: {column}")
 
+    clean = ensure_risk_columns(clean)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     clean.to_csv(output_path, index=False)
     audit_path = output_path.with_name(output_path.stem + "__tail_augmented_audit.csv")
@@ -287,11 +387,29 @@ def update_detail_file(clean_path: Path, detail_path: Path) -> None:
     detail = pd.read_csv(detail_path)
     if "match_id" not in detail.columns:
         return
-    clean_top5 = clean[["match_id", "top_5_scorelines", "top_5_scoreline_probability_pct"]].copy()
+    columns_to_merge = ["match_id", "top_5_scorelines", "top_5_scoreline_probability_pct"]
+    for column in [
+        "draw_risk",
+        "upset_win_risk",
+        "draw_pressure_weight",
+        "risk",
+        "favorite_fail_to_win_risk",
+    ]:
+        if column in clean.columns:
+            columns_to_merge.append(column)
+    clean_top5 = clean[columns_to_merge].copy()
     detail = detail.drop(
         columns=[
             column
-            for column in ["top_5_scorelines", "top_5_scoreline_probability_pct"]
+            for column in [
+                "top_5_scorelines",
+                "top_5_scoreline_probability_pct",
+                "draw_risk",
+                "upset_win_risk",
+                "draw_pressure_weight",
+                "risk",
+                "favorite_fail_to_win_risk",
+            ]
             if column in detail.columns
         ],
         errors="ignore",

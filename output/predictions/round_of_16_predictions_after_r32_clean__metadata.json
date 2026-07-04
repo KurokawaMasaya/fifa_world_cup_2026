@@ -1,0 +1,12 @@
+{
+  "prediction_scope": "round_of_16_after_r32_strength_update",
+  "source_fixtures_file": "output/live/fixtures_results.csv",
+  "rating_source_path": "data/processed/team_ratings_world_cup_elo.csv",
+  "rating_update_log": "data/processed/r32_strength_update_log.csv",
+  "wdl_model_version": "v2_uncertainty_superstar_club_form",
+  "scoreline_version": "v24_abcd_no_e",
+  "scoreline_model": "gated_favorite_blowout_mixture_scoreline_grid",
+  "row_count": 8,
+  "generated_at": "2026-07-04T05:07:30+00:00",
+  "notes": "R16 predictions use ratings updated after completed R32 results. Core W/D/L and V2.4 scoreline model logic were not modified."
+}

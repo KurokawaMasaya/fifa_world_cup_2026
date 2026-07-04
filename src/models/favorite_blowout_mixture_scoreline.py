@@ -48,6 +48,24 @@ class GatedBlowoutParams(BlowoutMixtureParams):
     favorite_scoring_capacity_power: float = 1.0
 
 
+def canonical_v24_abcd_no_e_params() -> GatedBlowoutParams:
+    """Canonical promoted V2.4 ABCD no-E scoreline parameters."""
+    return GatedBlowoutParams(
+        normal_k=12.0,
+        blowout_k=6.0,
+        blowout_lambda_multiplier=1.90,
+        blowout_lambda_add=0.90,
+        max_blowout_lambda_fav=6.2,
+        underdog_blowout_lambda_multiplier=0.80,
+        p_favorite_weight=0.28,
+        p_imbalance_weight=0.10,
+        p_rating_weight=0.04,
+        p_multiplier=1.15,
+        use_motivation_gate=False,
+        motivation_factor=1.0,
+    )
+
+
 def normalize_win_probability(probability: float) -> float:
     """Accept either 0-1 probabilities or 0-100 percentage inputs."""
     probability = float(probability)

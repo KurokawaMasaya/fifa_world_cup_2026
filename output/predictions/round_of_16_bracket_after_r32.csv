@@ -1,0 +1,9 @@
+match_id,date,kickoff_time_utc,team_a,team_b,status
+760502,2026-07-04,2026-07-04T17:00Z,Canada,Morocco,scheduled
+760503,2026-07-04,2026-07-04T21:00Z,Paraguay,France,scheduled
+760504,2026-07-05,2026-07-05T20:00Z,Brazil,Norway,scheduled
+760505,2026-07-06,2026-07-06T00:00Z,Mexico,England,scheduled
+760506,2026-07-06,2026-07-06T19:00Z,Portugal,Spain,scheduled
+760507,2026-07-07,2026-07-07T00:00Z,USA,Belgium,scheduled
+760508,2026-07-07,2026-07-07T20:00Z,Switzerland,Colombia,scheduled
+760509,2026-07-07,2026-07-07T16:00Z,Argentina,Egypt,scheduled

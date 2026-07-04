@@ -1,0 +1,28 @@
+{
+  "prediction_scope": "round_of_32_clean_sorted_by_espn_schedule",
+  "source_prediction_file": "output/predictions/round_of_32_predictions_after_group_stage.csv",
+  "source_bracket_file": "data/processed/R32.rtf",
+  "schedule_source": "ESPN JSON scoreboard date endpoints 20260628 through 20260703",
+  "schedule_snapshot_file": "output/live/raw/espn_r32_schedule_20260628_20260703.csv",
+  "output_file": "output/predictions/round_of_32_predictions_after_group_stage_clean.csv",
+  "rows": 16,
+  "columns": [
+    "match_id",
+    "Section",
+    "team_a",
+    "team_b",
+    "team_a_win_pct",
+    "team_b_win_pct",
+    "draw_pct",
+    "top5 scoreline",
+    "top5 scoreline_probability_pct",
+    "risk",
+    "favourite_fail_to_win_risk"
+  ],
+  "match_id_definition": "ESPN event id from the R32 schedule",
+  "wdl_model_version": "v2_uncertainty_superstar_club_form",
+  "scoreline_version": "v24_abcd_no_e",
+  "scoreline_model": "gated_favorite_blowout_mixture_scoreline_grid",
+  "generated_at": "2026-06-28T08:38:03+00:00",
+  "notes": "Rows are sorted by ESPN kickoff time. W/D/L comes from current V2 stack; Top5 scorelines come from promoted V2.4 ABCD no-E."
+}

@@ -35,6 +35,12 @@ LIVE_ROUND2_PREDICTIONS_PATH = (
 LIVE_ROUND2_PREDICTIONS_DETAIL_PATH = (
     OUTPUT_DIR / "predictions" / "live" / "group_stage_round2_predictions.csv"
 )
+LIVE_ROUND3_PREDICTIONS_PATH = (
+    OUTPUT_DIR / "predictions" / "live" / "group_stage_round3_predictions_clean.csv"
+)
+LIVE_ROUND3_PREDICTIONS_DETAIL_PATH = (
+    OUTPUT_DIR / "predictions" / "live" / "group_stage_round3_predictions.csv"
+)
 LIVE_RESULTS_PATH = OUTPUT_DIR / "live" / "fixtures_results.csv"
 LIVE_STANDINGS_PATH = OUTPUT_DIR / "live" / "group_standings.csv"
 LIVE_EVALUATION_PATH = OUTPUT_DIR / "live" / "worldcup_group_stage_live_summary.csv"
@@ -52,6 +58,8 @@ HEALTH_FILES = {
     "live_round1_predictions": LIVE_ROUND1_PREDICTIONS_PATH,
     "live_round2_predictions": LIVE_ROUND2_PREDICTIONS_PATH,
     "live_round2_predictions_detail": LIVE_ROUND2_PREDICTIONS_DETAIL_PATH,
+    "live_round3_predictions": LIVE_ROUND3_PREDICTIONS_PATH,
+    "live_round3_predictions_detail": LIVE_ROUND3_PREDICTIONS_DETAIL_PATH,
     "live_results": LIVE_RESULTS_PATH,
     "live_standings": LIVE_STANDINGS_PATH,
     "live_evaluation": LIVE_EVALUATION_PATH,
@@ -208,6 +216,31 @@ def live_round2_prediction_teams() -> dict:
 @app.get("/predictions/live/round2/{match_id}")
 def live_round2_prediction(match_id: str) -> dict:
     return _prediction_detail_response(LIVE_ROUND2_PREDICTIONS_PATH, match_id)
+
+
+@app.get("/predictions/live/round3", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round3_predictions() -> dict:
+    return dataset_response(LIVE_ROUND3_PREDICTIONS_PATH)
+
+
+@app.get("/predictions/live/round3/detail", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round3_predictions_detail() -> dict:
+    return dataset_response(LIVE_ROUND3_PREDICTIONS_DETAIL_PATH)
+
+
+@app.get("/predictions/live/round3/matches", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round3_prediction_matches() -> dict:
+    return _match_index_response(LIVE_ROUND3_PREDICTIONS_PATH)
+
+
+@app.get("/predictions/live/round3/teams", response_model=DatasetResponse, response_model_exclude_none=True)
+def live_round3_prediction_teams() -> dict:
+    return _prediction_teams_response(LIVE_ROUND3_PREDICTIONS_PATH)
+
+
+@app.get("/predictions/live/round3/{match_id}")
+def live_round3_prediction(match_id: str) -> dict:
+    return _prediction_detail_response(LIVE_ROUND3_PREDICTIONS_PATH, match_id)
 
 
 @app.get("/live/results", response_model=DatasetResponse, response_model_exclude_none=True)

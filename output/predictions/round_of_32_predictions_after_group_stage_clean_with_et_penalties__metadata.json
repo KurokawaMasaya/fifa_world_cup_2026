@@ -1,0 +1,14 @@
+{
+  "prediction_scope": "round_of_32_clean_with_extra_time_and_penalties",
+  "source_clean_file": "output/predictions/round_of_32_predictions_after_group_stage_clean.csv",
+  "source_detailed_file": "output/predictions/round_of_32_predictions_after_group_stage_with_et_penalties.csv",
+  "output_file": "output/predictions/round_of_32_predictions_after_group_stage_clean_with_et_penalties.csv",
+  "row_count": 16,
+  "sorted_by": "existing ESPN kickoff order from clean R32 file",
+  "wdl_model_version": "v2_uncertainty_superstar_club_form",
+  "scoreline_version": "v24_abcd_no_e",
+  "scoreline_model": "gated_favorite_blowout_mixture_scoreline_grid",
+  "scoreline_params_profile": "v24_gate_no_E_ABCD",
+  "generated_at": "2026-06-28T08:42:56+00:00",
+  "notes": "Clean R32 presentation file enriched with predicted 90-minute score, conditional 120-minute score, penalty winner probabilities, and final advancing team. W/D/L and scoreline probabilities were not recalculated here."
+}

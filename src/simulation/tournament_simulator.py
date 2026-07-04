@@ -21,6 +21,10 @@ from src.models.v2_probability_stack import (
     load_v2_feature_context,
     rescale_scoreline_probabilities_to_outcomes,
 )
+from src.models.favorite_blowout_mixture_scoreline import (
+    canonical_v24_abcd_no_e_params,
+    gated_favorite_blowout_mixture_scoreline_grid,
+)
 from src.config.model_config import (
     BRACKETS_DIR,
     DIAGNOSTICS_DIR,
@@ -51,6 +55,7 @@ from src.simulation.group_stage_simulator import (
     run_sanity_checks,
     sample_scoreline,
 )
+from src.simulation.knockout_resolution import simulate_knockout_resolution
 
 
 TOURNAMENT_OUTPUT_PATH = SIMULATIONS_DIR / "tournament_simulation_results_default.csv"
@@ -178,6 +183,16 @@ def precompute_knockout_predictions(
                     scoreline_probabilities=scoreline_probabilities,
                     target_outcomes=final_probabilities,
                 )
+            scoreline_probabilities, scoreline_metadata = gated_favorite_blowout_mixture_scoreline_grid(
+                lambda_a=float(prediction["lambda_a"]),
+                lambda_b=float(prediction["lambda_b"]),
+                p_team_a_win=float(final_probabilities["team_a_win"]),
+                p_draw=float(final_probabilities["draw"]),
+                p_team_b_win=float(final_probabilities["team_b_win"]),
+                rating_gap=float(ratings[team_a] - ratings[team_b]),
+                max_goals=10,
+                params=canonical_v24_abcd_no_e_params(),
+            )
             predictions[(team_a, team_b)] = {
                 "scoreline_probabilities": scoreline_probabilities,
                 "lambda_a": prediction["lambda_a"],
@@ -186,6 +201,9 @@ def precompute_knockout_predictions(
                 "p_draw": final_probabilities["draw"],
                 "p_team_b_win": final_probabilities["team_b_win"],
                 "model_probability_stack": "v2" if use_v2_stack else "v1",
+                "scoreline_version": "v24_abcd_no_e",
+                "scoreline_model": "gated_favorite_blowout_mixture_scoreline_grid",
+                "p_blowout_final": scoreline_metadata["p_blowout_final"],
             }
 
     return predictions, ratings
@@ -392,21 +410,36 @@ def simulate_knockout_match(
     rng: random.Random,
 ) -> tuple[str, str]:
     """Sample a knockout match and return winner and loser."""
+    resolution = simulate_knockout_match_with_resolution(
+        team_a=team_a,
+        team_b=team_b,
+        knockout_predictions=knockout_predictions,
+        rating_lookup=rating_lookup,
+        rng=rng,
+    )
+    return resolution["winner"], resolution["loser"]
+
+
+def simulate_knockout_match_with_resolution(
+    team_a: str,
+    team_b: str,
+    knockout_predictions: Mapping[tuple[str, str], Mapping[str, object]],
+    rating_lookup: Mapping[str, float],
+    rng: random.Random,
+) -> dict[str, object]:
+    """Sample a knockout match through 90, ET, then penalties if required."""
     prediction = knockout_predictions[(team_a, team_b)]
     goals_a, goals_b = sample_scoreline(prediction["scoreline_probabilities"], rng=rng)
-
-    if goals_a > goals_b:
-        return team_a, team_b
-    if goals_b > goals_a:
-        return team_b, team_a
-
-    team_a_advances_probability = elo_tiebreak_probability(
-        rating_lookup[team_a],
-        rating_lookup[team_b],
+    return simulate_knockout_resolution(
+        team_a=team_a,
+        team_b=team_b,
+        goals_a_90=goals_a,
+        goals_b_90=goals_b,
+        prediction=prediction,
+        rating_a=rating_lookup[team_a],
+        rating_b=rating_lookup[team_b],
+        rng=rng,
     )
-    if rng.random() < team_a_advances_probability:
-        return team_a, team_b
-    return team_b, team_a
 
 
 def simulate_knockout_round(
@@ -578,13 +611,15 @@ def simulate_knockout_bracket(
             original_label = schedule_match["original_match_label"]
             resolved_label = schedule_match["match_label"]
 
-        winner, loser = simulate_knockout_match(
+        resolution = simulate_knockout_match_with_resolution(
             team_a=team_a,
             team_b=team_b,
             knockout_predictions=knockout_predictions,
             rating_lookup=rating_lookup,
             rng=rng,
         )
+        winner = str(resolution["winner"])
+        loser = str(resolution["loser"])
         match_winners[match_number] = winner
         match_losers[match_number] = loser
         if stage_id == 2:
@@ -605,6 +640,14 @@ def simulate_knockout_bracket(
                 "team_a": team_a,
                 "team_b": team_b,
                 "winner": winner,
+                "loser": loser,
+                "match_resolution": resolution["match_resolution"],
+                "predicted_90min_score": resolution["predicted_90min_score"],
+                "predicted_120min_score": resolution["predicted_120min_score"],
+                "extra_time_goal_increment": resolution["extra_time_goal_increment"],
+                "penalty_winner": resolution["penalty_winner"],
+                "penalty_win_prob_team_a": resolution["penalty_win_prob_team_a"],
+                "penalty_win_prob_team_b": resolution["penalty_win_prob_team_b"],
                 "original_match_label": original_label,
                 "resolved_match_label": resolved_label,
                 "bracket_mode": BRACKET_MODE,
