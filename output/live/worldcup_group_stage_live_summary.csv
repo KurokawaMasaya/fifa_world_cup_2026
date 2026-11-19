@@ -1,2 +1,0 @@
-completed_matches,status,n_completed_matches,accuracy,mean_brier_score,mean_log_loss,mean_actual_outcome_probability,predicted_draw_rate,predicted_pick_draw_rate,actual_draw_rate,draw_calibration_error
-50,evaluated,50,0.72,0.39895159918435363,0.6981402162276136,0.5685119393365641,0.22056575798991213,0.02,0.22,0.0005657579899121246

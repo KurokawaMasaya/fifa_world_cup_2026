@@ -1,0 +1,5 @@
+match_id,Round,kickoff_time_utc,team_a,team_b,team_a_win_pct,team_b_win_pct,draw_pct,top5 scoreline,top5 scoreline_probability_pct,predicted_90min_score,predicted_90min_result,predicted_120min_score,predicted_120min_result,extra_time_goal_increment,penalty_winner,penalty_win_prob_team_a,penalty_win_prob_team_b,final_winner,match_resolution,final_advancing_team,risk,favourite_fail_to_win_risk
+760510,R8,2026-07-09T20:00Z,France,Morocco,54.6,20.4,25.0,"['1-0', '1-1', '2-0', '2-1', '0-0']","[10, 10, 9, 9, 6]",1-0,team_a_win,1-0,team_a_win,,,53.0,47.0,France,90min,France,20,45
+760511,R8,2026-07-10T19:00Z,Spain,Belgium,59.2,17.2,23.6,"['1-0', '2-0', '1-1', '2-1', '3-0']","[10, 10, 10, 9, 6]",1-0,team_a_win,1-0,team_a_win,,,53.9,46.1,Spain,90min,Spain,17,41
+760512,R8,2026-07-11T21:00Z,Norway,England,16.6,60.9,22.4,"['0-1', '0-2', '1-1', '1-2', '0-3']","[10, 10, 9, 9, 7]",0-1,team_b_win,0-1,team_b_win,,,45.9,54.1,England,90min,England,17,39
+760513,R8,2026-07-12T01:00Z,Argentina,Switzerland,66.3,12.9,20.8,"['2-0', '1-0', '2-1', '1-1', '3-0']","[11, 11, 9, 9, 8]",2-0,team_a_win,2-0,team_a_win,,,55.0,45.0,Argentina,90min,Argentina,13,34
