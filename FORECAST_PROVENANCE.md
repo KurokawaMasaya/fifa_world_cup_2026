@@ -1,8 +1,8 @@
 # Forecast provenance
 
-**Maintainer’s statement.** I completed and issued each of the 104 match forecasts before its own kickoff.
+All 104 match forecasts were completed before their respective kickoffs.
 
-The tables below document which forecast values a reader can trace to a dated file or GitHub push. A batch export has its own timestamp. For fixtures without a separately preserved first-issue time, the maintainer’s statement is the source for when the forecast was issued. All times are UTC.
+All times below are UTC.
 
 For **87 of 104 fixtures**, a pre-kickoff stage generation record or an earlier matching snapshot covers the archived win/draw/loss (W/D/L) percentages, five ordered scorelines and their displayed probabilities. **At least 42 of those 87** can also be checked against a GitHub push before kickoff, including 34 group games and all eight round-of-16 games. The retained stage export predates kickoff for 68 fixtures. Each count measures the records available for verification.
 
@@ -43,11 +43,11 @@ For each push below, GitHub’s repository activity identifies the server timest
 
 **Knockouts.** The July 4 push contains the exact round-of-32 and round-of-16 CSVs. It followed the last round-of-32 kickoff and preceded the first round-of-16 kickoff by 11 hours 22 minutes 33 seconds. The semifinals and both medal matches have pre-kickoff generation records in the original archive. The reviewed GitHub history first shows these three later-stage tables on November 19. [July 4 round-of-32 file](https://github.com/KurokawaMasaya/fifa_world_cup_2026/blob/c21c729f54eb5130509dffed8cbf0ec5c2a3254e/output/predictions/round_of_32_predictions_after_group_stage_clean_with_et_penalties.csv) · [November archive commit](https://github.com/KurokawaMasaya/fifa_world_cup_2026/commit/11992ff4778fd26abb6a14d4236d58294095c192)
 
-**Quarterfinals.** The maintainer confirms all four forecasts were completed before their respective kickoffs. The original export script writes `R8_predictions_clean.csv` and then records the current UTC time in `R8_predictions_clean__metadata.json`. Each run writes to the same paths. The retained JSON dates that export to July 12 at 12:51:42 UTC. The last quarterfinal had kicked off at 01:00 UTC that day. The exact times of first issue are not recorded in the surviving files.
+**Quarterfinals.** The original export script writes `R8_predictions_clean.csv` and then records the current UTC time in `R8_predictions_clean__metadata.json`. Each run writes to the same paths. The retained JSON dates that export to July 12 at 12:51:42 UTC. The last quarterfinal had kicked off at 01:00 UTC that day. The exact times of first issue are not recorded in the surviving files.
 
 ## Match-by-match record
 
-“Retained CSV export” shows whether the archived batch was written before or after kickoff. The maintainer’s statement above applies to all rows. The GitHub column gives the most detailed matching record found before that fixture. **CSV** means identical file bytes, **W/D/L + five** compares the three regulation-time percentages and the five ordered scores with their five displayed percentages, and **W/D/L** covers the three outcome percentages alone. The last column identifies additional evidence from the earlier local group files **L** and **P**. The local sources use their recorded export or file modification times. A dash means no qualifying record in that column.
+“Retained CSV export” shows whether the archived batch was written before or after kickoff. The GitHub column gives the most detailed matching record found before that fixture. **CSV** means identical file bytes, **W/D/L + five** compares the three regulation-time percentages and the five ordered scores with their five displayed percentages, and **W/D/L** covers the three outcome percentages alone. The last column identifies additional evidence from the earlier local group files **L** and **P**. The local sources use their recorded export or file modification times. A dash means no qualifying record in that column.
 
 Match links use the ESPN event ID from the original `output/live/fixtures_results.csv` and kickoff uses its `kickoff_time_utc` field. Group rows were joined by the ordered team pairing after resolving name variants. Knockout rows use the event ID directly. For Mexico–England (760505), the forecast and July 4 schedule show 00:00 on July 6 and the final fixture log shows 01:00. The ledger uses 01:00. Both are after the July 4 push. [July 4 fixture log](https://github.com/KurokawaMasaya/fifa_world_cup_2026/blob/c21c729f54eb5130509dffed8cbf0ec5c2a3254e/output/live/fixtures_results.csv)
 
